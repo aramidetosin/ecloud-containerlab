@@ -1,0 +1,14 @@
+[Unit]
+Description=ecloud clab ES-bond flap watchdog (reboots a leaf whose ES bond is stuck carrier-down)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+# loop the one-shot check every 45s; the script itself is idempotent + stateful (/run)
+ExecStart=/bin/sh -c "while true; do /usr/local/sbin/es-bond-watchdog.sh; sleep 45; done"
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

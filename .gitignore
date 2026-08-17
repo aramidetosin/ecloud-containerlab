@@ -1,0 +1,22 @@
+# VM images: licensed, bring your own (see README)
+*.qcow2
+images/
+
+# airgap assets fetched/built by k8s/build-k8s-image.sh
+k8s/k3s
+k8s/cilium
+k8s/*.tar
+k8s/*.tar.zst
+k8s/*.tgz
+k8s/*.log
+k8s/*.status
+
+# GoBGP binaries fetched by build_images.sh
+bootstrap/hosts/gobgp/gobgpd
+bootstrap/hosts/gobgp/gobgp
+
+# containerlab runtime state
+clab-ecloud/
+.*.clab.yml.bak
+
+.DS_Store

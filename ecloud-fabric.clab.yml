@@ -1,0 +1,198 @@
+name: ecloud-fabric
+mgmt:
+  network: ecloud-mgmt
+  ipv4-subnet: 172.29.129.0/24
+topology:
+  kinds:
+    nvidia_cumulusvx:
+      image: vrnetlab/nvidia_cumulus-vx:5.12.0
+  nodes:
+    spine-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.11
+      group: dc1
+    spine-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.12
+      group: dc1
+    leaf-k8s-master-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.13
+      group: dc1
+    leaf-k8s-master-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.14
+      group: dc1
+    leaf-k8s-worker-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.15
+      group: dc1
+    leaf-k8s-worker-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.16
+      group: dc1
+    leaf-service-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.17
+      group: dc1
+    leaf-service-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.18
+      group: dc1
+    leaf-border-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.19
+      group: dc1
+    leaf-border-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.20
+      group: dc1
+    dc2-spine-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.21
+      group: dc2
+    dc2-spine-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.22
+      group: dc2
+    dc2-k8s-leaf-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.23
+      group: dc2
+    dc2-k8s-leaf-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.24
+      group: dc2
+    dc2-svc-leaf-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.25
+      group: dc2
+    dc2-svc-leaf-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.26
+      group: dc2
+    dc2-border-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.27
+      group: dc2
+    dc2-border-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.28
+      group: dc2
+    br-agg-sw-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.29
+      group: aggr
+    br-agg-sw-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.30
+      group: aggr
+  links:
+  - endpoints:
+    - spine-1:swp1
+    - leaf-k8s-master-1:swp1
+  - endpoints:
+    - spine-1:swp2
+    - leaf-k8s-master-2:swp1
+  - endpoints:
+    - spine-1:swp3
+    - leaf-k8s-worker-1:swp1
+  - endpoints:
+    - spine-1:swp4
+    - leaf-k8s-worker-2:swp1
+  - endpoints:
+    - spine-1:swp5
+    - leaf-service-1:swp1
+  - endpoints:
+    - spine-1:swp6
+    - leaf-service-2:swp1
+  - endpoints:
+    - spine-1:swp7
+    - leaf-border-1:swp1
+  - endpoints:
+    - spine-1:swp8
+    - leaf-border-2:swp1
+  - endpoints:
+    - spine-2:swp1
+    - leaf-k8s-master-1:swp2
+  - endpoints:
+    - spine-2:swp2
+    - leaf-k8s-master-2:swp2
+  - endpoints:
+    - spine-2:swp3
+    - leaf-k8s-worker-1:swp2
+  - endpoints:
+    - spine-2:swp4
+    - leaf-k8s-worker-2:swp2
+  - endpoints:
+    - spine-2:swp5
+    - leaf-service-1:swp2
+  - endpoints:
+    - spine-2:swp6
+    - leaf-service-2:swp2
+  - endpoints:
+    - spine-2:swp7
+    - leaf-border-1:swp2
+  - endpoints:
+    - spine-2:swp8
+    - leaf-border-2:swp2
+  - endpoints:
+    - leaf-border-1:swp3
+    - br-agg-sw-1:swp1
+  - endpoints:
+    - leaf-border-2:swp3
+    - br-agg-sw-1:swp2
+  - endpoints:
+    - leaf-border-2:swp4
+    - br-agg-sw-2:swp2
+  - endpoints:
+    - dc2-border-2:swp3
+    - br-agg-sw-1:swp6
+  - endpoints:
+    - leaf-border-1:swp4
+    - br-agg-sw-2:swp1
+  - endpoints:
+    - dc2-border-1:swp3
+    - br-agg-sw-1:swp5
+  - endpoints:
+    - dc2-border-1:swp4
+    - br-agg-sw-2:swp5
+  - endpoints:
+    - dc2-spine-1:swp1
+    - dc2-k8s-leaf-1:swp1
+  - endpoints:
+    - dc2-spine-1:swp2
+    - dc2-k8s-leaf-2:swp1
+  - endpoints:
+    - dc2-spine-1:swp3
+    - dc2-svc-leaf-1:swp1
+  - endpoints:
+    - dc2-spine-1:swp4
+    - dc2-svc-leaf-2:swp1
+  - endpoints:
+    - dc2-spine-1:swp5
+    - dc2-border-1:swp1
+  - endpoints:
+    - dc2-spine-1:swp6
+    - dc2-border-2:swp1
+  - endpoints:
+    - dc2-spine-2:swp1
+    - dc2-k8s-leaf-1:swp2
+  - endpoints:
+    - dc2-spine-2:swp2
+    - dc2-k8s-leaf-2:swp2
+  - endpoints:
+    - dc2-spine-2:swp3
+    - dc2-svc-leaf-1:swp2
+  - endpoints:
+    - dc2-spine-2:swp4
+    - dc2-svc-leaf-2:swp2
+  - endpoints:
+    - dc2-spine-2:swp5
+    - dc2-border-1:swp2
+  - endpoints:
+    - dc2-spine-2:swp6
+    - dc2-border-2:swp2
+  - endpoints:
+    - dc2-border-2:swp4
+    - br-agg-sw-2:swp6

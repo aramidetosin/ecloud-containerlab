@@ -1,0 +1,68 @@
+# DC2 Cilium BGP: all k8s nodes share subnet 10.168.10.0/24 and peer the dc2-k8s-leaf pair
+# (AS65211 @ 10.168.10.2/.3). Local ASN 65020. Advertises the anycast + DC2 regional VIPs.
+apiVersion: cilium.io/v2alpha1
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: dc2-lb-pool
+spec:
+  blocks:
+  - start: 192.168.202.0   # anycast VIP (same in both DCs)
+    stop: 192.168.202.0
+  - start: 192.168.202.2   # DC2 regional
+    stop: 192.168.202.2
+  serviceSelector:
+    matchExpressions:
+    - {key: ecloud/dc, operator: In, values: ["dc2", "anycast"]}
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPPeerConfig
+metadata:
+  name: leaf-peer
+spec:
+  timers:
+    connectRetryTimeSeconds: 5
+    holdTimeSeconds: 9
+    keepAliveTimeSeconds: 3
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+  families:
+  - afi: ipv4
+    safi: unicast
+    advertisements:
+      matchLabels:
+        advertise: lb-vips
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPAdvertisement
+metadata:
+  name: lb-vips
+  labels:
+    advertise: lb-vips
+spec:
+  advertisements:
+  - advertisementType: Service
+    service:
+      addresses: ["LoadBalancerIP"]
+    selector:
+      matchExpressions:
+      - {key: ecloud/dc, operator: Exists}
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+  name: dc2-k8s
+spec:
+  nodeSelector: {}          # all nodes (single leaf pair, single subnet)
+  bgpInstances:
+  - name: instance-65020
+    localASN: 65020
+    peers:
+    - name: dc2-leaf-1
+      peerASN: 65211
+      peerAddress: 10.168.10.2
+      peerConfigRef: {name: leaf-peer}
+    - name: dc2-leaf-2
+      peerASN: 65211
+      peerAddress: 10.168.10.3
+      peerConfigRef: {name: leaf-peer}

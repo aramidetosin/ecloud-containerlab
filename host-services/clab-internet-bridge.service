@@ -1,0 +1,12 @@
+[Unit]
+Description=ecloud clab: pre-create the 'internet' host bridge (clab bridge kind attaches to an EXISTING bridge)
+Before=docker.service
+After=network-pre.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'ip link show internet >/dev/null 2>&1 || ip link add name internet type bridge; ip link set internet up'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

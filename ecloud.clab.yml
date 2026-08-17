@@ -1,0 +1,409 @@
+# ecloud two-DC EVPN-VXLAN POC, replicated in containerlab.
+# Generated from the authoritative EVE-NG link map (84 p2p links + 1 shared internet segment).
+# Switches: Cumulus VX 5.12.0 (vrnetlab VM-in-container). Firewalls: PA-VM 12.1.2 (vrnetlab).
+# Hosts: plain linux containers, provisioned after deploy (k8s/Cilium, BIND, GoBGP, clients).
+# NOTE: stock nvidia_cumulusvx does NOT apply startup-config. OUR image carries a patched vrnetlab
+# launcher (cvx_startup_config.patch.py) that applies /config/startup-config.cfg over SSH once switchd
+# is up, so the fabric BOOTSTRAPS ITSELF on `clab deploy`. bootstrap/*.cfg = filtered nv-set lines
+# (no eth0/mgmt/hostname/REDACTED/aaa-user) from fabric-evpn-mh/. Creds cumulus/Clab123!.
+name: ecloud
+mgmt:
+  network: ecloud-mgmt
+  ipv4-subnet: 172.29.129.0/24     # same mgmt /24 as the EVE lab, but STATIC (no DHCP drift)
+topology:
+  kinds:
+    nvidia_cumulusvx:
+      image: vrnetlab/nvidia_cumulus-vx:5.12.0
+    paloalto_panos:
+      image: vrnetlab/paloalto_pa-vm:12.1.2
+    linux:
+      image: ghcr.io/srl-labs/network-multitool
+  nodes:
+    spine-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.11
+      group: dc1
+      startup-config: bootstrap/spine-1.cfg   # applied at FIRST BOOT by the patched launcher
+    spine-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.12
+      group: dc1
+      startup-config: bootstrap/spine-2.cfg   # applied at FIRST BOOT by the patched launcher
+    leaf-k8s-master-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.13
+      group: dc1
+      startup-config: bootstrap/leaf-k8s-master-1.cfg   # applied at FIRST BOOT by the patched launcher
+    leaf-k8s-master-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.14
+      group: dc1
+      startup-config: bootstrap/leaf-k8s-master-2.cfg   # applied at FIRST BOOT by the patched launcher
+    leaf-k8s-worker-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.15
+      group: dc1
+      startup-config: bootstrap/leaf-k8s-worker-1.cfg   # applied at FIRST BOOT by the patched launcher
+    leaf-k8s-worker-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.16
+      group: dc1
+      startup-config: bootstrap/leaf-k8s-worker-2.cfg   # applied at FIRST BOOT by the patched launcher
+    leaf-service-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.17
+      group: dc1
+      startup-config: bootstrap/leaf-service-1.cfg   # applied at FIRST BOOT by the patched launcher
+    leaf-service-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.18
+      group: dc1
+      startup-config: bootstrap/leaf-service-2.cfg   # applied at FIRST BOOT by the patched launcher
+    leaf-border-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.19
+      group: dc1
+      startup-config: bootstrap/leaf-border-1.cfg   # applied at FIRST BOOT by the patched launcher
+    leaf-border-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.20
+      group: dc1
+      startup-config: bootstrap/leaf-border-2.cfg   # applied at FIRST BOOT by the patched launcher
+    dc2-spine-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.21
+      group: dc2
+      startup-config: bootstrap/dc2-spine-1.cfg   # applied at FIRST BOOT by the patched launcher
+    dc2-spine-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.22
+      group: dc2
+      startup-config: bootstrap/dc2-spine-2.cfg   # applied at FIRST BOOT by the patched launcher
+    dc2-k8s-leaf-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.23
+      group: dc2
+      startup-config: bootstrap/dc2-k8s-leaf-1.cfg   # applied at FIRST BOOT by the patched launcher
+    dc2-k8s-leaf-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.24
+      group: dc2
+      startup-config: bootstrap/dc2-k8s-leaf-2.cfg   # applied at FIRST BOOT by the patched launcher
+    dc2-svc-leaf-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.25
+      group: dc2
+      startup-config: bootstrap/dc2-svc-leaf-1.cfg   # applied at FIRST BOOT by the patched launcher
+    dc2-svc-leaf-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.26
+      group: dc2
+      startup-config: bootstrap/dc2-svc-leaf-2.cfg   # applied at FIRST BOOT by the patched launcher
+    dc2-border-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.27
+      group: dc2
+      startup-config: bootstrap/dc2-border-1.cfg   # applied at FIRST BOOT by the patched launcher
+    dc2-border-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.28
+      group: dc2
+      startup-config: bootstrap/dc2-border-2.cfg   # applied at FIRST BOOT by the patched launcher
+    br-agg-sw-1:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.29
+      group: aggr
+      startup-config: bootstrap/br-agg-sw-1.cfg   # applied at FIRST BOOT by the patched launcher
+    br-agg-sw-2:
+      kind: nvidia_cumulusvx
+      mgmt-ipv4: 172.29.129.30
+      group: aggr
+      startup-config: bootstrap/br-agg-sw-2.cfg   # applied at FIRST BOOT by the patched launcher
+    fw-pri:
+      kind: paloalto_panos
+      mgmt-ipv4: 172.29.129.31
+      group: firewall
+      startup-config: bootstrap/fw-pri.xml   # FULL live <config> XML (interfaces/VR+BGP/HA/zones/NAT/security), loaded via API
+      env:
+        QEMU_CPU: host
+        QEMU_SMP: 8
+        QEMU_MEMORY: 16384
+    fw-sec:
+      kind: paloalto_panos
+      mgmt-ipv4: 172.29.129.32
+      group: firewall
+      startup-config: bootstrap/fw-sec.xml   # FULL live <config> XML (interfaces/VR+BGP/HA/zones/NAT/security), loaded via API
+      env:
+        QEMU_CPU: host
+        QEMU_SMP: 8
+        QEMU_MEMORY: 16384
+    k8s-master-1:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.33
+      group: dc1-k8s
+      env:
+        K3S_ROLE: "server-init"
+        K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
+        NODE_IP: "10.167.10.11"
+        NODE_BOND_IP: "10.167.10.11/24"
+        NODE_GW: "10.167.10.1"
+        NODE_DNS: "10.167.30.10"
+        NODE_MAC: "50:00:00:0b:00:01"
+        ECLOUD_DC: "dc1"
+        ECLOUD_POD_CIDR: "10.244.0.0/16"
+        ECLOUD_EXPECT_NODES: "6"
+    k8s-master-2:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.34
+      group: dc1-k8s
+      env:
+        K3S_ROLE: "server-join"
+        K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
+        NODE_IP: "10.167.10.12"
+        NODE_BOND_IP: "10.167.10.12/24"
+        NODE_GW: "10.167.10.1"
+        NODE_DNS: "10.167.30.10"
+        NODE_MAC: "50:00:00:0c:00:01"
+        K3S_URL: "https://10.167.10.11:6443"
+    k8s-master-3:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.35
+      group: dc1-k8s
+      env:
+        K3S_ROLE: "server-join"
+        K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
+        NODE_IP: "10.167.10.13"
+        NODE_BOND_IP: "10.167.10.13/24"
+        NODE_GW: "10.167.10.1"
+        NODE_DNS: "10.167.30.10"
+        NODE_MAC: "50:00:00:0d:00:01"
+        K3S_URL: "https://10.167.10.11:6443"
+    k8s-woker-1:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.36
+      group: dc1-k8s
+      env:
+        K3S_ROLE: "agent"
+        K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
+        NODE_IP: "10.167.20.11"
+        NODE_BOND_IP: "10.167.20.11/24"
+        NODE_GW: "10.167.20.1"
+        NODE_DNS: "10.167.30.10"
+        NODE_MAC: "50:00:00:0e:00:01"
+        K3S_URL: "https://10.167.10.11:6443"
+    k8s-woker-2:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.37
+      group: dc1-k8s
+      env:
+        K3S_ROLE: "agent"
+        K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
+        NODE_IP: "10.167.20.12"
+        NODE_BOND_IP: "10.167.20.12/24"
+        NODE_GW: "10.167.20.1"
+        NODE_DNS: "10.167.30.10"
+        NODE_MAC: "50:00:00:0f:00:01"
+        K3S_URL: "https://10.167.10.11:6443"
+    k8s-woker-3:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.38
+      group: dc1-k8s
+      env:
+        K3S_ROLE: "agent"
+        K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
+        NODE_IP: "10.167.20.13"
+        NODE_BOND_IP: "10.167.20.13/24"
+        NODE_GW: "10.167.20.1"
+        NODE_DNS: "10.167.30.10"
+        NODE_MAC: "50:00:00:10:00:01"
+        K3S_URL: "https://10.167.10.11:6443"
+    service-node-dns-ntp:
+      kind: linux
+      mgmt-ipv4: 172.29.129.39
+      group: dc1-hosts
+      binds:
+        - bootstrap/hosts:/bootstrap:ro
+      exec:
+        - sh /bootstrap/service-node-dns-ntp.sh
+    client-1:
+      kind: linux
+      mgmt-ipv4: 172.29.129.40
+      group: clients
+      binds:
+        - bootstrap/hosts:/bootstrap:ro
+      exec:
+        - sh /bootstrap/client-1.sh
+    external-client-2:
+      kind: linux
+      mgmt-ipv4: 172.29.129.41
+      group: clients
+      binds:
+        - bootstrap/hosts:/bootstrap:ro
+      exec:
+        - sh /bootstrap/external-client-2.sh
+    gobgp-1:
+      kind: linux
+      mgmt-ipv4: 172.29.129.42
+      group: controllers
+      binds:
+        - bootstrap/hosts:/bootstrap:ro
+      exec:
+        - sh /bootstrap/gobgp-1.sh
+    gobgp-2:
+      kind: linux
+      mgmt-ipv4: 172.29.129.43
+      group: controllers
+      binds:
+        - bootstrap/hosts:/bootstrap:ro
+      exec:
+        - sh /bootstrap/gobgp-2.sh
+    dc2-k8s-master-1:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.44
+      group: dc2-k8s
+      env:
+        K3S_ROLE: "server-init"
+        K3S_TOKEN: "ecloud-dc2-k3s-7b2e11"
+        NODE_IP: "10.168.10.11"
+        NODE_BOND_IP: "10.168.10.11/24"
+        NODE_GW: "10.168.10.1"
+        NODE_DNS: "10.168.30.10"
+        NODE_MAC: "50:00:00:1f:00:01"
+        ECLOUD_DC: "dc2"
+        ECLOUD_POD_CIDR: "10.245.0.0/16"
+        ECLOUD_EXPECT_NODES: "4"
+    dc2-k8s-worker-1:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.45
+      group: dc2-k8s
+      env:
+        K3S_ROLE: "agent"
+        K3S_TOKEN: "ecloud-dc2-k3s-7b2e11"
+        NODE_IP: "10.168.10.21"
+        NODE_BOND_IP: "10.168.10.21/24"
+        NODE_GW: "10.168.10.1"
+        NODE_DNS: "10.168.30.10"
+        NODE_MAC: "50:00:00:20:00:01"
+        K3S_URL: "https://10.168.10.11:6443"
+    dc2-k8s-worker-2:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.46
+      group: dc2-k8s
+      env:
+        K3S_ROLE: "agent"
+        K3S_TOKEN: "ecloud-dc2-k3s-7b2e11"
+        NODE_IP: "10.168.10.22"
+        NODE_BOND_IP: "10.168.10.22/24"
+        NODE_GW: "10.168.10.1"
+        NODE_DNS: "10.168.30.10"
+        NODE_MAC: "50:00:00:21:00:01"
+        K3S_URL: "https://10.168.10.11:6443"
+    dc2-k8s-worker-3:
+      kind: linux
+      image: ecloud-k8s-host:1.31.5
+      mgmt-ipv4: 172.29.129.47
+      group: dc2-k8s
+      env:
+        K3S_ROLE: "agent"
+        K3S_TOKEN: "ecloud-dc2-k3s-7b2e11"
+        NODE_IP: "10.168.10.23"
+        NODE_BOND_IP: "10.168.10.23/24"
+        NODE_GW: "10.168.10.1"
+        NODE_DNS: "10.168.30.10"
+        NODE_MAC: "50:00:00:22:00:01"
+        K3S_URL: "https://10.168.10.11:6443"
+    dc2-svc-ntp-dns:
+      kind: linux
+      mgmt-ipv4: 172.29.129.48
+      group: dc2-hosts
+      binds:
+        - bootstrap/hosts:/bootstrap:ro
+      exec:
+        - sh /bootstrap/dc2-svc-ntp-dns.sh
+    internet:
+      kind: bridge     # = EVE net54 (10.80.15.0/24): PAN eth1/3 x2 + client-1 + external-client-2
+  links:
+    - endpoints: ["spine-1:swp1", "leaf-k8s-master-1:swp1"]
+    - endpoints: ["spine-1:swp2", "leaf-k8s-master-2:swp1"]
+    - endpoints: ["spine-1:swp3", "leaf-k8s-worker-1:swp1"]
+    - endpoints: ["spine-1:swp4", "leaf-k8s-worker-2:swp1"]
+    - endpoints: ["spine-1:swp5", "leaf-service-1:swp1"]
+    - endpoints: ["spine-1:swp6", "leaf-service-2:swp1"]
+    - endpoints: ["spine-1:swp7", "leaf-border-1:swp1"]
+    - endpoints: ["spine-1:swp8", "leaf-border-2:swp1"]
+    - endpoints: ["spine-2:swp1", "leaf-k8s-master-1:swp2"]
+    - endpoints: ["spine-2:swp2", "leaf-k8s-master-2:swp2"]
+    - endpoints: ["spine-2:swp3", "leaf-k8s-worker-1:swp2"]
+    - endpoints: ["spine-2:swp4", "leaf-k8s-worker-2:swp2"]
+    - endpoints: ["spine-2:swp5", "leaf-service-1:swp2"]
+    - endpoints: ["spine-2:swp6", "leaf-service-2:swp2"]
+    - endpoints: ["spine-2:swp7", "leaf-border-1:swp2"]
+    - endpoints: ["spine-2:swp8", "leaf-border-2:swp2"]
+    - endpoints: ["leaf-k8s-master-1:swp3", "k8s-master-1:eth1"]
+    - endpoints: ["leaf-k8s-master-2:swp3", "k8s-master-1:eth2"]
+    - endpoints: ["leaf-k8s-master-1:swp4", "k8s-master-2:eth1"]
+    - endpoints: ["leaf-k8s-master-2:swp4", "k8s-master-2:eth2"]
+    - endpoints: ["leaf-k8s-master-1:swp5", "k8s-master-3:eth1"]
+    - endpoints: ["leaf-k8s-master-2:swp5", "k8s-master-3:eth2"]
+    - endpoints: ["leaf-k8s-worker-1:swp3", "k8s-woker-1:eth1"]
+    - endpoints: ["leaf-k8s-worker-2:swp3", "k8s-woker-1:eth2"]
+    - endpoints: ["leaf-k8s-worker-1:swp4", "k8s-woker-2:eth1"]
+    - endpoints: ["leaf-k8s-worker-2:swp4", "k8s-woker-2:eth2"]
+    - endpoints: ["leaf-k8s-worker-1:swp5", "k8s-woker-3:eth1"]
+    - endpoints: ["leaf-k8s-worker-2:swp5", "k8s-woker-3:eth2"]
+    - endpoints: ["leaf-service-1:swp3", "service-node-dns-ntp:eth1"]
+    - endpoints: ["leaf-service-2:swp3", "service-node-dns-ntp:eth2"]
+    - endpoints: ["leaf-border-1:swp3", "br-agg-sw-1:swp1"]
+    - endpoints: ["leaf-border-2:swp3", "br-agg-sw-1:swp2"]
+    - endpoints: ["fw-sec:eth1", "br-agg-sw-1:swp4"]
+    - endpoints: ["leaf-border-2:swp4", "br-agg-sw-2:swp2"]
+    - endpoints: ["fw-pri:eth1", "br-agg-sw-1:swp3"]
+    - endpoints: ["dc2-border-2:swp3", "br-agg-sw-1:swp6"]
+    - endpoints: ["leaf-border-1:swp4", "br-agg-sw-2:swp1"]
+    - endpoints: ["fw-sec:eth2", "br-agg-sw-2:swp4"]
+    - endpoints: ["dc2-border-1:swp3", "br-agg-sw-1:swp5"]
+    - endpoints: ["fw-pri:eth2", "br-agg-sw-2:swp3"]
+    - endpoints: ["dc2-border-1:swp4", "br-agg-sw-2:swp5"]
+    - endpoints: ["fw-pri:eth5", "fw-sec:eth5"]
+    - endpoints: ["fw-pri:eth6", "fw-sec:eth6"]
+    - endpoints: ["fw-pri:eth7", "fw-sec:eth7"]
+    - endpoints: ["dc2-spine-1:swp1", "dc2-k8s-leaf-1:swp1"]
+    - endpoints: ["dc2-spine-1:swp2", "dc2-k8s-leaf-2:swp1"]
+    - endpoints: ["dc2-spine-1:swp3", "dc2-svc-leaf-1:swp1"]
+    - endpoints: ["dc2-spine-1:swp4", "dc2-svc-leaf-2:swp1"]
+    - endpoints: ["dc2-spine-1:swp5", "dc2-border-1:swp1"]
+    - endpoints: ["dc2-spine-1:swp6", "dc2-border-2:swp1"]
+    - endpoints: ["dc2-spine-2:swp1", "dc2-k8s-leaf-1:swp2"]
+    - endpoints: ["dc2-spine-2:swp2", "dc2-k8s-leaf-2:swp2"]
+    - endpoints: ["dc2-spine-2:swp3", "dc2-svc-leaf-1:swp2"]
+    - endpoints: ["dc2-spine-2:swp4", "dc2-svc-leaf-2:swp2"]
+    - endpoints: ["dc2-spine-2:swp5", "dc2-border-1:swp2"]
+    - endpoints: ["dc2-spine-2:swp6", "dc2-border-2:swp2"]
+    - endpoints: ["dc2-k8s-leaf-1:swp3", "dc2-k8s-master-1:eth1"]
+    - endpoints: ["dc2-k8s-leaf-2:swp3", "dc2-k8s-master-1:eth2"]
+    - endpoints: ["dc2-k8s-leaf-1:swp4", "dc2-k8s-worker-1:eth1"]
+    - endpoints: ["dc2-k8s-leaf-2:swp4", "dc2-k8s-worker-1:eth2"]
+    - endpoints: ["dc2-k8s-leaf-1:swp5", "dc2-k8s-worker-2:eth1"]
+    - endpoints: ["dc2-k8s-leaf-2:swp5", "dc2-k8s-worker-2:eth2"]
+    - endpoints: ["dc2-k8s-leaf-1:swp6", "dc2-k8s-worker-3:eth1"]
+    - endpoints: ["dc2-k8s-leaf-2:swp6", "dc2-k8s-worker-3:eth2"]
+    - endpoints: ["dc2-svc-leaf-1:swp3", "dc2-svc-ntp-dns:eth1"]
+    - endpoints: ["dc2-svc-leaf-2:swp3", "dc2-svc-ntp-dns:eth2"]
+    - endpoints: ["dc2-border-2:swp4", "br-agg-sw-2:swp6"]
+    - endpoints: ["gobgp-1:eth1", "br-agg-sw-1:swp7"]
+    - endpoints: ["gobgp-1:eth2", "br-agg-sw-2:swp7"]
+    - endpoints: ["br-agg-sw-1:swp8", "gobgp-2:eth1"]
+    - endpoints: ["br-agg-sw-2:swp8", "gobgp-2:eth2"]
+    - endpoints: ["fw-pri:eth3", "internet:fw-pri"]
+    - endpoints: ["fw-sec:eth3", "internet:fw-sec"]
+    - endpoints: ["client-1:eth1", "internet:client-1"]
+    - endpoints: ["external-client-2:eth1", "internet:external-client-2"]

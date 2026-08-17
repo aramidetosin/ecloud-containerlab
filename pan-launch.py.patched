@@ -1,0 +1,531 @@
+#!/usr/bin/env python3
+
+import datetime
+import logging
+import os
+import re
+import signal
+import sys
+import time
+import requests
+import urllib3
+import xml.etree.ElementTree as ET
+
+
+import vrnetlab
+
+
+STARTUP_CONFIG_FILE = "/config/startup-config.cfg"
+SAVED_CONFIG_FILE = "/config/device-state.tgz"
+
+
+def handle_SIGCHLD(signal, frame):
+    os.waitpid(-1, os.WNOHANG)
+
+
+def handle_SIGTERM(signal, frame):
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, handle_SIGTERM)
+signal.signal(signal.SIGTERM, handle_SIGTERM)
+signal.signal(signal.SIGCHLD, handle_SIGCHLD)
+
+TRACE_LEVEL_NUM = 9
+logging.addLevelName(TRACE_LEVEL_NUM, "TRACE")
+
+
+def trace(self, message, *args, **kws):
+    # Yes, logger takes its '*args' as 'args'.
+    if self.isEnabledFor(TRACE_LEVEL_NUM):
+        self._log(TRACE_LEVEL_NUM, message, args, **kws)
+
+
+logging.Logger.trace = trace
+
+
+class PAN_vm(vrnetlab.VM):
+    def __init__(self, hostname, username, password, conn_mode):
+        disk_image = ""
+        for e in os.listdir("/"):
+            if re.search(".qcow2$", e):
+                disk_image = "/" + e
+        if disk_image == "":
+            logging.getLogger().info("Disk image was not found")
+            exit(1)
+        super(PAN_vm, self).__init__(
+            username, password, disk_image=disk_image, ram=6144, cpu="host,level=9", smp="2,sockets=1,cores=1"
+        )
+        self.hostname = hostname
+        self.conn_mode = conn_mode
+        # mgmt + 24 that show up in the vm, may as well populate them all in vrnetlab right away
+        self.num_nics = 25
+        self.nic_type = "virtio-net-pci"
+        # pan wants a uuid it seems (for licensing reasons?!)
+        self.uuid = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+
+    def bootstrap_spin(self):
+        """This function should be called periodically to do work."""
+
+        if self.spins > 300:
+            # too many spins with no result ->  give up
+            self.logger.info("To many spins with no result, restarting")
+            self.stop()
+            self.start()
+            return
+
+        (ridx, match, res) = self.tn.expect(
+            [
+                b"Login incorrect",
+                b"vm login:",
+                b"PA-HDF login",
+                b"PA-VM login:",
+                b"[pP]assword:",
+                b"Enter old password :",
+                b"Enter new password :",
+                b"Confirm password   :",
+                b"admin@[^>\r\n]*>",   # ecloud fix: PAN-OS 12 / hostname / HA-state prompts
+            ],
+            1,
+        )
+        if match:  # got a match!
+            if ridx == 0:
+                self.logger.debug("login incorrect, sleeping a bit")
+                time.sleep(30)
+            if ridx == 1:
+                self.wait_write("", wait=None)
+                time.sleep(30)
+            elif ridx == 2:  # PA-HDF login
+                self.wait_write("", wait=None)
+                time.sleep(30)
+            elif ridx == 3:  # login
+                self.logger.debug("sending username 'admin'")
+                self.wait_write("admin", wait=None)
+            elif ridx == 4:
+                self.logger.debug("sending password 'admin'")
+                self.wait_write("admin", wait=None)
+            elif ridx == 5:
+                self.logger.debug("sending 'old' password 'admin'")
+                self.wait_write("admin", wait=None)
+            elif ridx == 6:
+                self.logger.debug(f"sending 'new' password '{self.password}'")
+                self.wait_write(self.password, wait=None)
+            elif ridx == 7:
+                self.logger.debug(f"confirming 'new' password '{self.password}'")
+                self.wait_write(self.password, wait=None)
+                # ecloud fix: PAN-OS 12 shows no prompt after "Password changed" until a keystroke
+                # arrives; nudge the console so the admin@...> prompt is emitted and matched next spin.
+                time.sleep(3)
+                self.wait_write("", wait=None)
+                time.sleep(2)
+                self.wait_write("", wait=None)
+            elif ridx == 8:
+                # run main config!
+                self.bootstrap_config()
+                self.startup_config()
+                # Apply saved device-state if it exists
+                self.apply_saved_configuration()
+                # close telnet connection
+                self.tn.close()
+                # startup time?
+                startup_time = datetime.datetime.now() - self.start_time
+                self.logger.info("Startup complete in: %s" % startup_time)
+                # mark as running
+                self.running = True
+                return
+
+        # no match, if we saw some output from the router it's probably
+        # booting, so let's give it some more time
+        if res != b"":
+            self.logger.trace("OUTPUT: %s" % res.decode())
+            # reset spins if we saw some output
+            self.spins = 0
+
+        self.spins += 1
+
+        return
+
+    def bootstrap_config(self):
+        """Do the actual bootstrap config"""
+        self.logger.info("applying bootstrap configuration")
+        self.wait_write("", None)
+
+        # disable paging/fancy terminal stuff
+        self.wait_write("set cli pager off", ">")
+        self.wait_write("set cli scripting-mode on", ">")
+
+        # wait for auto commit to finish, seems like pan wants a kick here w/ a return for
+        # whatever reason
+        self.wait_write("", None)
+        while True:
+            # ecloud fix: send the kick FIRST so the (blocking) console read always has output to return
+            self.wait_write("show jobs processed", wait=None)
+            (ridx, match, res) = self.tn.expect([b"FIN", b"PEND"], 15)
+            if match:
+                if ridx == 0:  # login
+                    self.logger.debug("auto commit complete, begin configuration")
+                    break
+                elif ridx == 1:
+                    self.logger.debug("auto commit still pending, sleeping...")
+                    time.sleep(10)
+            else:
+                time.sleep(10)
+
+        self.logger.debug("applying mgmt addressing and credentials...")
+        self.wait_write("configure", wait=None)
+
+        # configure mgmt interface
+        self.wait_write(
+            "set deviceconfig system ip-address 10.0.0.15 netmask 255.255.255.0 default-gateway 10.0.0.2",
+            "#",
+        )
+
+        # configure mgmt user
+        self.wait_write(f"set mgt-config users {self.username} password")
+        self.wait_write(self.password, "Enter password   :")
+        self.wait_write(self.password, "Confirm password :")
+        self.wait_write(f"set mgt-config users {self.username} permissions role-based superuser yes")
+
+        self.logger.debug("committing changes...")
+        self.wait_write("commit", "#")
+
+        time.sleep(60)
+        self.wait_write("exit", "#")
+
+    STARTUP_CONFIG_XML = "/config/startup-config.xml"
+
+    def _api_op(self, api_key, cmd, timeout=120):
+        return requests.post(f"https://127.0.0.1/api/?type=op&key={api_key}", data={"cmd": cmd}, verify=False, timeout=timeout).text
+
+    def _api_wait_job(self, api_key, job, what, tries=60):
+        for attempt in range(tries):
+            time.sleep(10)
+            root = ET.fromstring(self.check_config_commit_status(api_key, job))
+            st = root.find(".//job/status"); res = root.find(".//job/result"); det = root.find(".//job/details")
+            if st is not None and st.text == "FIN":
+                r = res.text if res is not None else "?"
+                self.logger.info("%s job %s finished: %s %s", what, job, r,
+                                 ("".join(det.itertext())[:300] if det is not None else ""))
+                return r
+        self.logger.warning("%s job %s did not finish", what, job)
+        return None
+
+    def _enable_jumbo_and_reboot(self, api_key):
+        """PAN-OS validates interface MTUs against the ACTIVE jumbo-frame mode, and jumbo-frame
+        mode only takes effect after a reboot. A fresh PA-VM is jumbo=off, so a config with
+        9216 interfaces fails validation ("device is not in jumbo-frame mode but interface
+        ethernet1/1 mtu is greater than 1500") until the box has rebooted in jumbo mode.
+        Phase 1 of the XML bootstrap: set jumbo, commit, reboot, wait for the API to return."""
+        self.logger.info("Phase 1: enabling jumbo-frame mode (mtu 9216), committing, rebooting")
+        # The config element <deviceconfig><setting><jumbo-frame><mtu> only sets the SIZE. The MODE is an
+        # OPERATIONAL toggle: `set system setting jumbo-frame on` (returns "Device is now in Jumbo-Frame
+        # mode, please reboot device"). Verified: config-only + reboot (hard or graceful) left mode=off;
+        # the op command flipped it to on immediately (pending reboot). Do both, then reboot.
+        r = self._api_op(api_key, "<set><system><setting><jumbo-frame>on</jumbo-frame></setting></system></set>", timeout=60)
+        self.logger.info("op set jumbo-frame on: %s", re.sub(r"<[^>]+>", " ", r).strip()[:120])
+        requests.post(f"https://127.0.0.1/api/?type=config&action=set&key={api_key}",
+                      data={"xpath": "/config/devices/entry[@name='localhost.localdomain']/deviceconfig/setting/jumbo-frame",
+                            "element": "<mtu>9216</mtu>"}, verify=False, timeout=60)
+        job = self.panos_commit_configuration(api_key, description="ecloud jumbo-frame")
+        self._api_wait_job(api_key, job, "jumbo commit")
+        # The jumbo mode only becomes ACTIVE when the dataplane re-initialises on a GRACEFUL restart.
+        # A QEMU hard reset right after the commit leaves the config element persisted but the mode
+        # off (verified: config 9216, uptime 4 min, mode off). And <request><restart><system/> over the
+        # API is silently ignored WHILE the first-boot auto-commit is still running, but works once
+        # the box is settled (verified: went down 5 s after the call). So: wait for auto-commit to be
+        # clear, then graceful API restart; fall back to QEMU system_reset only if it does not go down.
+        self._wait_autocommit(api_key)
+        time.sleep(15)
+        self.logger.info("Phase 1: graceful restart via the API (post auto-commit)")
+        self._api_op(api_key, "<request><restart><system></system></restart></request>", timeout=30)
+        went_down = False
+        for attempt in range(24):
+            time.sleep(5)
+            try:
+                requests.get("https://127.0.0.1/api/?type=keygen&user=x&password=x", verify=False, timeout=5)
+            except Exception:
+                went_down = True
+                break
+        if not went_down:
+            self.logger.warning("API restart did not take the box down; falling back to QEMU system_reset")
+            try:
+                self.qm.write(b"system_reset\r\n")
+            except Exception as exc:
+                self.logger.warning("qemu monitor system_reset failed: %s", exc)
+            for attempt in range(60):
+                time.sleep(5)
+                try:
+                    requests.get("https://127.0.0.1/api/?type=keygen&user=x&password=x", verify=False, timeout=5)
+                except Exception:
+                    went_down = True
+                    break
+        self.logger.info("box down=%s; waiting for the API to come back (PAN-OS 12: several minutes)", went_down)
+        time.sleep(120)
+        for attempt in range(90):
+            try:
+                k = self.panos_api_login()
+                if k:
+                    r = self._api_op(k, "<show><system><info></info></system></show>", timeout=30)
+                    if "<hostname>" in r:
+                        up = re.search(r"<uptime>([^<]+)", r)
+                        self.logger.info("PAN back after jumbo reboot (uptime %s)", up.group(1) if up else "?")
+                        # after a reboot PAN-OS runs its own auto-commit and REJECTS user commits
+                        # ("Commit job was not queued since auto-commit not yet finished") until it is
+                        # done. Wait for the AutoCom job to reach FIN before returning.
+                        self._wait_autocommit(k)
+                        return k
+            except Exception:
+                pass
+            time.sleep(10)
+        raise RuntimeError("PAN did not come back after the jumbo-frame reboot")
+
+    def _wait_autocommit(self, api_key, tries=60):
+        for attempt in range(tries):
+            try:
+                j = self._api_op(api_key, "<show><jobs><all></all></jobs></show>", timeout=30)
+                # any AutoCom job that is not FIN => still running
+                jobs = re.findall(r"<job>(.*?)</job>", j, re.S)
+                ac = [x for x in jobs if "<type>AutoCom</type>" in x]
+                if ac and all("<status>FIN</status>" in x for x in ac):
+                    self.logger.info("post-reboot auto-commit finished")
+                    return
+                if not ac and attempt > 3:
+                    self.logger.info("no AutoCom job listed; proceeding")
+                    return
+            except Exception:
+                pass
+            time.sleep(10)
+        self.logger.warning("auto-commit wait timed out; proceeding anyway")
+
+    def startup_config_xml(self):
+        """ecloud: load a full <config> XML tree via the API (import -> load -> commit -> poll).
+        If the config uses jumbo frames, do the jumbo-enable + reboot phase first."""
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        self.logger.info(f"Applying XML startup config {self.STARTUP_CONFIG_XML} via the API")
+        api_key = self.panos_api_login()
+        with open(self.STARTUP_CONFIG_XML, "rb") as f:
+            blob = f.read()
+        if b"<jumbo-frame>" in blob:
+            api_key = self._enable_jumbo_and_reboot(api_key)
+        fname = os.path.basename(self.STARTUP_CONFIG_XML)
+        # 1) import as a configuration file
+        url = f"https://127.0.0.1/api/?type=import&category=configuration&key={api_key}"
+        with open(self.STARTUP_CONFIG_XML, "rb") as f:
+            resp = requests.post(url, files={"file": (fname, f, "application/xml")}, verify=False, timeout=120)
+        self.logger.info("import configuration: %s", ET.fromstring(resp.content).get("status"))
+        # 2) merge it into the candidate section by section (PARTIAL load, mode merge). A whole-tree
+        #    `load config from` replaces the candidate and hides validation reasons; partial merge onto
+        #    the box's baseline validated OK and gave real error text during debugging.
+        dev = "/config/devices/entry[@name='localhost.localdomain']"
+        for from_x, to_x in [(f"{dev}/deviceconfig", f"{dev}/deviceconfig"), (f"{dev}/network", f"{dev}/network"),
+                             (f"{dev}/vsys", f"{dev}/vsys"), ("/config/shared", "/config/shared")]:
+            cmd = (f"<load><config><partial><mode>merge</mode><from-xpath>{from_x}</from-xpath>"
+                   f"<to-xpath>{to_x}</to-xpath><from>{fname}</from></partial></config></load>")
+            resp = requests.post(f"https://127.0.0.1/api/?type=op&key={api_key}", data={"cmd": cmd}, verify=False, timeout=120)
+            self.logger.info("partial load %s: %s", to_x.split("/")[-1], ET.fromstring(resp.content).get("status"))
+        # validate first so a bad config is reported with its reason, not a bare FAIL
+        v = self._api_op(api_key, "<validate><full></full></validate>", timeout=120)
+        vj = re.search(r"<job>(\d+)</job>", v)
+        if vj:
+            vr = self._api_wait_job(api_key, vj.group(1), "validate")
+            if vr != "OK":
+                self.logger.error("startup-config did NOT validate; skipping commit")
+                return
+        # 3) commit + poll (reuse the launcher's helpers)
+        job = self.panos_commit_configuration(api_key, description="ecloud startup-config.xml")
+        self.logger.info("commit job %s submitted", job)
+        for attempt in range(60):
+            time.sleep(10)
+            root = ET.fromstring(self.check_config_commit_status(api_key, job))
+            st = root.find(".//job/status"); pr = root.find(".//job/progress"); res = root.find(".//job/result")
+            st = st.text if st is not None else None
+            if st == "FIN":
+                self.logger.info("XML startup config commit finished: result=%s", res.text if res is not None else "?")
+                det = root.find(".//job/details")
+                if det is not None and det.text:
+                    self.logger.info("commit details: %s", "".join(det.itertext())[:400])
+                return
+            self.logger.info("commit status %s progress %s", st, pr.text if pr is not None else "?")
+        self.logger.warning("XML startup config commit did not finish in time")
+
+    def startup_config(self):
+        """Load additional config provided by user."""
+
+        # ecloud: containerlab always delivers the startup-config as /config/startup-config.cfg.
+        # If that file is an XML <config> tree, load it via the API path; else fall through to
+        # the stock set-line replay.
+        if os.path.exists(STARTUP_CONFIG_FILE):
+            with open(STARTUP_CONFIG_FILE, "rb") as f:
+                head = f.read(200)
+            if b"<config" in head:
+                import shutil
+                shutil.copy(STARTUP_CONFIG_FILE, self.STARTUP_CONFIG_XML)
+                try:
+                    self.startup_config_xml()
+                except Exception as exc:
+                    self.logger.error("XML startup config failed: %s", exc)
+                return
+
+        if not os.path.exists(STARTUP_CONFIG_FILE):
+            self.logger.trace(f"Startup config file {STARTUP_CONFIG_FILE} is not found")
+            return
+
+        self.logger.trace(f"Startup config file {STARTUP_CONFIG_FILE} exists")
+        with open(STARTUP_CONFIG_FILE) as file:
+            config_lines = file.readlines()
+            config_lines = [line.rstrip() for line in config_lines]
+            self.logger.trace(f"Parsed startup config file {STARTUP_CONFIG_FILE}")
+
+        self.logger.info(f"Writing lines from {STARTUP_CONFIG_FILE}")
+
+        self.wait_write("configure", wait=None)
+
+        for line in config_lines:
+            self.wait_write(line, "#")
+
+        self.logger.debug("committing user config...")
+        self.wait_write("commit", "#")
+        self.wait_write("exit", "#")
+
+    def panos_api_login(self):
+        """Login to the PanOS API to get an API token to save/load configs"""
+        resp = requests.post(
+            f"https://127.0.0.1/api/?type=keygen&user={self.username}&password={self.password}",
+            verify=False,
+        )
+        tree = ET.fromstring(resp.content)
+        key_elem = tree.find('.//result/key')
+        key_value = key_elem.text if key_elem is not None else None
+        assert key_value is not None, "API key not found in response"
+        return key_value
+    
+    def panos_import_configuration(self, api_key: str):
+        """Step 1 of 3 to use the saved device-state tgz. Load the file into the filesystem of the PanOS VM."""
+        url = f"https://127.0.0.1/api/?type=import&category=device-state&key={api_key}"
+        with open(SAVED_CONFIG_FILE, "rb") as f:
+            files = {
+                "file": (os.path.basename(SAVED_CONFIG_FILE), f, "application/gzip"),
+            }
+            resp = requests.post(url, files=files, verify=False, timeout=60)
+        root = ET.fromstring(resp.content)
+        status = root.get("status")
+        if status != "success":
+            self.logger.error(f"Import configuration API call failed with status: {status}")
+            self.logger.debug(f"Response content: {resp.content.decode()}")
+        return True
+    
+    def panos_load_configuration(self, api_key: str):
+        """Step 2 of 3 to use the saved device-state tgz. Load the imported configuration into the running config."""
+        cmd = "<load><device-state></device-state></load>"
+        url = f"https://127.0.0.1/api/?type=op&key={api_key}"
+        resp = requests.post(url, data={"cmd": cmd}, timeout=60, verify=False)
+        root = ET.fromstring(resp.content)
+        status = root.get("status")
+        if status != "success":
+            self.logger.error(f"Load configuration API call failed with status: {status}")
+            self.logger.debug(f"Response content: {resp.content.decode()}")
+        return True
+    
+    def panos_commit_configuration(self, api_key: str, description: str = "vrnetlab saved config"):
+        """Step 3 of 3 to use the saved device-state tgz. Commit the loaded configuration."""
+        url = f"https://127.0.0.1/api/?type=commit&key={api_key}"
+        cmd = f"<commit><description>{description}</description></commit>"
+        resp = requests.post(url, data={"cmd": cmd}, verify=False, timeout=60)
+        root = ET.fromstring(resp.content)
+        status = root.get("status")
+        if status != "success":
+            self.logger.error(f"Commit configuration API call failed with status: {status}")
+            self.logger.debug(f"Response content: {resp.content.decode()}")
+        commit_job_id = resp.text.split('jobid')[1].split('<')[0].split()[0]
+        self.logger.info(f"Configuration commit started with job ID: {commit_job_id}")
+        return commit_job_id
+    
+    def check_config_commit_status(self, api_key: str, job_id: str):
+        """Check the status of a configuration commit job."""
+        url = f"https://127.0.0.1/api/?type=op&key={api_key}"
+        cmd = f"<show><jobs><id>{job_id}</id></jobs></show>"
+        resp = requests.post(url, data={"cmd": cmd}, verify=False, timeout=60)
+        return resp.text
+    
+    def apply_saved_configuration(self):
+        """Logic and API calls to apply saved device-state tgz if it exists."""
+        if not os.path.exists(SAVED_CONFIG_FILE):
+            self.logger.trace(f"Saved config file {SAVED_CONFIG_FILE} is not found")
+            return
+        # Palo generates a self-signed cert for API, no need to flood stderr with junk
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        
+        self.logger.trace(f"Saved device state file {SAVED_CONFIG_FILE} exists")
+
+        self.logger.info(f"Applying saved device state from {SAVED_CONFIG_FILE}")
+
+        api_key = self.panos_api_login()
+        self.logger.info("Logged into PanOS API")
+
+        self.panos_import_configuration(api_key)
+        self.logger.info("Imported device state into PanOS VM")
+
+        self.panos_load_configuration(api_key)
+        self.logger.info("Loaded device state into running config")
+
+        commit_job_id = self.panos_commit_configuration(api_key)
+        self.logger.info("Committed configuration changes")
+        time.sleep(10)
+
+        # Check commit status since it can take a hot minute
+        for attempt in range(30):
+            status_response = self.check_config_commit_status(api_key, commit_job_id)
+            root = ET.fromstring(status_response)
+            status_elem = root.find('.//job/status')
+            progress_elem = root.find('.//job/progress')
+            job_status = status_elem.text if status_elem is not None else None
+            job_progress = progress_elem.text if progress_elem is not None else None
+            if job_status == "FIN":
+                self.logger.info("Configuration commit completed successfully")
+                break
+            elif job_status == "PEND":
+                self.logger.info(f"Configuration commit still pending in queue, waiting...")
+                time.sleep(10)
+            elif job_status == "ACT":
+                self.logger.info(f"Configuration commit in progress: {job_progress}% complete")
+                time.sleep(10)
+            else:
+                self.logger.error(f"Unknown job status: {job_status}")
+                break    
+
+class PAN(vrnetlab.VR):
+    def __init__(self, hostname, username, password, conn_mode):
+        super(PAN, self).__init__(username, password)
+        self.vms = [PAN_vm(hostname, username, password, conn_mode)]
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="")
+    parser.add_argument(
+        "--trace", action="store_true", help="enable trace level logging"
+    )
+    parser.add_argument("--hostname", default="vr-pan", help="Router hostname")
+    parser.add_argument("--username", default="vrnetlab", help="Username")
+    parser.add_argument("--password", default="VR-netlab9", help="Password")
+    parser.add_argument(
+        "--connection-mode",
+        default="vrxcon",
+        help="Connection mode to use in the datapath",
+    )
+    args = parser.parse_args()
+
+    LOG_FORMAT = "%(asctime)s: %(module)-10s %(levelname)-8s %(message)s"
+    logging.basicConfig(format=LOG_FORMAT)
+    logger = logging.getLogger()
+
+    logger.setLevel(logging.DEBUG)
+    if args.trace:
+        logger.setLevel(1)
+
+    logger.debug(f"Environment variables: {os.environ}")
+    vrnetlab.boot_delay()
+
+    vr = PAN(args.hostname, args.username, args.password, args.connection_mode)
+    vr.start()

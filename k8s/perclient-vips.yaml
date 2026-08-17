@@ -1,0 +1,44 @@
+# Per-client anycast VIPs for the GoBGP steering demo. Applied to BOTH DCs (each DC runs dc-demo,
+# each advertises .202.3 and .202.4; the GoBGP brain steers .202.3->DC1 (client-1, latency) and
+# .202.4->DC2 (ext-client-2, static)). Labels match this clab build's Cilium selectors:
+#   pool serviceSelector draws only client-ep services from this pool;
+#   ecloud/dc=anycast makes the CiliumBGPAdvertisement (ecloud/dc Exists) advertise them from both DCs.
+apiVersion: cilium.io/v2alpha1
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: perclient-vips
+spec:
+  blocks:
+  - start: 192.168.202.3   # client-1     -> steered to DC1
+    stop: 192.168.202.4    # ext-client-2 -> steered to DC2
+  serviceSelector:
+    matchExpressions:
+    - {key: client-ep, operator: Exists}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dc-demo-cli1
+  namespace: default
+  labels: {app: dc-demo, client-ep: cli1, ecloud/dc: anycast}
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.202.3
+  externalTrafficPolicy: Cluster
+  selector: {app: dc-demo}
+  ports:
+    - {name: http, port: 80, targetPort: 8080}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dc-demo-cli2
+  namespace: default
+  labels: {app: dc-demo, client-ep: cli2, ecloud/dc: anycast}
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.202.4
+  externalTrafficPolicy: Cluster
+  selector: {app: dc-demo}
+  ports:
+    - {name: http, port: 80, targetPort: 8080}

@@ -1,0 +1,46 @@
+{
+  "role": "standby",
+  "base_local_pref": 450,
+  "override": "auto",
+  "health_interval": 2,
+  "health_timeout": 1,
+  "dc_vips": {
+    "DC1": "192.168.202.1",
+    "DC2": "192.168.202.2"
+  },
+  "contexts": {
+    "DC1": "dc1",
+    "DC2": "dc2"
+  },
+  "managed": [
+    {
+      "name": "global",
+      "prefix": "192.168.202.0/32",
+      "policy": {
+        "mode": "failover",
+        "primary": "DC1"
+      },
+      "override": "auto"
+    },
+    {
+      "name": "client-1",
+      "prefix": "192.168.202.3/32",
+      "policy": {
+        "mode": "latency",
+        "primary": "DC1",
+        "latency_leave_ms": 1.5,
+        "latency_return_ms": 1.0
+      },
+      "override": "auto"
+    },
+    {
+      "name": "ext-client-2",
+      "prefix": "192.168.202.4/32",
+      "policy": {
+        "mode": "static",
+        "dc": "DC2"
+      },
+      "override": "auto"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+nv set bridge domain
+nv set interface eth0 ip address 172.29.129.191/24
+nv set interface eth0 ip gateway 172.29.129.254
+nv set interface eth0 ip vrf mgmt
+nv set interface eth0 type eth
+nv set interface swp1-6,swp1.100,200,swp2.100,200,swp3.100,200,swp4.100,200,swp5.100,200,swp6.100,200 link mtu 9216
+nv set interface swp1-8,15-16 type swp
+nv set interface swp1.100,200 base-interface swp1
+nv set interface swp1.100,200,swp2.100,200,swp3.100,200,swp4.100,200,swp5.100,200,swp6.100,200 type sub
+nv set interface swp1.100,swp2.100,swp3.100,swp4.100,swp5.100,swp6.100 vlan 100
+nv set interface swp1.100,swp2.100,swp3.100,swp4.100,swp5.100,swp6.100,swp7-8 ip vrf tenant-k8s
+nv set interface swp1.200,swp2.200,swp3.200,swp4.200,swp5.200,swp6.200 ip vrf tenant-svc
+nv set interface swp1.200,swp2.200,swp3.200,swp4.200,swp5.200,swp6.200 vlan 200
+nv set interface swp2.100,200 base-interface swp2
+nv set interface swp3.100 ip address 10.201.0.0/31
+nv set interface swp3.100,200 base-interface swp3
+nv set interface swp3.200 ip address 10.201.1.0/31
+nv set interface swp4.100 ip address 10.201.0.4/31
+nv set interface swp4.100,200 base-interface swp4
+nv set interface swp4.200 ip address 10.201.1.4/31
+nv set interface swp5.100,200 base-interface swp5
+nv set interface swp6.100,200 base-interface swp6
+nv set interface swp7 ip address 10.201.20.1/30
+nv set interface swp8 ip address 10.201.20.9/30
+nv set interface swp15-16 link
+nv set router bgp autonomous-system 65400
+nv set router bgp enable on
+nv set router bgp router-id 10.201.255.1
+nv set router policy prefix-list ANYCAST-VIP rule 10 action permit
+nv set router policy prefix-list ANYCAST-VIP rule 10 match 192.168.202.0/32
+nv set router policy prefix-list PL-ANYCAST-VIP rule 10 action permit
+nv set router policy prefix-list PL-ANYCAST-VIP rule 10 match 192.168.202.0/32
+nv set router policy prefix-list PL-ANYCAST-VIP rule 20 action permit
+nv set router policy prefix-list PL-ANYCAST-VIP rule 20 match 192.168.202.3/32
+nv set router policy prefix-list PL-ANYCAST-VIP rule 30 action permit
+nv set router policy prefix-list PL-ANYCAST-VIP rule 30 match 192.168.202.4/32
+nv set router policy route-map ANYCAST-STEER rule 10 action permit
+nv set router policy route-map ANYCAST-STEER rule 10 match ip-prefix-list ANYCAST-VIP
+nv set router policy route-map ANYCAST-STEER rule 10 match type ipv4
+nv set router policy route-map ANYCAST-STEER rule 10 set local-preference 200
+nv set router policy route-map ANYCAST-STEER rule 20 action permit
+nv set router policy route-map PREFER-FWPRI rule 10 action permit
+nv set router policy route-map PREFER-FWPRI rule 10 set local-preference 200
+nv set router policy route-map RM-DENY-ANYCAST-OUT rule 10 action deny
+nv set router policy route-map RM-DENY-ANYCAST-OUT rule 10 match ip-prefix-list PL-ANYCAST-VIP
+nv set router policy route-map RM-DENY-ANYCAST-OUT rule 10 match type ipv4
+nv set router policy route-map RM-DENY-ANYCAST-OUT rule 20 action permit
+nv set service ntp mgmt server 0.cumulusnetworks.pool.ntp.org
+nv set service ntp mgmt server 1.cumulusnetworks.pool.ntp.org
+nv set service ntp mgmt server 2.cumulusnetworks.pool.ntp.org
+nv set service ntp mgmt server 3.cumulusnetworks.pool.ntp.org
+nv set system aaa class nvapply action allow
+nv set system aaa class nvapply command-path / permission all
+nv set system aaa class nvshow action allow
+nv set system aaa class nvshow command-path / permission ro
+nv set system aaa class sudo action allow
+nv set system aaa class sudo command-path / permission all
+nv set system aaa role nvue-admin class nvapply
+nv set system aaa role nvue-monitor class nvshow
+nv set system aaa role system-admin class nvapply
+nv set system aaa role system-admin class sudo
+nv set system aaa user cumulus full-name cumulus,,,
+nv set system aaa user cumulus hashed-password '*'
+nv set system aaa user cumulus role system-admin
+nv set system api state enabled
+nv set system config auto-save state enabled
+nv set system control-plane acl acl-default-dos inbound
+nv set system control-plane acl acl-default-whitelist inbound
+nv set system hostname br-agg-sw-1
+nv set system reboot mode cold
+nv set system ssh-server state enabled
+nv set system wjh channel forwarding trigger l2
+nv set system wjh channel forwarding trigger l3
+nv set system wjh channel forwarding trigger tunnel
+nv set system wjh enable on
+nv set vrf tenant-k8s router bgp address-family ipv4-unicast enable on
+nv set vrf tenant-k8s router bgp address-family ipv4-unicast multipaths ebgp 4
+nv set vrf tenant-k8s router bgp address-family ipv4-unicast network 10.201.20.0/30
+nv set vrf tenant-k8s router bgp address-family ipv4-unicast network 10.201.20.8/30
+nv set vrf tenant-k8s router bgp autonomous-system 65400
+nv set vrf tenant-k8s router bgp enable on
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.1 address-family ipv4-unicast policy inbound route-map PREFER-FWPRI
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.1 remote-as 65300
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.1 timers hold 9
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.1 timers keepalive 3
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.1 type numbered
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.5 remote-as 65300
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.5 timers hold 9
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.5 timers keepalive 3
+nv set vrf tenant-k8s router bgp neighbor 10.201.0.5 type numbered
+nv set vrf tenant-k8s router bgp neighbor 10.201.20.2 address-family ipv4-unicast enable on
+nv set vrf tenant-k8s router bgp neighbor 10.201.20.2 remote-as 65400
+nv set vrf tenant-k8s router bgp neighbor 10.201.20.2 type numbered
+nv set vrf tenant-k8s router bgp neighbor 10.201.20.10 address-family ipv4-unicast enable on
+nv set vrf tenant-k8s router bgp neighbor 10.201.20.10 remote-as 65400
+nv set vrf tenant-k8s router bgp neighbor 10.201.20.10 type numbered
+nv set vrf tenant-k8s router bgp neighbor swp1.100 address-family ipv4-unicast policy inbound
+nv set vrf tenant-k8s router bgp neighbor swp1.100 address-family ipv4-unicast policy outbound route-map RM-DENY-ANYCAST-OUT
+nv set vrf tenant-k8s router bgp neighbor swp1.100 remote-as external
+nv set vrf tenant-k8s router bgp neighbor swp1.100 timers hold 3
+nv set vrf tenant-k8s router bgp neighbor swp1.100 timers keepalive 1
+nv set vrf tenant-k8s router bgp neighbor swp1.100 type unnumbered
+nv set vrf tenant-k8s router bgp neighbor swp2.100 address-family ipv4-unicast policy inbound
+nv set vrf tenant-k8s router bgp neighbor swp2.100 address-family ipv4-unicast policy outbound route-map RM-DENY-ANYCAST-OUT
+nv set vrf tenant-k8s router bgp neighbor swp2.100 remote-as external
+nv set vrf tenant-k8s router bgp neighbor swp2.100 timers hold 3
+nv set vrf tenant-k8s router bgp neighbor swp2.100 timers keepalive 1
+nv set vrf tenant-k8s router bgp neighbor swp2.100 type unnumbered
+nv set vrf tenant-k8s router bgp neighbor swp5.100 address-family ipv4-unicast policy outbound route-map RM-DENY-ANYCAST-OUT
+nv set vrf tenant-k8s router bgp neighbor swp5.100 remote-as external
+nv set vrf tenant-k8s router bgp neighbor swp5.100 timers hold 3
+nv set vrf tenant-k8s router bgp neighbor swp5.100 timers keepalive 1
+nv set vrf tenant-k8s router bgp neighbor swp5.100 type unnumbered
+nv set vrf tenant-k8s router bgp neighbor swp6.100 address-family ipv4-unicast policy outbound route-map RM-DENY-ANYCAST-OUT
+nv set vrf tenant-k8s router bgp neighbor swp6.100 remote-as external
+nv set vrf tenant-k8s router bgp neighbor swp6.100 timers hold 3
+nv set vrf tenant-k8s router bgp neighbor swp6.100 timers keepalive 1
+nv set vrf tenant-k8s router bgp neighbor swp6.100 type unnumbered
+nv set vrf tenant-k8s router bgp path-selection multipath
+nv set vrf tenant-k8s router bgp router-id 10.201.255.1
+nv set vrf tenant-svc router bgp address-family ipv4-unicast enable on
+nv set vrf tenant-svc router bgp address-family ipv4-unicast multipaths ebgp 4
+nv set vrf tenant-svc router bgp autonomous-system 65400
+nv set vrf tenant-svc router bgp enable on
+nv set vrf tenant-svc router bgp neighbor 10.201.1.1 address-family ipv4-unicast policy inbound route-map PREFER-FWPRI
+nv set vrf tenant-svc router bgp neighbor 10.201.1.1 remote-as 65300
+nv set vrf tenant-svc router bgp neighbor 10.201.1.1 timers hold 9
+nv set vrf tenant-svc router bgp neighbor 10.201.1.1 timers keepalive 3
+nv set vrf tenant-svc router bgp neighbor 10.201.1.1 type numbered
+nv set vrf tenant-svc router bgp neighbor 10.201.1.5 remote-as 65300
+nv set vrf tenant-svc router bgp neighbor 10.201.1.5 timers hold 9
+nv set vrf tenant-svc router bgp neighbor 10.201.1.5 timers keepalive 3
+nv set vrf tenant-svc router bgp neighbor 10.201.1.5 type numbered
+nv set vrf tenant-svc router bgp neighbor swp1.200 address-family ipv4-unicast
+nv set vrf tenant-svc router bgp neighbor swp1.200 remote-as external
+nv set vrf tenant-svc router bgp neighbor swp1.200 timers hold 3
+nv set vrf tenant-svc router bgp neighbor swp1.200 timers keepalive 1
+nv set vrf tenant-svc router bgp neighbor swp1.200 type unnumbered
+nv set vrf tenant-svc router bgp neighbor swp2.200 address-family ipv4-unicast
+nv set vrf tenant-svc router bgp neighbor swp2.200 remote-as external
+nv set vrf tenant-svc router bgp neighbor swp2.200 timers hold 3
+nv set vrf tenant-svc router bgp neighbor swp2.200 timers keepalive 1
+nv set vrf tenant-svc router bgp neighbor swp2.200 type unnumbered
+nv set vrf tenant-svc router bgp neighbor swp5.200 address-family ipv4-unicast
+nv set vrf tenant-svc router bgp neighbor swp5.200 remote-as external
+nv set vrf tenant-svc router bgp neighbor swp5.200 timers hold 3
+nv set vrf tenant-svc router bgp neighbor swp5.200 timers keepalive 1
+nv set vrf tenant-svc router bgp neighbor swp5.200 type unnumbered
+nv set vrf tenant-svc router bgp neighbor swp6.200 address-family ipv4-unicast
+nv set vrf tenant-svc router bgp neighbor swp6.200 remote-as external
+nv set vrf tenant-svc router bgp neighbor swp6.200 timers hold 3
+nv set vrf tenant-svc router bgp neighbor swp6.200 timers keepalive 1
+nv set vrf tenant-svc router bgp neighbor swp6.200 type unnumbered
+nv set vrf tenant-svc router bgp router-id 10.201.255.1

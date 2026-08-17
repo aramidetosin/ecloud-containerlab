@@ -1,0 +1,14 @@
+10.167.10.11 k8s-master-1.ecloud.lab k8s-master-1
+10.167.10.12 k8s-master-2.ecloud.lab k8s-master-2
+10.167.10.13 k8s-master-3.ecloud.lab k8s-master-3
+10.167.20.11 k8s-woker-1.ecloud.lab k8s-woker-1
+10.167.20.12 k8s-woker-2.ecloud.lab k8s-woker-2
+10.167.20.13 k8s-woker-3.ecloud.lab k8s-woker-3
+10.167.30.10 service-node-dns-ntp.ecloud.lab service-node-dns-ntp
+10.168.10.11 dc2-k8s-master-1.ecloud.lab dc2-k8s-master-1
+10.168.10.21 dc2-k8s-worker-1.ecloud.lab dc2-k8s-worker-1
+10.168.10.22 dc2-k8s-worker-2.ecloud.lab dc2-k8s-worker-2
+10.168.10.23 dc2-k8s-worker-3.ecloud.lab dc2-k8s-worker-3
+10.168.30.10 dc2-svc-ntp-dns.ecloud.lab dc2-svc-ntp-dns
+10.201.20.2 gobgp-1.ecloud.lab gobgp-1
+10.201.20.10 gobgp-2.ecloud.lab gobgp-2

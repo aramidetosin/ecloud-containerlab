@@ -1,0 +1,17 @@
+# ecloud k8s-host: multitool base + baked k3s + airgap images + Cilium, with a cgroup-evacuating
+# PID-1 entrypoint. Built once, used by all 10 k8s node containers (they share the read-only layers).
+FROM ghcr.io/srl-labs/network-multitool
+# k3s auto-imports any *.tar under agent/images into the k8s.io containerd namespace on startup (airgap)
+RUN mkdir -p /var/lib/rancher/k3s/agent/images
+COPY k3s-airgap-images-amd64.tar /var/lib/rancher/k3s/agent/images/
+COPY cilium-images.tar            /var/lib/rancher/k3s/agent/images/
+COPY app-python.tar               /var/lib/rancher/k3s/agent/images/
+COPY k3s     /usr/local/bin/k3s
+COPY cilium  /usr/local/bin/cilium
+COPY k8s-entrypoint.sh /usr/local/bin/k8s-entrypoint.sh
+# cluster self-config assets (run by the init master): Cilium+BGP install + per-DC BGP + dc-demo app
+RUN mkdir -p /opt/ecloud
+COPY cluster-bootstrap.sh /opt/ecloud/cluster-bootstrap.sh
+COPY bgp-dc1.yaml bgp-dc2.yaml dc-demo-dc1.yaml dc-demo-dc2.yaml perclient-vips.yaml /opt/ecloud/
+RUN chmod +x /usr/local/bin/k3s /usr/local/bin/cilium /usr/local/bin/k8s-entrypoint.sh /opt/ecloud/cluster-bootstrap.sh
+ENTRYPOINT ["/usr/local/bin/k8s-entrypoint.sh"]

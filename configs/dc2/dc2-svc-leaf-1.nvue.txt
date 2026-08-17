@@ -1,0 +1,89 @@
+nv set bridge domain br_default vlan 230 vni 10230
+nv set evpn enable on
+nv set evpn multihoming enable on
+nv set evpn vni 10230 route-target both 65000:10230
+nv set evpn vni 50102 route-target both 65000:50102
+nv set interface bond1 bond member swp3
+nv set interface bond1 bridge domain br_default access 230
+nv set interface bond1 evpn multihoming segment enable on
+nv set interface bond1 evpn multihoming segment local-id 1
+nv set interface bond1 evpn multihoming segment mac-address 44:38:39:be:ef:1a
+nv set interface bond1 type bond
+nv set interface bond1,swp1-2,vlan230 link mtu 9216
+nv set interface eth0 ip address 172.29.129.17/24
+nv set interface eth0 ip gateway 172.29.129.254
+nv set interface eth0 ip vrf mgmt
+nv set interface eth0 type eth
+nv set interface lo ip address 10.2.0.13/32
+nv set interface lo type loopback
+nv set interface swp1-2 evpn multihoming uplink on
+nv set interface swp1-2,14-15 type swp
+nv set interface swp14-15 link state down
+nv set interface vlan230 ip address 10.168.30.2/24
+nv set interface vlan230 ip vrf tenant-svc
+nv set interface vlan230 ip vrr address 10.168.30.1/24
+nv set interface vlan230 ip vrr enable on
+nv set interface vlan230 ip vrr mac-address 00:00:5e:00:02:30
+nv set interface vlan230 ip vrr state up
+nv set interface vlan230 type svi
+nv set interface vlan230 vlan 230
+nv set nve vxlan arp-nd-suppress on
+nv set nve vxlan enable on
+nv set nve vxlan source address 10.2.0.13
+nv set router bgp autonomous-system 65212
+nv set router bgp enable on
+nv set router bgp router-id 10.2.0.13
+nv set router vrr enable on
+nv set service ntp mgmt server 0.cumulusnetworks.pool.ntp.org
+nv set service ntp mgmt server 1.cumulusnetworks.pool.ntp.org
+nv set service ntp mgmt server 2.cumulusnetworks.pool.ntp.org
+nv set service ntp mgmt server 3.cumulusnetworks.pool.ntp.org
+nv set system aaa class nvapply action allow
+nv set system aaa class nvapply command-path / permission all
+nv set system aaa class nvshow action allow
+nv set system aaa class nvshow command-path / permission ro
+nv set system aaa class sudo action allow
+nv set system aaa class sudo command-path / permission all
+nv set system aaa role nvue-admin class nvapply
+nv set system aaa role nvue-monitor class nvshow
+nv set system aaa role system-admin class nvapply
+nv set system aaa role system-admin class sudo
+nv set system aaa user cumulus full-name cumulus,,,
+nv set system aaa user cumulus hashed-password REDACTED
+nv set system aaa user cumulus role system-admin
+nv set system api state enabled
+nv set system config auto-save state enabled
+nv set system control-plane acl acl-default-dos inbound
+nv set system control-plane acl acl-default-whitelist inbound
+nv set system hostname dc2-svc-leaf-1
+nv set system reboot mode cold
+nv set system ssh-server state enabled
+nv set system wjh channel forwarding trigger l2
+nv set system wjh channel forwarding trigger l3
+nv set system wjh channel forwarding trigger tunnel
+nv set system wjh enable on
+nv set vrf default router bgp address-family ipv4-unicast enable on
+nv set vrf default router bgp address-family ipv4-unicast redistribute connected enable on
+nv set vrf default router bgp address-family l2vpn-evpn enable on
+nv set vrf default router bgp enable on
+nv set vrf default router bgp neighbor swp1 address-family ipv4-unicast aspath allow-my-asn enable on
+nv set vrf default router bgp neighbor swp1 address-family ipv4-unicast aspath allow-my-asn occurrences 1
+nv set vrf default router bgp neighbor swp1 address-family l2vpn-evpn aspath allow-my-asn enable on
+nv set vrf default router bgp neighbor swp1 address-family l2vpn-evpn aspath allow-my-asn occurrences 1
+nv set vrf default router bgp neighbor swp1 address-family l2vpn-evpn enable on
+nv set vrf default router bgp neighbor swp1 remote-as external
+nv set vrf default router bgp neighbor swp1 type unnumbered
+nv set vrf default router bgp neighbor swp2 address-family ipv4-unicast aspath allow-my-asn enable on
+nv set vrf default router bgp neighbor swp2 address-family ipv4-unicast aspath allow-my-asn occurrences 1
+nv set vrf default router bgp neighbor swp2 address-family l2vpn-evpn aspath allow-my-asn enable on
+nv set vrf default router bgp neighbor swp2 address-family l2vpn-evpn aspath allow-my-asn occurrences 1
+nv set vrf default router bgp neighbor swp2 address-family l2vpn-evpn enable on
+nv set vrf default router bgp neighbor swp2 remote-as external
+nv set vrf default router bgp neighbor swp2 type unnumbered
+nv set vrf tenant-svc evpn enable on
+nv set vrf tenant-svc evpn vlan 3102
+nv set vrf tenant-svc evpn vni 50102
+nv set vrf tenant-svc router bgp address-family ipv4-unicast enable on
+nv set vrf tenant-svc router bgp address-family ipv4-unicast redistribute connected enable on
+nv set vrf tenant-svc router bgp address-family ipv4-unicast route-export to-evpn enable on
+nv set vrf tenant-svc router bgp enable on
