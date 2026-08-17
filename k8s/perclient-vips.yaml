@@ -19,7 +19,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dc-demo-cli1
-  namespace: default
+  namespace: demo
   labels: {app: dc-demo, client-ep: cli1, ecloud/dc: anycast}
 spec:
   type: LoadBalancer
@@ -33,7 +33,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dc-demo-cli2
-  namespace: default
+  namespace: demo
   labels: {app: dc-demo, client-ep: cli2, ecloud/dc: anycast}
 spec:
   type: LoadBalancer

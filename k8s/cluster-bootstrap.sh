@@ -42,6 +42,20 @@ done
 # 4) apply the per-DC BGP config + the dc-demo app + the per-client steering VIPs (idempotent).
 # perclient-vips is DC-agnostic: both DCs advertise .202.3 and .202.4, the GoBGP brain steers each.
 [ -f "/opt/ecloud/bgp-$DC.yaml" ]        && { $K apply -f "/opt/ecloud/bgp-$DC.yaml" >/dev/null 2>&1;        log "applied bgp-$DC"; }
+# the rich dc-demo app lives in namespace demo with its code + docs in the dc-demo-app ConfigMap.
+# The ConfigMap MUST go through create/replace, never apply: docs.html (>256KB) overflows the
+# kubectl last-applied annotation (same rule as the original EVE runbook).
+if [ -f "/opt/ecloud/demo/app-$DC.py" ]; then
+  $K create namespace demo >/dev/null 2>&1
+  if $K -n demo get configmap dc-demo-app >/dev/null 2>&1; then
+    $K -n demo create configmap dc-demo-app --from-file=app.py="/opt/ecloud/demo/app-$DC.py" \
+      --from-file=docs.html=/opt/ecloud/demo/docs.html --dry-run=client -o yaml | $K -n demo replace -f - >/dev/null 2>&1
+  else
+    $K -n demo create configmap dc-demo-app --from-file=app.py="/opt/ecloud/demo/app-$DC.py" \
+      --from-file=docs.html=/opt/ecloud/demo/docs.html >/dev/null 2>&1
+  fi
+  log "dc-demo-app configmap in place"
+fi
 [ -f "/opt/ecloud/dc-demo-$DC.yaml" ]    && { $K apply -f "/opt/ecloud/dc-demo-$DC.yaml" >/dev/null 2>&1;    log "applied dc-demo-$DC"; }
 [ -f "/opt/ecloud/perclient-vips.yaml" ] && { $K apply -f "/opt/ecloud/perclient-vips.yaml" >/dev/null 2>&1; log "applied perclient-vips"; }
 log "cluster bootstrap complete"

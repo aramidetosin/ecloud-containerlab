@@ -13,5 +13,7 @@ COPY k8s-entrypoint.sh /usr/local/bin/k8s-entrypoint.sh
 RUN mkdir -p /opt/ecloud
 COPY cluster-bootstrap.sh /opt/ecloud/cluster-bootstrap.sh
 COPY bgp-dc1.yaml bgp-dc2.yaml dc-demo-dc1.yaml dc-demo-dc2.yaml perclient-vips.yaml /opt/ecloud/
+# the rich demo app: code + docs, turned into the dc-demo-app ConfigMap by cluster-bootstrap
+COPY demo/ /opt/ecloud/demo/
 RUN chmod +x /usr/local/bin/k3s /usr/local/bin/cilium /usr/local/bin/k8s-entrypoint.sh /opt/ecloud/cluster-bootstrap.sh
 ENTRYPOINT ["/usr/local/bin/k8s-entrypoint.sh"]
