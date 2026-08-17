@@ -259,5 +259,45 @@ NEW_SC = '''    STARTUP_CONFIG_XML = "/config/startup-config.xml"
 assert OLD_SC in t, "startup_config anchor not found"
 t = t.replace(OLD_SC, NEW_SC, 1)
 
+# Fix 5: bootstrap_spin deadlocks if a login-flow prompt is split across expect windows.
+# telnetlib's expect() DISCARDS unmatched data on timeout, so a prompt that arrives split across
+# two 1-second windows ("En" in one read, "ter old password : " in the next) can NEVER match.
+# PAN-OS then waits silently for input forever, and the trickle of kernel messages keeps resetting
+# self.spins, so the 300-spin restart never fires either. Verified live: BOTH A/A units deadlocked
+# at "Enter old password :" during a cold-deploy boot-storm (23+ min silent). Fix: track no-MATCH
+# progress separately and nudge the console with a bare newline every 20 stalled spins; the prompt
+# re-emits as a single burst and matches on the next spin. A stray newline is benign at every stage
+# of the login flow (empty input just re-prompts).
+OLD_SPIN = '''        # no match, if we saw some output from the router it's probably
+        # booting, so let's give it some more time
+        if res != b"":
+            self.logger.trace("OUTPUT: %s" % res.decode())
+            # reset spins if we saw some output
+            self.spins = 0
+
+        self.spins += 1'''
+NEW_SPIN = '''        # no match, if we saw some output from the router it's probably
+        # booting, so let's give it some more time
+        if res != b"":
+            self.logger.trace("OUTPUT: %s" % res.decode())
+            # reset spins if we saw some output
+            self.spins = 0
+
+        # ecloud fix: recover from a prompt split across expect windows (telnetlib discards
+        # unmatched data on timeout, so the pattern can never match once fragmented). Nudge the
+        # console after 20 spins without a pattern match; the prompt re-emits in one burst.
+        if match:
+            self._stall_spins = 0
+        else:
+            self._stall_spins = getattr(self, "_stall_spins", 0) + 1
+            if self._stall_spins >= 20:
+                self.logger.debug("no prompt match for %d spins; nudging the serial console", self._stall_spins)
+                self.wait_write("", wait=None)
+                self._stall_spins = 0
+
+        self.spins += 1'''
+assert OLD_SPIN in t, "bootstrap_spin no-match anchor not found"
+t = t.replace(OLD_SPIN, NEW_SPIN, 1)
+
 open(p, "w").write(t)
-print("patched:", p, "(PAN-OS 12: prompt nudge + liberal prompt + kick-first auto-commit + XML startup-config via API)")
+print("patched:", p, "(PAN-OS 12: prompt nudge + liberal prompt + kick-first auto-commit + XML startup-config via API + stall-nudge)")

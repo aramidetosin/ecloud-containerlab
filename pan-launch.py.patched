@@ -141,6 +141,18 @@ class PAN_vm(vrnetlab.VM):
             # reset spins if we saw some output
             self.spins = 0
 
+        # ecloud fix: recover from a prompt split across expect windows (telnetlib discards
+        # unmatched data on timeout, so the pattern can never match once fragmented). Nudge the
+        # console after 20 spins without a pattern match; the prompt re-emits in one burst.
+        if match:
+            self._stall_spins = 0
+        else:
+            self._stall_spins = getattr(self, "_stall_spins", 0) + 1
+            if self._stall_spins >= 20:
+                self.logger.debug("no prompt match for %d spins; nudging the serial console", self._stall_spins)
+                self.wait_write("", wait=None)
+                self._stall_spins = 0
+
         self.spins += 1
 
         return
