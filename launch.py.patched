@@ -208,7 +208,9 @@ class CumulusVX_vm(vrnetlab.VM):
                 self.logger.info("operator authorized_keys install rc=%s", kr.returncode)
             # ecloud: the containerlab VSCode extension SSHes as 'admin' by default; give the
             # switches the same lab convention as the hosts (admin/admin + the operator key).
-            mk = ("sudo useradd -m -s /bin/bash admin 2>/dev/null; echo admin:admin | sudo chpasswd; "
+            mk = ("sudo useradd -m -s /bin/bash admin 2>/dev/null; "
+                  # chpasswd is vetoed by Cumulus password-quality PAM; write the crypt hash directly
+                  "sudo usermod -p '$6$ecloudlab$Uf7ZjAwEVT13Doo.zoNI7OGx0zIUzy0SkiKeiiRIuKQxAnZk7TY39el3vMb0zcxQ4YblqLJscirCFqe3HkTU./' admin; "
                   "sudo usermod -aG sudo admin 2>/dev/null; "
                   "if [ -f ~/.ssh/authorized_keys ]; then sudo mkdir -p /home/admin/.ssh && "
                   "sudo cp ~/.ssh/authorized_keys /home/admin/.ssh/authorized_keys && "
