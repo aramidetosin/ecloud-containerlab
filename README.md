@@ -30,6 +30,20 @@ per-VIP policy (failover / latency with hysteresis / static). External clients
 reach it through the PA pair's DNAT (`10.80.15.50` and friends), or by name
 (`app.ecloud.lab`, `dc1.…`, `dc2.…`) via the lab DNS.
 
+The app behind the VIPs is the full ecloud demo (namespace `demo`): a per-DC
+themed UI with a region picker, `/docs` (the complete POC design document),
+a **cross-region consumer** that fetches the peer DC's dataset over the backbone
+via NodePort 30080 (`/api/consume?region=DC2`), and a **live traceroute path map**
+(`/api/trace?region=…`) that shows the actual hop-by-hop east-west path:
+pod, leaf SVI, border, backbone aggr, peer leaf, peer node. Its code + docs live
+in a ConfigMap that cluster-bootstrap builds with create/replace (never `apply`:
+docs.html is >256KB and overflows the last-applied annotation).
+
+The whole suite has been **failover-drilled** (pod, anycast steering, host link,
+EVPN-MH leaf, backbone aggr, firewall): see
+[docs/FAILOVER-DRILLS.md](docs/FAILOVER-DRILLS.md) for methodology, per-drill
+loss numbers, and the A/A firewall grey-failure finding.
+
 ## Requirements
 
 - A Linux host with **bare-metal KVM** (`/dev/kvm`), ~48 vCPU / ~128 GB RAM
@@ -106,9 +120,13 @@ ssh admin@clab-ecloud-k8s-master-1        # password: admin, then: kubectl get n
 docker exec clab-ecloud-gobgp-1 cat /run/gobgp-brain-status.json
 
 # the money shot (~20 min, once the firewalls are healthy):
-docker exec clab-ecloud-client-1 curl http://app.ecloud.lab/   # -> DC1 dc-demo
-docker exec clab-ecloud-client-1 curl http://dc2.ecloud.lab/   # -> DC2 dc-demo
-docker exec clab-ecloud-client-1 curl http://10.80.15.54/      # -> DC2 (static per-client steering)
+docker exec clab-ecloud-client-1 curl http://app.ecloud.lab/api/whoami   # -> DC1 pod identity
+docker exec clab-ecloud-client-1 curl http://dc2.ecloud.lab/api/whoami   # -> DC2 pod identity
+docker exec clab-ecloud-client-1 curl http://10.80.15.54/api/whoami      # -> DC2 (static per-client steering)
+# rich-app extras: the docs page, the cross-region consumer, the live path trace
+docker exec clab-ecloud-client-1 curl -o /dev/null -w '%{size_download}\n' http://10.80.15.50/docs   # 463907 bytes
+docker exec clab-ecloud-client-1 curl 'http://10.80.15.51/api/consume?region=DC2'  # DC1 pod fetches DC2 over the backbone
+docker exec clab-ecloud-client-1 curl 'http://10.80.15.51/api/trace?region=DC2'    # hop-by-hop east-west path
 ```
 
 ## Access
