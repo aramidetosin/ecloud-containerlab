@@ -7,6 +7,10 @@ set -e
 KEY="${1:-$HOME/.ssh/id_ed25519.pub}"
 [ -f "$KEY" ] || ssh-keygen -t ed25519 -f "${KEY%.pub}" -N "" -q
 PUB=$(cat "$KEY")
+# stage the key into the bootstrap so REDEPLOYS install it at first boot (hosts via the
+# bind mount, switches via the patched launcher, firewalls folded into the config commit)
+REPO="$(cd "$(dirname "$0")/.." && pwd)"
+install -m 644 "$KEY" "$REPO/bootstrap/hosts/authorized_keys" && echo "staged into bootstrap/hosts/authorized_keys"
 SO="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=6 -o LogLevel=ERROR"
 
 echo "== switches (cumulus) =="

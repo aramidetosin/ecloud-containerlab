@@ -70,6 +70,16 @@ pgrep -x dropbear >/dev/null 2>&1 || (mkdir -p /etc/dropbear; dropbear -R -p 22 
 # kubectl for operators: k3s is called as kubectl via a symlink; KUBECONFIG set system-wide
 ln -sf /usr/local/bin/k3s /usr/bin/kubectl 2>/dev/null || true
 printf 'export KUBECONFIG=/etc/rancher/k3s/k3s.yaml\nexport PATH=$PATH:/usr/local/bin\n' > /etc/profile.d/k3s.sh 2>/dev/null || true
+# operator passwordless SSH: install the deploy-provided authorized_keys if present
+if [ -f /bootstrap/authorized_keys ]; then
+  for h in /root /home/admin /home/user; do
+    [ -d "$h" ] || continue
+    mkdir -p "$h/.ssh"; cp /bootstrap/authorized_keys "$h/.ssh/authorized_keys"
+    chmod 700 "$h/.ssh"; chmod 600 "$h/.ssh/authorized_keys"
+    u=${h##*/}; [ "$u" = root ] || chown -R "$u" "$h/.ssh" 2>/dev/null || true
+  done
+  log "operator authorized_keys installed"
+fi
 log "sshd (dropbear) up; login admin/admin or user|root/Test123; kubectl ready on masters"
 
 # ---- 3c) cluster self-config: the cluster-init master installs Cilium + BGP + the dc-demo app

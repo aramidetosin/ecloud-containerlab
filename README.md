@@ -139,6 +139,11 @@ docker exec clab-ecloud-client-1 curl 'http://10.80.15.51/api/trace?region=DC2' 
 | PA-VM | HTTPS/XML-API on its mgmt IP | `admin` / `Admin@123` |
 | GoBGP | `docker exec clab-ecloud-gobgp-1 gobgp global rib` | - |
 
+**Passwordless SSH**: run `host-services/push-ssh-keys.sh` once. It installs the host's
+ed25519 key on every running device AND stages it into `bootstrap/hosts/authorized_keys`,
+which every later deploy installs at first boot (hosts via the bind mount, switches via
+the patched launcher, firewalls folded into the config commit).
+
 Mgmt IPs are static (`172.29.129.11-.48`, mapped in `ecloud.clab.yml`); clab also writes
 `/etc/hosts` entries so container names resolve from the host.
 

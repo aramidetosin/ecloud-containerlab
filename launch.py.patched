@@ -198,6 +198,14 @@ class CumulusVX_vm(vrnetlab.VM):
         if "applied" in out:
             open(self.STARTUP_APPLIED_MARK, "w").write("ok\n")
             self.logger.info("startup-config applied and marked")
+            # ecloud: passwordless operator SSH from first boot. If the deploy bind-mounted an
+            # authorized_keys file (bootstrap/hosts -> /bootstrap-keys), install it for cumulus
+            # over the same SSH channel. The VM disk persists, so this survives the MH reboot.
+            akf = "/bootstrap-keys/authorized_keys"
+            if os.path.isfile(akf):
+                pub = open(akf).read().strip()
+                kr = subprocess.run(ssh + ["mkdir -p ~/.ssh && chmod 700 ~/.ssh && grep -qF '" + pub + "' ~/.ssh/authorized_keys 2>/dev/null || echo '" + pub + "' >> ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys"], capture_output=True, timeout=60)
+                self.logger.info("operator authorized_keys install rc=%s", kr.returncode)
         else:
             self.logger.warning("nv config apply did not report 'applied': %s", out[-200:])
             return

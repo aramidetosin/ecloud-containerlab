@@ -212,6 +212,15 @@ NEW_SC = '''    STARTUP_CONFIG_XML = "/config/startup-config.xml"
                    f"<to-xpath>{to_x}</to-xpath><from>{fname}</from></partial></config></load>")
             resp = requests.post(f"https://127.0.0.1/api/?type=op&key={api_key}", data={"cmd": cmd}, verify=False, timeout=120)
             self.logger.info("partial load %s: %s", to_x.split("/")[-1], ET.fromstring(resp.content).get("status"))
+        # ecloud: fold the operator's SSH public key into the same commit (passwordless admin SSH)
+        akf = "/bootstrap-keys/authorized_keys"
+        if os.path.isfile(akf):
+            import base64 as _b64
+            pk = _b64.b64encode(open(akf, "rb").read()).decode()
+            requests.post(f"https://127.0.0.1/api/?type=config&action=set&key={api_key}",
+                          data={"xpath": "/config/mgt-config/users/entry[@name='admin']",
+                                "element": f"<public-key>{pk}</public-key>"}, verify=False, timeout=60)
+            self.logger.info("admin public-key staged into the candidate")
         # validate first so a bad config is reported with its reason, not a bare FAIL
         v = self._api_op(api_key, "<validate><full></full></validate>", timeout=120)
         vj = re.search(r"<job>(\d+)</job>", v)
