@@ -86,7 +86,7 @@ if ! ip link show bond0 >/dev/null 2>&1; then
   printf 'nameserver {dns}\\nsearch ecloud.lab\\n' > /etc/resolv.conf
 fi
 for a in user admin; do id $a >/dev/null 2>&1 || adduser -D -s /bin/sh $a 2>/dev/null; addgroup $a wheel 2>/dev/null; done; echo "user:Test123" | chpasswd 2>/dev/null; echo "root:Test123" | chpasswd 2>/dev/null; echo "admin:admin" | chpasswd 2>/dev/null; pgrep -x dropbear >/dev/null 2>&1 || dropbear -R -p 22 >/dev/null 2>&1
-[ -f /bootstrap/authorized_keys ] && for h in /root /home/admin /home/user; do [ -d "$h" ] || continue; mkdir -p "$h/.ssh"; cp /bootstrap/authorized_keys "$h/.ssh/authorized_keys"; chmod 700 "$h/.ssh"; chmod 600 "$h/.ssh/authorized_keys"; u=${h##*/}; [ "$u" = root ] || chown -R "$u" "$h/.ssh" 2>/dev/null; done
+[ -f /bootstrap/authorized_keys ] && for h in /root /home/admin /home/user; do [ -d "$h" ] || continue; mkdir -p "$h/.ssh"; cp /bootstrap/authorized_keys "$h/.ssh/authorized_keys"; chmod 700 "$h/.ssh"; chmod 600 "$h/.ssh/authorized_keys"; u=$(basename "$h"); [ "$u" = root ] || chown -R "$u" "$h/.ssh" 2>/dev/null; done
 {extra}echo "{name}: bond0 {ip} via {gw} dns {dns}"
 """
 
@@ -141,7 +141,7 @@ while ip route show default dev eth0 2>/dev/null | grep -q .; do ip route del de
 ip route replace default via {gw} dev eth1
 printf 'nameserver 10.80.15.41\\nsearch ecloud.lab\\n' > /etc/resolv.conf
 for a in user admin; do id $a >/dev/null 2>&1 || adduser -D -s /bin/sh $a 2>/dev/null; addgroup $a wheel 2>/dev/null; done; echo "user:Test123" | chpasswd 2>/dev/null; echo "root:Test123" | chpasswd 2>/dev/null; echo "admin:admin" | chpasswd 2>/dev/null; pgrep -x dropbear >/dev/null 2>&1 || dropbear -R -p 22 >/dev/null 2>&1
-[ -f /bootstrap/authorized_keys ] && for h in /root /home/admin /home/user; do [ -d "$h" ] || continue; mkdir -p "$h/.ssh"; cp /bootstrap/authorized_keys "$h/.ssh/authorized_keys"; chmod 700 "$h/.ssh"; chmod 600 "$h/.ssh/authorized_keys"; u=${h##*/}; [ "$u" = root ] || chown -R "$u" "$h/.ssh" 2>/dev/null; done
+[ -f /bootstrap/authorized_keys ] && for h in /root /home/admin /home/user; do [ -d "$h" ] || continue; mkdir -p "$h/.ssh"; cp /bootstrap/authorized_keys "$h/.ssh/authorized_keys"; chmod 700 "$h/.ssh"; chmod 600 "$h/.ssh/authorized_keys"; u=$(basename "$h"); [ "$u" = root ] || chown -R "$u" "$h/.ssh" 2>/dev/null; done
 echo "{name}: eth1 {ip} via {gw}"
 """
 
@@ -170,7 +170,7 @@ ip route replace 192.168.202.0/24 nexthop via {p1} dev eth1 nexthop via {p2} dev
 for a in user admin; do id $a >/dev/null 2>&1 || adduser -D -s /bin/sh $a 2>/dev/null; addgroup $a wheel 2>/dev/null; done
 echo "user:Test123" | chpasswd 2>/dev/null; echo "root:Test123" | chpasswd 2>/dev/null; echo "admin:admin" | chpasswd 2>/dev/null
 pgrep -x dropbear >/dev/null 2>&1 || dropbear -R -p 22 >/dev/null 2>&1
-[ -f /bootstrap/authorized_keys ] && for h in /root /home/admin /home/user; do [ -d "$h" ] || continue; mkdir -p "$h/.ssh"; cp /bootstrap/authorized_keys "$h/.ssh/authorized_keys"; chmod 700 "$h/.ssh"; chmod 600 "$h/.ssh/authorized_keys"; u=${h##*/}; [ "$u" = root ] || chown -R "$u" "$h/.ssh" 2>/dev/null; done
+[ -f /bootstrap/authorized_keys ] && for h in /root /home/admin /home/user; do [ -d "$h" ] || continue; mkdir -p "$h/.ssh"; cp /bootstrap/authorized_keys "$h/.ssh/authorized_keys"; chmod 700 "$h/.ssh"; chmod 600 "$h/.ssh/authorized_keys"; u=$(basename "$h"); [ "$u" = root ] || chown -R "$u" "$h/.ssh" 2>/dev/null; done
 # install gobgpd + brain from the bind mount, then start (setsid survives the exec; PID1 nginx stays up)
 mkdir -p /etc/gobgp /opt/gobgp-brain /run
 cp -f /bootstrap/gobgp/gobgpd /bootstrap/gobgp/gobgp /usr/local/bin/ 2>/dev/null; chmod +x /usr/local/bin/gobgpd /usr/local/bin/gobgp 2>/dev/null

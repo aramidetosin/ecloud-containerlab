@@ -25,101 +25,141 @@ topology:
       mgmt-ipv4: 172.29.129.11
       group: dc1
       startup-config: bootstrap/spine-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     spine-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.12
       group: dc1
       startup-config: bootstrap/spine-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     leaf-k8s-master-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.13
       group: dc1
       startup-config: bootstrap/leaf-k8s-master-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     leaf-k8s-master-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.14
       group: dc1
       startup-config: bootstrap/leaf-k8s-master-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     leaf-k8s-worker-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.15
       group: dc1
       startup-config: bootstrap/leaf-k8s-worker-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     leaf-k8s-worker-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.16
       group: dc1
       startup-config: bootstrap/leaf-k8s-worker-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     leaf-service-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.17
       group: dc1
       startup-config: bootstrap/leaf-service-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     leaf-service-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.18
       group: dc1
       startup-config: bootstrap/leaf-service-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     leaf-border-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.19
       group: dc1
       startup-config: bootstrap/leaf-border-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     leaf-border-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.20
       group: dc1
       startup-config: bootstrap/leaf-border-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     dc2-spine-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.21
       group: dc2
       startup-config: bootstrap/dc2-spine-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     dc2-spine-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.22
       group: dc2
       startup-config: bootstrap/dc2-spine-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     dc2-k8s-leaf-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.23
       group: dc2
       startup-config: bootstrap/dc2-k8s-leaf-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     dc2-k8s-leaf-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.24
       group: dc2
       startup-config: bootstrap/dc2-k8s-leaf-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     dc2-svc-leaf-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.25
       group: dc2
       startup-config: bootstrap/dc2-svc-leaf-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     dc2-svc-leaf-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.26
       group: dc2
       startup-config: bootstrap/dc2-svc-leaf-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     dc2-border-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.27
       group: dc2
       startup-config: bootstrap/dc2-border-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     dc2-border-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.28
       group: dc2
       startup-config: bootstrap/dc2-border-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     br-agg-sw-1:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.29
       group: aggr
       startup-config: bootstrap/br-agg-sw-1.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     br-agg-sw-2:
       kind: nvidia_cumulusvx
       mgmt-ipv4: 172.29.129.30
       group: aggr
       startup-config: bootstrap/br-agg-sw-2.cfg   # applied at FIRST BOOT by the patched launcher
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher
     fw-pri:
       kind: paloalto_panos
       mgmt-ipv4: 172.29.129.31
@@ -129,6 +169,8 @@ topology:
         QEMU_CPU: host
         QEMU_SMP: 8
         QEMU_MEMORY: 16384
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, folded into the config commit
     fw-sec:
       kind: paloalto_panos
       mgmt-ipv4: 172.29.129.32
@@ -138,11 +180,15 @@ topology:
         QEMU_CPU: host
         QEMU_SMP: 8
         QEMU_MEMORY: 16384
+      binds:
+        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, folded into the config commit
     k8s-master-1:
       kind: linux
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.33
       group: dc1-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "server-init"
         K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
@@ -159,6 +205,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.34
       group: dc1-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "server-join"
         K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
@@ -173,6 +221,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.35
       group: dc1-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "server-join"
         K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
@@ -187,6 +237,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.36
       group: dc1-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "agent"
         K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
@@ -201,6 +253,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.37
       group: dc1-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "agent"
         K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
@@ -215,6 +269,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.38
       group: dc1-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "agent"
         K3S_TOKEN: "ecloud-dc1-k3s-9f3a2c"
@@ -269,6 +325,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.44
       group: dc2-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "server-init"
         K3S_TOKEN: "ecloud-dc2-k3s-7b2e11"
@@ -285,6 +343,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.45
       group: dc2-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "agent"
         K3S_TOKEN: "ecloud-dc2-k3s-7b2e11"
@@ -299,6 +359,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.46
       group: dc2-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "agent"
         K3S_TOKEN: "ecloud-dc2-k3s-7b2e11"
@@ -313,6 +375,8 @@ topology:
       image: ecloud-k8s-host:1.31.5
       mgmt-ipv4: 172.29.129.47
       group: dc2-k8s
+      binds:
+        - bootstrap/hosts:/bootstrap:ro        # optional authorized_keys for the entrypoint
       env:
         K3S_ROLE: "agent"
         K3S_TOKEN: "ecloud-dc2-k3s-7b2e11"
