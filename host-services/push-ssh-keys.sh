@@ -10,14 +10,14 @@ PUB=$(cat "$KEY")
 SO="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=6 -o LogLevel=ERROR"
 
 echo "== switches (cumulus) =="
-for c in $(docker ps --format '{{.Names}}' | grep clab-ecloud | grep -E 'spine|leaf|br-agg'); do
+for c in $(docker ps --format '{{.Names}}' | grep clab-ecloud | grep -E 'spine|leaf|br-agg|border'); do
   docker exec "$c" sshpass -p 'Clab123!' ssh $SO cumulus@127.0.0.1 \
     "mkdir -p ~/.ssh && chmod 700 ~/.ssh && grep -qF '$PUB' ~/.ssh/authorized_keys 2>/dev/null || echo '$PUB' >> ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys" \
     2>/dev/null && echo "  ${c#clab-ecloud-} ok" || echo "  ${c#clab-ecloud-} FAILED"
 done
 
 echo "== linux hosts (root, admin, user) =="
-for c in $(docker ps --format '{{.Names}}' | grep clab-ecloud | grep -vE 'spine|leaf|br-agg|fw-'); do
+for c in $(docker ps --format '{{.Names}}' | grep clab-ecloud | grep -vE 'spine|leaf|br-agg|border|fw-'); do
   docker exec "$c" sh -c "
     for pair in '/root root' '/home/admin admin' '/home/user user'; do
       set -- \$pair; h=\$1; u=\$2
