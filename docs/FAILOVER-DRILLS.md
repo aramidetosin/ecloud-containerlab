@@ -2,7 +2,7 @@
 
 The same drill suite the original EVE-NG lab ran, executed against this containerlab
 replica on 2026-08-17 (post rich-demo deploy, everything self-bootstrapped from this
-repo at `8a64c08`). One element fails per drill; the lab must keep serving, then return
+repo at `63c1ae0`). One element fails per drill; the lab must keep serving, then return
 to green on restore.
 
 ## Methodology
