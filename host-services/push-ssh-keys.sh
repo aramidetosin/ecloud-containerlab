@@ -18,6 +18,9 @@ for c in $(docker ps --format '{{.Names}}' | grep clab-ecloud | grep -E 'spine|l
   docker exec "$c" sshpass -p 'Clab123!' ssh $SO cumulus@127.0.0.1 \
     "mkdir -p ~/.ssh && chmod 700 ~/.ssh && grep -qF '$PUB' ~/.ssh/authorized_keys 2>/dev/null || echo '$PUB' >> ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys" \
     2>/dev/null && echo "  ${c#clab-ecloud-} ok" || echo "  ${c#clab-ecloud-} FAILED"
+  # VSCode-extension convenience: admin/admin + the same key (plain useradd, no NVUE)
+  docker exec "$c" sshpass -p 'Clab123!' ssh $SO cumulus@127.0.0.1 \
+    "sudo useradd -m -s /bin/bash admin 2>/dev/null; echo admin:admin | sudo chpasswd; sudo usermod -aG sudo admin 2>/dev/null; sudo mkdir -p /home/admin/.ssh && sudo cp ~/.ssh/authorized_keys /home/admin/.ssh/authorized_keys && sudo chown -R admin:admin /home/admin/.ssh && sudo chmod 700 /home/admin/.ssh && sudo chmod 600 /home/admin/.ssh/authorized_keys" 2>/dev/null || true
 done
 
 echo "== linux hosts (root, admin, user) =="

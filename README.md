@@ -133,7 +133,7 @@ docker exec clab-ecloud-client-1 curl 'http://10.80.15.51/api/trace?region=DC2' 
 
 | What | How | Credentials |
 |---|---|---|
-| Cumulus switches | `ssh cumulus@<mgmt-ip>` or `docker exec <c> sshpass -p 'Clab123!' ssh cumulus@127.0.0.1` | `cumulus` / `Clab123!` |
+| Cumulus switches | `ssh cumulus@<mgmt-ip>` or `docker exec <c> sshpass -p 'Clab123!' ssh cumulus@127.0.0.1` | `cumulus` / `Clab123!` (also `admin` / `admin`, the VSCode extension's default) |
 | Hosts, k8s nodes, clients, gobgp | `ssh admin@clab-ecloud-<name>` | `admin` / `admin` (also `user` and `root` / `Test123`) |
 | kubectl | on any master, as any user | preconfigured (`KUBECONFIG` + symlink) |
 | PA-VM | HTTPS/XML-API on its mgmt IP | `admin` / `Admin@123` |

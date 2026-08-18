@@ -206,6 +206,16 @@ class CumulusVX_vm(vrnetlab.VM):
                 pub = open(akf).read().strip()
                 kr = subprocess.run(ssh + ["mkdir -p ~/.ssh && chmod 700 ~/.ssh && grep -qF '" + pub + "' ~/.ssh/authorized_keys 2>/dev/null || echo '" + pub + "' >> ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys"], capture_output=True, timeout=60)
                 self.logger.info("operator authorized_keys install rc=%s", kr.returncode)
+            # ecloud: the containerlab VSCode extension SSHes as 'admin' by default; give the
+            # switches the same lab convention as the hosts (admin/admin + the operator key).
+            mk = ("sudo useradd -m -s /bin/bash admin 2>/dev/null; echo admin:admin | sudo chpasswd; "
+                  "sudo usermod -aG sudo admin 2>/dev/null; "
+                  "if [ -f ~/.ssh/authorized_keys ]; then sudo mkdir -p /home/admin/.ssh && "
+                  "sudo cp ~/.ssh/authorized_keys /home/admin/.ssh/authorized_keys && "
+                  "sudo chown -R admin:admin /home/admin/.ssh && sudo chmod 700 /home/admin/.ssh && "
+                  "sudo chmod 600 /home/admin/.ssh/authorized_keys; fi")
+            ar = subprocess.run(ssh + [mk], capture_output=True, timeout=60)
+            self.logger.info("admin account setup rc=%s", ar.returncode)
         else:
             self.logger.warning("nv config apply did not report 'applied': %s", out[-200:])
             return
