@@ -1,5 +1,6 @@
 # ecloud two-DC EVPN-VXLAN POC, replicated in containerlab.
-# Generated from the authoritative EVE-NG link map (84 p2p links + 1 shared internet segment).
+# Generated from the EVE-NG link map captured live via the EVE API (84 networks audited;
+# 71 p2p links + the shared internet segment carried into clab; mgmt-only nets dropped).
 # Switches: Cumulus VX 5.12.0 (vrnetlab VM-in-container). Firewalls: PA-VM 12.1.2 (vrnetlab).
 # Hosts: plain linux containers, provisioned after deploy (k8s/Cilium, BIND, GoBGP, clients).
 # NOTE: stock nvidia_cumulusvx does NOT apply startup-config. OUR image carries a patched vrnetlab
