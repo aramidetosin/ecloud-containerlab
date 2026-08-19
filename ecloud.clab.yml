@@ -10,7 +10,7 @@
 name: ecloud
 mgmt:
   network: ecloud-mgmt
-  ipv4-subnet: 172.29.129.0/24     # same mgmt /24 as the EVE lab, but STATIC (no DHCP drift)
+  ipv4-subnet: 172.29.129.0/24     # static mgmt /24 (override: CLAB_MGMT_PREFIX)
 topology:
   kinds:
     nvidia_cumulusvx:

@@ -3,6 +3,10 @@
 Every link below is a real EVE p2p network; nothing is inferred."""
 import os
 
+# mgmt /24 for every node (static, no DHCP drift). Override when the default collides with an
+# existing network on the clab host (e.g. EVE-NG's nat0 cloud on an EVE box): CLAB_MGMT_PREFIX=172.29.131
+MGMT = os.environ.get("CLAB_MGMT_PREFIX", "172.29.129")
+
 CVX_IMG = "vrnetlab/nvidia_cumulus-vx:5.12.0"
 PAN_IMG = "vrnetlab/paloalto_pa-vm:12.1.2"
 HOST_IMG = "ghcr.io/srl-labs/network-multitool"   # stays up + has ip/bond/tcpdump; real provisioning (k8s etc) comes later
@@ -144,7 +148,7 @@ out.append("# (no eth0/mgmt/hostname/REDACTED/aaa-user) from fabric-evpn-mh/. Cr
 out.append("name: ecloud")
 out.append("mgmt:")
 out.append("  network: ecloud-mgmt")
-out.append("  ipv4-subnet: 172.29.129.0/24     # same mgmt /24 as the EVE lab, but STATIC (no DHCP drift)")
+out.append(f"  ipv4-subnet: {MGMT}.0/24     # static mgmt /24 (override: CLAB_MGMT_PREFIX)")
 out.append("topology:")
 out.append("  kinds:")
 out.append("    nvidia_cumulusvx:")
@@ -158,7 +162,7 @@ out.append("  nodes:")
 mgmt_ip = {}
 ipn = 11
 for name,dc in switches.items():
-    mgmt_ip[name] = f"172.29.129.{ipn}"; ipn += 1
+    mgmt_ip[name] = f"{MGMT}.{ipn}"; ipn += 1
     out.append(f"    {name}:")
     out.append(f"      kind: nvidia_cumulusvx")
     out.append(f"      mgmt-ipv4: {mgmt_ip[name]}")
@@ -167,7 +171,7 @@ for name,dc in switches.items():
     out.append(f"      binds:")
     out.append(f"        - bootstrap/hosts:/bootstrap-keys:ro   # optional authorized_keys, installed by the launcher")
 for fw in firewalls:
-    mgmt_ip[fw] = f"172.29.129.{ipn}"; ipn += 1
+    mgmt_ip[fw] = f"{MGMT}.{ipn}"; ipn += 1
     out.append(f"    {fw}:")
     out.append(f"      kind: paloalto_panos")
     out.append(f"      mgmt-ipv4: {mgmt_ip[fw]}")
@@ -217,7 +221,7 @@ def k8s_node(h, grp):
     for k,v in env.items():
         out.append(f"        {k}: \"{v}\"")
 for h in hosts:
-    mgmt_ip[h] = f"172.29.129.{ipn}"; ipn += 1
+    mgmt_ip[h] = f"{MGMT}.{ipn}"; ipn += 1
     if h in H.K8S_NODES:    k8s_node(h, "dc2-k8s" if h.startswith("dc2") else "dc1-k8s")
     elif h in H.CLIENTS:    host_node(h, "clients")
     elif h in H.GOBGP:      host_node(h, "controllers")

@@ -75,10 +75,12 @@ sudo systemctl daemon-reload && sudo systemctl enable --now clab-internet-bridge
 Two host-specific caveats to check:
 - If your docker runs with `"iptables": false`, containers have no egress; add MASQUERADE
   rules for the docker/clab subnets (only the *builds* need internet; the lab itself is airgapped).
-- If `172.29.129.0/24` (the lab mgmt subnet) collides with an existing route on your host
-  (VPN, Tailscale subnet route, ...), pin it local:
-  `ip rule add to 172.29.129.0/24 lookup main priority 5100`.
-  Or change `mgmt.ipv4-subnet` via `build_clab.py`.
+- If `172.29.129.0/24` (the lab mgmt subnet) collides with something on your host, you have
+  two options. A *routing* collision (VPN, Tailscale subnet route) is fixed by pinning it local:
+  `ip rule add to 172.29.129.0/24 lookup main priority 5100`. A *local bridge* collision (e.g.
+  running on an EVE-NG box, whose `nat0` cloud IS 172.29.129.0/24) needs a different subnet:
+  `CLAB_MGMT_PREFIX=172.29.131 python3 build_clab.py` regenerates the topology on that /24
+  (every mgmt IP keeps its last octet, so `.11` is still spine-1).
 
 **2) Patch vrnetlab + build the VM images (~15 min):**
 
