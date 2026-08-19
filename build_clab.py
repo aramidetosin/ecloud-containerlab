@@ -19,18 +19,25 @@ def _pick_mgmt():
     if os.path.isfile(pin):
         v = open(pin).read().strip()
         if v: return v, ".mgmt-prefix"
-    local = set()
+    taken, ours = set(), set()
     try:
         import subprocess
         for ln in subprocess.run(["ip", "-4", "-o", "addr"], capture_output=True, text=True).stdout.splitlines():
             p = ln.split()
             if len(p) >= 4 and "/" in p[3]:
                 o = p[3].split("/")[0].split(".")
-                if len(o) == 4: local.add(".".join(o[:3]))
+                if len(o) != 4: continue
+                pfx = ".".join(o[:3])
+                # a docker bridge (br-<id>) holding a candidate is the ALREADY-DEPLOYED lab's own
+                # mgmt network: reuse it so a regen never moves a running lab to a new subnet.
+                (ours if p[1].startswith("br-") else taken).add(pfx)
     except Exception:
         pass
-    for cand in ("172.29.129", "172.29.140", "172.29.141", "172.29.142", "172.29.150"):
-        if cand not in local: return cand, ("default" if cand == "172.29.129" else f"auto (172.29.129 is local on this host)")
+    cands = ("172.29.129", "172.29.140", "172.29.141", "172.29.142", "172.29.150")
+    for cand in cands:
+        if cand in ours: return cand, "auto (reusing the deployed lab's mgmt bridge)"
+    for cand in cands:
+        if cand not in taken: return cand, ("default" if cand == "172.29.129" else "auto (172.29.129 is local on this host)")
     return "172.29.129", "fallback"
 MGMT, MGMT_HOW = _pick_mgmt()
 
