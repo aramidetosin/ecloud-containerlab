@@ -1,6 +1,7 @@
 # ecloud k8s-host: multitool base + baked k3s + airgap images + Cilium, with a cgroup-evacuating
 # PID-1 entrypoint. Built once, used by all 10 k8s node containers (they share the read-only layers).
-FROM ghcr.io/srl-labs/network-multitool
+# pinned by digest (same image the linux hosts use); :latest drifts between hosts
+FROM ghcr.io/srl-labs/network-multitool@sha256:5013e4b58ec2d72affad2c3adc4ee807157efe452d31022e87317d00e94620f4
 # k3s auto-imports any *.tar under agent/images into the k8s.io containerd namespace on startup (airgap)
 RUN mkdir -p /var/lib/rancher/k3s/agent/images
 COPY k3s-airgap-images-amd64.tar /var/lib/rancher/k3s/agent/images/

@@ -9,7 +9,8 @@ MGMT = os.environ.get("CLAB_MGMT_PREFIX", "172.29.129")
 
 CVX_IMG = "vrnetlab/nvidia_cumulus-vx:5.12.0"
 PAN_IMG = "vrnetlab/paloalto_pa-vm:12.1.2"
-HOST_IMG = "ghcr.io/srl-labs/network-multitool"   # stays up + has ip/bond/tcpdump; real provisioning (k8s etc) comes later
+# pinned by digest: the floating :latest resolved to different ages on different hosts (dnsmasq 2.90 vs 2.92)
+HOST_IMG = "ghcr.io/srl-labs/network-multitool@sha256:5013e4b58ec2d72affad2c3adc4ee807157efe452d31022e87317d00e94620f4"
 
 # ---------- nodes ----------
 switches = {

@@ -117,6 +117,11 @@ def dnsmasq_conf():
         # ignore the container's clab-populated /etc/hosts (mgmt IPs); serve fabric IPs from ecloud.hosts
         "no-hosts",
         "server=8.8.8.8", "server=1.1.1.1", "addn-hosts=/etc/ecloud.hosts",
+        # answer AAAA for the zone with an empty (::) record instead of NXDOMAIN. musl's dual-stack
+        # getaddrinfo (curl/python on alpine) fails the WHOLE lookup when the AAAA half of a parallel
+        # A+AAAA query comes back bare-NXDOMAIN, which older dnsmasq (2.90) does for local= zones;
+        # nslookup/getent look fine while curl says "Could not resolve". Version-proof fix.
+        "address=/ecloud.lab/::",
     ]
     for n, ip in DEMO_DNS.items():
         lines.append(f"address=/{n}.ecloud.lab/{ip}")
