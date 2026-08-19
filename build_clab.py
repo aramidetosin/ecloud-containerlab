@@ -3,9 +3,36 @@
 Every link below is a real EVE p2p network; nothing is inferred."""
 import os
 
-# mgmt /24 for every node (static, no DHCP drift). Override when the default collides with an
-# existing network on the clab host (e.g. EVE-NG's nat0 cloud on an EVE box): CLAB_MGMT_PREFIX=172.29.131
-MGMT = os.environ.get("CLAB_MGMT_PREFIX", "172.29.129")
+# mgmt /24 for every node (static, no DHCP drift). Picked automatically so a plain `python3 build_clab.py`
+# does the right thing on any host, no per-host override to remember:
+#   1. CLAB_MGMT_PREFIX env, if set (explicit always wins)
+#   2. .mgmt-prefix file next to this script, if present (per-host pin, gitignored)
+#   3. auto: the first candidate /24 that does NOT already belong to a local interface on this host.
+#      On an EVE-NG box 172.29.129.0/24 IS the nat0 cloud bridge, so the default there is taken.
+# A routing-table collision (VPN/Tailscale subnet route) is NOT a local interface and is left to the
+# ip-rule fix in the README; only a genuinely local /24 makes us move.
+def _pick_mgmt():
+    env = os.environ.get("CLAB_MGMT_PREFIX")
+    if env: return env, "env"
+    here = os.path.dirname(os.path.abspath(__file__))
+    pin = os.path.join(here, ".mgmt-prefix")
+    if os.path.isfile(pin):
+        v = open(pin).read().strip()
+        if v: return v, ".mgmt-prefix"
+    local = set()
+    try:
+        import subprocess
+        for ln in subprocess.run(["ip", "-4", "-o", "addr"], capture_output=True, text=True).stdout.splitlines():
+            p = ln.split()
+            if len(p) >= 4 and "/" in p[3]:
+                o = p[3].split("/")[0].split(".")
+                if len(o) == 4: local.add(".".join(o[:3]))
+    except Exception:
+        pass
+    for cand in ("172.29.129", "172.29.140", "172.29.141", "172.29.142", "172.29.150"):
+        if cand not in local: return cand, ("default" if cand == "172.29.129" else f"auto (172.29.129 is local on this host)")
+    return "172.29.129", "fallback"
+MGMT, MGMT_HOW = _pick_mgmt()
 
 CVX_IMG = "vrnetlab/nvidia_cumulus-vx:5.12.0"
 PAN_IMG = "vrnetlab/paloalto_pa-vm:12.1.2"
@@ -241,6 +268,7 @@ for n,i in [("fw-pri","eth3"),("fw-sec","eth3"),("client-1","eth1"),("external-c
 
 y="\n".join(out)+"\n"
 open(os.path.join(os.path.dirname(__file__),"ecloud.clab.yml"),"w").write(y)
+print(f"mgmt: {MGMT}.0/24  [{MGMT_HOW}]")
 print(f"nodes: {len(switches)} switches + {len(firewalls)} fw + {len(hosts)} hosts + 1 bridge = {len(switches)+len(firewalls)+len(hosts)+1}")
 print(f"links: {len(links)} p2p + 4 bridge = {len(links)+4}")
 print("mgmt map:"); [print(f"  {k:24} {v}") for k,v in mgmt_ip.items()]

@@ -23,3 +23,6 @@ clab-ecloud/
 
 # operator public key staged by push-ssh-keys.sh (host-specific)
 bootstrap/hosts/authorized_keys
+
+# optional per-host mgmt /24 pin read by build_clab.py
+.mgmt-prefix

@@ -78,9 +78,11 @@ Two host-specific caveats to check:
 - If `172.29.129.0/24` (the lab mgmt subnet) collides with something on your host, you have
   two options. A *routing* collision (VPN, Tailscale subnet route) is fixed by pinning it local:
   `ip rule add to 172.29.129.0/24 lookup main priority 5100`. A *local bridge* collision (e.g.
-  running on an EVE-NG box, whose `nat0` cloud IS 172.29.129.0/24) needs a different subnet:
-  `CLAB_MGMT_PREFIX=172.29.131 python3 build_clab.py` regenerates the topology on that /24
-  (every mgmt IP keeps its last octet, so `.11` is still spine-1).
+  running on an EVE-NG box, whose `nat0` cloud IS 172.29.129.0/24) is handled automatically:
+  `build_clab.py` checks the host's local interfaces and moves to the next free /24 (172.29.140
+  first) by itself. Every mgmt IP keeps its last octet, so `.11` is still spine-1; the chosen
+  subnet is printed when you regenerate. To force one: `CLAB_MGMT_PREFIX=x.y.z`, or drop the
+  prefix into a `.mgmt-prefix` file next to the script.
 
 **2) Patch vrnetlab + build the VM images (~15 min):**
 
