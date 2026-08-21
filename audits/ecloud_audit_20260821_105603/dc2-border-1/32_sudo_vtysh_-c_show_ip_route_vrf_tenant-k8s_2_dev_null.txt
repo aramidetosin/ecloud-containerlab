@@ -1,0 +1,52 @@
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-k8s:
+B>* 0.0.0.0/0 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                  via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:48
+B>* 10.167.10.0/24 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                       via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 10.167.10.11/32 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                        via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 10.167.10.12/32 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                        via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 10.167.10.13/32 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                        via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 10.167.20.0/24 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                       via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 10.167.20.11/32 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                        via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 10.167.20.12/32 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                        via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 10.167.20.13/32 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                        via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 10.168.10.0/24 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                       via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57
+B>* 10.168.10.11/32 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                        via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57
+B>* 10.168.10.21/32 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                        via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57
+B>* 10.168.10.22/32 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                        via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57
+B>* 10.168.10.23/32 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                        via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57
+B>* 10.201.20.0/30 [20/0] via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 20:32:40
+B>* 10.201.20.4/30 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 20:32:41
+B>* 10.201.20.8/30 [20/0] via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 20:32:40
+B>* 10.201.20.12/30 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 20:32:41
+B>* 192.168.202.0/32 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                         via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57
+B>* 192.168.202.1/32 [20/0] via fe80::a8c1:abff:fecb:6b23, swp4.100, weight 1, 00:59:57
+  *                         via fe80::a8c1:abff:feec:19d8, swp3.100, weight 1, 00:59:57
+B>* 192.168.202.2/32 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                         via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57
+B>* 192.168.202.3/32 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                         via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57
+B>* 192.168.202.4/32 [20/0] via 10.2.0.11, vlan3101_l3 onlink, weight 1, 00:59:57
+  *                         via 10.2.0.12, vlan3101_l3 onlink, weight 1, 00:59:57

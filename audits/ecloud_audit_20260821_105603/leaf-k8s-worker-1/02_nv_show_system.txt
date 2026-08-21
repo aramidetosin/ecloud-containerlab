@@ -1,0 +1,23 @@
+
+                 operational                                  applied          
+---------------  -------------------------------------------  -----------------
+build            Cumulus Linux 5.12.0                                          
+uptime           20:32:49                                                      
+hostname         leaf-k8s-worker-1                            leaf-k8s-worker-1
+product-name     Cumulus Linux                                                 
+product-release  5.12.0                                                        
+platform         N/A                                                           
+system-memory    1.27 GB used / 1.93 GB free / 3.57 GB total                   
+swap-memory      0 Bytes used / 0 Bytes free / 0 Bytes total                   
+health-status    OK                                                            
+date-time        2026-08-21 06:56:04                                           
+status           N/A                                                           
+timezone         Etc/UTC                                                       
+maintenance                                                                    
+  mode           disabled                                                      
+  ports          enabled                                                       
+version                                                                        
+  kernel         6.1.0-cl-1-amd64                                              
+  build-date     Mon Feb 03 17:42:08 UTC 2025                                  
+  image          5.12.0.0037                                                   
+  onie           N/A                                                           

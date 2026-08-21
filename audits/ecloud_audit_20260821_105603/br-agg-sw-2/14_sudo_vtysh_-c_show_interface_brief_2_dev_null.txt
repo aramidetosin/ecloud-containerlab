@@ -1,0 +1,39 @@
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+lo              up      default         
+swp1            up      default         
+swp2            up      default         
+swp3            up      default         
+swp4            up      default         
+swp5            up      default         
+swp6            up      default         
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+eth0            up      mgmt            10.0.0.15/24
+                                        + fec0::e00:75ff:fe02:7d00/64
+mgmt            up      mgmt            
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+swp1.100        up      tenant-k8s      
+swp2.100        up      tenant-k8s      
+swp3.100        up      tenant-k8s      10.201.0.2/31
+swp4.100        up      tenant-k8s      10.201.0.6/31
+swp5.100        up      tenant-k8s      
+swp6.100        up      tenant-k8s      
+swp7            up      tenant-k8s      10.201.20.5/30
+swp8            up      tenant-k8s      10.201.20.13/30
+tenant-k8s      up      tenant-k8s      
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+swp1.200        up      tenant-svc      
+swp2.200        up      tenant-svc      
+swp3.200        up      tenant-svc      10.201.1.2/31
+swp4.200        up      tenant-svc      10.201.1.6/31
+swp5.200        up      tenant-svc      
+swp6.200        up      tenant-svc      
+tenant-svc      up      tenant-svc      
+

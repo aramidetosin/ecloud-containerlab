@@ -1,0 +1,17 @@
+
+VNI: 50102 (known to the kernel)
+  Type: L3
+  Tenant VRF: tenant-svc
+  RD: 10.2.0.16:2
+  Originator IP: 10.2.0.16
+  MAC-VRF Site-of-Origin: 
+  Advertise-gw-macip : n/a
+  Advertise-svi-macip : n/a
+  Advertise-pip: Yes
+  System-IP: 10.2.0.16
+  System-MAC: 0c:00:07:c2:a9:c8
+  Router-MAC: 0c:00:07:c2:a9:c8
+  Import Route Target:
+    65213:50102
+  Export Route Target:
+    65213:50102

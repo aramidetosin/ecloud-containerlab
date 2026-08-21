@@ -1,0 +1,18 @@
+
+Interface  Admin Status  Oper Status  Speed  MTU    Type      Remote Host     Remote Port  Summary                                 
+---------  ------------  -----------  -----  -----  --------  --------------  -----------  ----------------------------------------
+eth0       up            up           1G     1500   eth                                    IP Address:                 10.0.0.15/24
+                                                                                           IP Address:  fe80::e00:34ff:fe87:ef00/64
+                                                                                           IP Address:  fec0::e00:34ff:fe87:ef00/64
+lo         up            unknown             65536  loopback                               IP Address:                  10.2.0.2/32
+                                                                                           IP Address:                  127.0.0.1/8
+                                                                                           IP Address:                      ::1/128
+mgmt       up            up                  65575  vrf                                    IP Address:                  127.0.0.1/8
+                                                                                           IP Address:                  127.0.1.1/8
+                                                                                           IP Address:                      ::1/128
+swp1       up            up           1G     9216   swp       dc2-k8s-leaf-1  swp2         IP Address: fe80::a8c1:abff:febe:f8a8/64
+swp2       up            up           1G     9216   swp       dc2-k8s-leaf-2  swp2         IP Address: fe80::a8c1:abff:fe5a:9baf/64
+swp3       up            up           1G     9216   swp       dc2-svc-leaf-1  swp2         IP Address: fe80::a8c1:abff:fe77:b438/64
+swp4       up            up           1G     9216   swp       dc2-svc-leaf-2  swp2         IP Address: fe80::a8c1:abff:fe43:108a/64
+swp5       up            up           1G     9216   swp       dc2-border-1    swp2         IP Address: fe80::a8c1:abff:fe8c:871a/64
+swp6       up            up           1G     9216   swp       dc2-border-2    swp2         IP Address: fe80::a8c1:abff:fe20:b8fc/64

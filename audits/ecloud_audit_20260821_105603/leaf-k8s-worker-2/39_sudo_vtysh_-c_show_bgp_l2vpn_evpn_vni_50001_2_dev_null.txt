@@ -1,0 +1,15 @@
+
+VNI: 50001
+  Type: L2
+  Tenant-Vrf: default
+  RD: 10.0.0.14:6
+  Originator IP: 10.0.0.14
+  Mcast group: 0.0.0.0
+  MAC-VRF Site-of-Origin: 
+  Advertise-gw-macip : Disabled
+  Advertise-svi-macip : Disabled
+  SVI interface : unknown
+  Import Route Target:
+    65000:50001
+  Export Route Target:
+    65000:50001

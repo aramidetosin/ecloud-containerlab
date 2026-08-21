@@ -1,0 +1,9 @@
+
+Number of MACs (local and remote) known for this VNI: 5
+Flags: N=sync-neighs, I=local-inactive, P=peer-active, X=peer-proxy
+MAC               Type   Flags Intf/Remote ES/VTEP            VLAN  Seq #'s
+50:00:00:10:00:01 local  NP    bond3                          120   0/0
+50:00:00:0e:00:01 local  NP    bond1                          120   0/0
+0c:00:c2:98:18:c9 local        vlan120                              0/0
+50:00:00:0f:00:01 local  NP    bond2                          120   0/0
+0c:00:1b:c3:9e:42 remote       10.0.0.14                            1/0

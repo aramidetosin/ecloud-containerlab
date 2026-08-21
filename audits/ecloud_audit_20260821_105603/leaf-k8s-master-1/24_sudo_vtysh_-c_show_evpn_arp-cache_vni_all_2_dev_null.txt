@@ -1,0 +1,17 @@
+
+VNI 10110 #ARP (IPv4 and IPv6, local and remote) 12
+
+Flags: I=local-inactive, P=peer-active, X=peer-proxy
+Neighbor              Type   Flags State    MAC               Remote ES/VTEP                 Seq #'s
+10.167.10.13          local  P     active   50:00:00:0d:00:01                                0/0
+10.167.10.77          local  I     active   50:00:00:0b:00:01                                0/0
+10.167.10.99          local  I     inactive 02:ec:de:00:00:99                                0/0
+fe80::5200:ff:fe0b:1  local  P     active   50:00:00:0b:00:01                                0/0
+10.167.10.12          local  P     active   50:00:00:0c:00:01                                0/0
+fe80::5200:ff:fe0e:1  local  I     inactive 50:00:00:0e:00:01                                0/0
+fe80::ec:deff:fe00:77 local  I     inactive 02:ec:de:00:00:77                                0/0
+fe80::5200:ff:fe0d:1  local  P     active   50:00:00:0d:00:01                                0/0
+fe80::5200:ff:fe11:1  local  I     inactive 50:00:00:11:00:01                                0/0
+fe80::5200:ff:fe0c:1  local  P     active   50:00:00:0c:00:01                                0/0
+10.167.10.55          local  I     active   50:00:00:0b:00:01                                0/0
+10.167.10.11          local  P     active   50:00:00:0b:00:01                                0/0

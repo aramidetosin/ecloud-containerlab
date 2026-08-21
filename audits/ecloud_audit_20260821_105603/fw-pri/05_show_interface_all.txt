@@ -1,0 +1,31 @@
+
+
+total configured hardware interfaces: 6
+
+name                    id    speed/duplex/state            mac address       
+--------------------------------------------------------------------------------
+ethernet1/1             16    10000/full/up                 aa:c1:ab:b1:ca:0c 
+ethernet1/2             17    10000/full/up                 aa:c1:ab:13:51:b2 
+ethernet1/3             18    10000/full/up                 aa:c1:ab:4e:4d:2f 
+ethernet1/5             20    10000/full/up                 aa:c1:ab:9c:f6:aa 
+ethernet1/6             21    10000/full/up                 aa:c1:ab:a0:ee:b4 
+ethernet1/7             22    10000/full/up                 aa:c1:ab:2e:24:fb 
+
+aggregation groups: 0
+
+
+total configured logical interfaces: 10
+
+name                      id    vsys zone             forwarding               tag    address                                         
+------------------------- ----- ---- ---------------- ------------------------ ------ ------------------
+ethernet1/1               16    1                     N/A                      0      N/A               
+ethernet1/1.100           256   1    k8s              vr:default               100    10.201.0.1/31     
+ethernet1/1.200           257   1    svc              vr:default               200    10.201.1.1/31     
+ethernet1/2               17    1                     N/A                      0      N/A               
+ethernet1/2.100           258   1    k8s              vr:default               100    10.201.0.3/31     
+ethernet1/2.200           259   1    svc              vr:default               200    10.201.1.3/31     
+ethernet1/3               18    1    internet         vr:default               0      10.80.15.21/24    
+ethernet1/5               20    1                     ha                       0      10.210.0.1/30     
+ethernet1/6               21    1                     ha                       0      N/A               
+ethernet1/7               22    1                     ha                       0      N/A               
+

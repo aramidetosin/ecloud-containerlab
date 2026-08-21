@@ -1,0 +1,1583 @@
+
+==============================================================================
+fw-sec# show system info
+==============================================================================
+
+
+hostname: fw-sec
+ip-address: 10.0.0.15
+public-ip-address: unknown
+netmask: 255.255.255.0
+default-gateway: 10.0.0.2
+ip-assignment: static
+ip6-assignment: static
+ipv6-address: unknown
+ipv6-link-local-address: fe80::e00:84ff:fece:e00/64
+ipv6-default-gateway: 
+mac-address: 0c:00:84:ce:0e:00
+time: Thu Aug 20 23:56:31 2026
+uptime: 0 days, 20:26:40
+family: vm
+model: PA-VM
+serial: unknown
+vm-mac-base: BA:DB:EE:FB:AD:00
+vm-mac-count: 255
+vm-uuid: AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+vm-cpuid: KVM:210FB000FFFB8B17
+vm-license: none
+vm-cap-tier: unknown
+vm-cpu-count: 8
+vm-memory: 16354240
+vm-mode: KVM
+cloud-mode: non-cloud
+sw-version: 12.1.2
+global-protect-client-package-version: 0.0.0
+device-dictionary-version: 82-406
+device-dictionary-release-date: 
+app-version: 9010-9583
+app-release-date: 
+av-version: 0
+av-release-date: 
+threat-version: 0
+threat-release-date: 
+wf-private-version: 0
+wf-private-release-date: unknown
+url-db: paloaltonetworks
+wildfire-version: 0
+wildfire-release-date: 
+wildfire-rt: Disabled
+url-filtering-version: 0000.00.00.000
+global-protect-datafile-version: 0
+global-protect-datafile-release-date: unknown
+global-protect-clientless-vpn-version: 0
+global-protect-clientless-vpn-release-date: 
+logdb-version: 12.1.4
+vm_series: vm_series-6.1.0
+dlp: dlp-6.0.1
+platform-family: vm
+vpn-disable-mode: off
+multi-vsys: off
+operational-mode: normal
+advanced-routing: off
+duplicate-ip: Disabled
+device-certificate-status: None
+
+
+==============================================================================
+fw-sec# show high-availability state
+==============================================================================
+
+
+Group 1: 
+  Mode: Active-Active
+  Local Information:
+    Version: 1
+    Mode: Active-Active
+    State: active-secondary (last 20 hours)
+    Device Information:
+      Management IPv4 Address: 10.0.0.15/24
+      Management IPv6 Address: 
+      Jumbo-Frames enabled; MTU 9216
+    HA1 Control Links Joint Configuration:
+      Encryption Enabled: no
+    Election Option Information:
+      Priority: 100
+      Preemptive: no
+    Version Compatibility:
+      Software Version: Match
+      Application Content Compatibility: Match
+      IOT Content Compatibility: Match
+      Anti-Virus Compatibility: Match
+      Threat Content Compatibility: Match
+      VPN Client Software Compatibility: Match
+      Global Protect Client Software Compatibility: Match
+      VM License Type: Match
+      Plugin Information:
+        DLP-compat: Match
+        VMS-compat: Match
+    State Synchronization: Complete; type: ethernet
+  Peer Information:
+    Connection status: up
+    Version: 1
+    Mode: Active-Active
+    State: active-primary (last 20 hours)
+    Device Information:
+      Management IPv4 Address: 10.0.0.15/24
+      Management IPv6 Address: 
+      Jumbo-Frames enabled; MTU 9216
+      Connection up; Primary HA1 link
+    Election Option Information:
+      Priority: 100
+      Preemptive: no
+  Configuration Synchronization:
+    Enabled: no
+    Running Configuration: not synchronized
+      Out-of-sync Reason: Peer disconnected with commit
+
+==============================================================================
+fw-sec# show high-availability all
+==============================================================================
+
+
+Group 1: 
+  Mode: Active-Active
+  Local Information:
+    Version: 1
+    Mode: Active-Active
+    State: active-secondary (last 20 hours)
+    Device Information:
+      Model: PA-VM
+      Serial: 
+      Management IPv4 Address: 10.0.0.15/24
+      Management IPv6 Address: 
+      Jumbo-Frames enabled; MTU 9216
+    HA1 Control Links Joint Configuration:
+      Link Monitor Interval: 3000 ms
+      Encryption Enabled: no
+    HA1 Control Link Information:
+      IP Address: 10.210.0.2/30
+      MAC Address: aa:c1:ab:00:8e:fa
+      Interface: ethernet1/5
+      Link State: Up; Setting: 10Gb/s-full
+      Key Imported : no
+    HA2 Data Link Information:
+      MAC Address: aa:c1:ab:a7:0b:cd
+      Interface: ethernet1/6
+      Link State: Up; Setting: 10Gb/s-full
+    HA3 Packet-Forwarding Link Information:
+      MAC Address: aa:c1:ab:25:64:ff
+      Interface: ethernet1/7
+      Link State: Up; Setting: 10Gb/s-full
+    Election Option Information:
+      Priority: 100
+      Preemptive: no
+      Promotion Hold Interval: 2000 ms
+      Hello Message Interval: 8000 ms
+      Heartbeat Ping Interval: 2000 ms
+      Max # of Flaps: 3
+      Preemption Hold Interval: 1 min
+      Monitor Fail Hold Up Interval: 0 ms
+      Addon Master Hold Up Interval: 500 ms
+    Active-Active Mode:
+      Device-id: 1
+      Tentative Hold Interval: 60 sec
+      Network Config Sync Virtual-Router: no
+      Network Config Sync QOS: no
+      Session Owner Selection Session Processing Rule: first-packet
+      Session Owner Selection Session Setup Rule: ip-modulo
+    Version Information:
+      Build Release: 12.1.2
+      URL Database: 0000.00.00.000
+      Application Content: 9010-9583
+      IOT Content: Not Installed
+      Anti-Virus: Not Installed
+      Threat Content: 0
+      VPN Client Software: Not Installed
+      Global Protect Client Software: Not Installed
+      VM License Type: vm16000
+      Plugin Information:
+        DLP: 6.0.1
+        VMS: 6.1.0
+    Version Compatibility:
+      Software Version: Match
+      Application Content Compatibility: Match
+      IOT Content Compatibility: Match
+      Anti-Virus Compatibility: Match
+      Threat Content Compatibility: Match
+      VPN Client Software Compatibility: Match
+      Global Protect Client Software Compatibility: Match
+      VM License Type: Match
+      Plugin Information:
+        DLP-compat: Match
+        VMS-compat: Match
+    State Synchronization: Complete; type: ethernet
+  Peer Information:
+    Connection status: up
+    Version: 1
+    Mode: Active-Active
+    State: active-primary (last 20 hours)
+    Device Information:
+      Model: PA-VM
+      Serial: 
+      Management IPv4 Address: 10.0.0.15/24
+      Management IPv6 Address: 
+      Jumbo-Frames enabled; MTU 9216
+    HA1 Control Link Information:
+      IP Address: 10.210.0.1
+      MAC Address: aa:c1:ab:9c:f6:aa
+      Connection up; Primary HA1 link
+    HA2 Data Link Information:
+      MAC Address: aa:c1:ab:a0:ee:b4
+    HA3 Packet-Forwarding Link Information:
+      MAC Address: aa:c1:ab:2e:24:fb
+    Election Option Information:
+      Priority: 100
+      Preemptive: no
+    Active-Active Mode:
+      Device-id: 0
+      Tentative Hold Interval: 60 sec
+      Session Owner Selection Session Processing Rule: first-packet
+      Session Owner Selection Session Setup Rule: ip-modulo
+    Version Information:
+      Build Release: 12.1.2
+      URL Database: 0000.00.00.000
+      Application Content: 9010-9583
+      IOT Content: Not Installed
+      Anti-Virus: Not Installed
+      Threat Content: 0
+      VPN Client Software: Not Installed
+      Global Protect Client Software: Not Installed
+      VM License Type: vm16000
+      Plugin Information:
+        DLP: 6.0.1
+        VMS: 6.1.0
+  Initial Monitor Hold inactive; Allow Network/Links to Settle:
+    Link and path monitoring failures honored
+  Tentative hold time inactive
+  Link Monitoring Information:
+    Enabled: yes
+    Failure condition: any
+    Group ae1-members:
+      Enabled: yes
+      Failure condition: all
+      Interface ethernet1/1: up
+      Interface ethernet1/2: up
+  Path Monitoring Information:
+    Enabled: yes
+    Failure condition: any
+    Virtual-Wire Groups:
+      No Virtual-Wire path monitoring groups
+    VLAN Groups:
+      No VLAN path monitoring groups
+    Virtual-Router Groups:
+      Virtual-Router  name: default
+        Enabled: yes
+        Failure condition: all
+        Ping Interval: 200 ms
+        Ping Count: 10
+        Destination Group: transit
+          Enabled: yes
+          Failure condition: all
+          Destination IP Address: 10.201.0.4: up
+          Destination IP Address: 10.201.0.6: up
+  Configuration Synchronization:
+    Enabled: no
+    Running Configuration: not synchronized
+      Out-of-sync Reason: Peer disconnected with commit
+
+==============================================================================
+fw-sec# show high-availability link-monitoring
+==============================================================================
+
+
+Group 1: 
+  Mode: Active-Active
+  Link Monitoring Information:
+    Enabled: yes
+    Failure condition: any
+    Group ae1-members:
+      Enabled: yes
+      Failure condition: all
+      Interface ethernet1/1: up
+      Interface ethernet1/2: up
+
+==============================================================================
+fw-sec# show interface all
+==============================================================================
+
+
+total configured hardware interfaces: 6
+
+name                    id    speed/duplex/state            mac address       
+--------------------------------------------------------------------------------
+ethernet1/1             16    10000/full/up                 aa:c1:ab:2f:15:c6 
+ethernet1/2             17    10000/full/up                 aa:c1:ab:3e:6d:b9 
+ethernet1/3             18    10000/full/up                 aa:c1:ab:38:aa:a8 
+ethernet1/5             20    10000/full/up                 aa:c1:ab:00:8e:fa 
+ethernet1/6             21    10000/full/up                 aa:c1:ab:a7:0b:cd 
+ethernet1/7             22    10000/full/up                 aa:c1:ab:25:64:ff 
+
+aggregation groups: 0
+
+
+total configured logical interfaces: 10
+
+name                      id    vsys zone             forwarding               tag    address                                         
+------------------------- ----- ---- ---------------- ------------------------ ------ ------------------
+ethernet1/1               16    1                     N/A                      0      N/A               
+ethernet1/1.100           256   1    k8s              vr:default               100    10.201.0.5/31     
+ethernet1/1.200           257   1    svc              vr:default               200    10.201.1.5/31     
+ethernet1/2               17    1                     N/A                      0      N/A               
+ethernet1/2.100           258   1    k8s              vr:default               100    10.201.0.7/31     
+ethernet1/2.200           259   1    svc              vr:default               200    10.201.1.7/31     
+ethernet1/3               18    1    internet         vr:default               0      10.80.15.22/24    
+ethernet1/5               20    1                     ha                       0      10.210.0.2/30     
+ethernet1/6               21    1                     ha                       0      N/A               
+ethernet1/7               22    1                     ha                       0      N/A               
+
+
+==============================================================================
+fw-sec# show interface logical
+==============================================================================
+
+
+total configured logical interfaces: 10
+
+name                      id    vsys zone             forwarding               tag    address                                         
+------------------------- ----- ---- ---------------- ------------------------ ------ ------------------
+ethernet1/1               16    1                     N/A                      0      N/A               
+ethernet1/1.100           256   1    k8s              vr:default               100    10.201.0.5/31     
+ethernet1/1.200           257   1    svc              vr:default               200    10.201.1.5/31     
+ethernet1/2               17    1                     N/A                      0      N/A               
+ethernet1/2.100           258   1    k8s              vr:default               100    10.201.0.7/31     
+ethernet1/2.200           259   1    svc              vr:default               200    10.201.1.7/31     
+ethernet1/3               18    1    internet         vr:default               0      10.80.15.22/24    
+ethernet1/5               20    1                     ha                       0      10.210.0.2/30     
+ethernet1/6               21    1                     ha                       0      N/A               
+ethernet1/7               22    1                     ha                       0      N/A               
+
+
+==============================================================================
+fw-sec# show routing protocol bgp summary
+==============================================================================
+
+
+  ==========
+  router id:                     10.200.21.4
+  virtual router:                default
+  reject default route:          yes
+  redist default route:          allow
+  Install BGP routes:            yes
+  Graceful Restart:              supported
+  AS size:                       2
+  Local AS:                      65300
+  Local member AS:               0
+  Cluster id:                    0.0.0.0
+  Default local preference:      100
+  Always compare MED:            no
+  Aggregate regardless MED:      yes
+  Deterministic MED processing:  yes
+  Accept ORF:                    no
+  Accept CISCO style prefix:     yes
+  mp-bgp-enable:                 yes
+  afi-safi-ipv4-unicast:         yes
+  rib-out entries:               current 4, peak 4 
+    peer agg1-k8s:               AS 65400, Established, IP 10.201.0.4
+      bgpAfiIpv4/unicast pfx:    Accepted pfx: 20, Advertised pfx: 1
+    peer agg2-k8s:               AS 65400, Established, IP 10.201.0.6
+      bgpAfiIpv4/unicast pfx:    Accepted pfx: 20, Advertised pfx: 1
+    peer agg1-svc:               AS 65400, Established, IP 10.201.1.4
+      bgpAfiIpv4/unicast pfx:    Accepted pfx: 4, Advertised pfx: 1
+    peer agg2-svc:               AS 65400, Established, IP 10.201.1.6
+      bgpAfiIpv4/unicast pfx:    Accepted pfx: 4, Advertised pfx: 1
+
+
+==============================================================================
+fw-sec# show routing protocol bgp peer
+==============================================================================
+
+
+  ==========
+  Peer:                          agg1-k8s (id 1)
+  virtual router:                default
+  Peer router id:                10.201.255.1
+  Remote AS:                     65400
+  Peer group:                    fabric (id 1)
+  Peer status:                   Established, for 73357 seconds
+  Password set:                  no
+  Passive:                       no
+  Multi-hop TTL:                 1
+  Remote Address:                10.201.0.4:179
+  Local Address:                 10.201.0.5:41861
+  (R) reflector client:          not-client
+  same confederation:            no
+  send aggr confed as-path:      yes
+  peering type:                  Unspecified
+  Connect-Retry interval:        15
+  Open Delay:                    0
+  Idle Hold:                     15
+  Prefix limit:                  5000
+  Holdtime:                      9 (config 9)
+  Keep-Alive interval:           3 (config 3)
+  Update messages:               in      152, out        2
+  Total messages:                in    24605, out    28597
+  Last update age:               2
+  Last error:                    
+  Flap counts:                   1, established 1 times
+  (R) ORF entries:               0
+  Nexthop set to self:           no
+  use 3rd party as next-hop:     yes
+  override nexthop to peer:      no
+  ----------
+  remove private AS number:      no
+  ------------
+  Capability:                    Multiprotocol Extensions(1)  value: IPv4 Unicast
+  Capability:                    Route Refresh(yes)
+  Capability:                    unknown(yes)
+  Capability:                    Graceful Restart(64)  value: 0078
+  Capability:                    4-Byte AS Number(65)  value: 65400
+  Capability:                    unknown(69)  value: 00010101
+  Capability:                    Enhanced Route Refresh(yes)
+  Capability:                    unknown(71)  value: 00010180000000
+  Capability:                    unknown(73)  value: 0B62722D6167672D73772D3100
+  Capability:                    Route Refresh (Cisco)(yes)
+  ----------
+  Prefix counter for:            bgpAfiIpv4 / unicast
+  Incoming Prefix:               Accepted 20, Rejected 0, Policy Rej 0, Total 20
+  Outgoing Prefix:               1
+  Advertised Prefix:             1
+  ==========
+  Peer:                          agg2-k8s (id 3)
+  virtual router:                default
+  Peer router id:                10.201.255.2
+  Remote AS:                     65400
+  Peer group:                    fabric (id 1)
+  Peer status:                   Established, for 73357 seconds
+  Password set:                  no
+  Passive:                       no
+  Multi-hop TTL:                 1
+  Remote Address:                10.201.0.6:179
+  Local Address:                 10.201.0.7:34367
+  (R) reflector client:          not-client
+  same confederation:            no
+  send aggr confed as-path:      yes
+  peering type:                  Unspecified
+  Connect-Retry interval:        15
+  Open Delay:                    0
+  Idle Hold:                     15
+  Prefix limit:                  5000
+  Holdtime:                      9 (config 9)
+  Keep-Alive interval:           3 (config 3)
+  Update messages:               in      152, out        2
+  Total messages:                in    24605, out    28592
+  Last update age:               2
+  Last error:                    
+  Flap counts:                   1, established 1 times
+  (R) ORF entries:               0
+  Nexthop set to self:           no
+  use 3rd party as next-hop:     yes
+  override nexthop to peer:      no
+  ----------
+  remove private AS number:      no
+  ------------
+  Capability:                    Multiprotocol Extensions(1)  value: IPv4 Unicast
+  Capability:                    Route Refresh(yes)
+  Capability:                    unknown(yes)
+  Capability:                    Graceful Restart(64)  value: 0078
+  Capability:                    4-Byte AS Number(65)  value: 65400
+  Capability:                    unknown(69)  value: 00010101
+  Capability:                    Enhanced Route Refresh(yes)
+  Capability:                    unknown(71)  value: 00010180000000
+  Capability:                    unknown(73)  value: 0B62722D6167672D73772D3200
+  Capability:                    Route Refresh (Cisco)(yes)
+  ----------
+  Prefix counter for:            bgpAfiIpv4 / unicast
+  Incoming Prefix:               Accepted 20, Rejected 0, Policy Rej 0, Total 20
+  Outgoing Prefix:               1
+  Advertised Prefix:             1
+  ==========
+  Peer:                          agg1-svc (id 2)
+  virtual router:                default
+  Peer router id:                10.201.255.1
+  Remote AS:                     65400
+  Peer group:                    fabric (id 1)
+  Peer status:                   Established, for 73357 seconds
+  Password set:                  no
+  Passive:                       no
+  Multi-hop TTL:                 1
+  Remote Address:                10.201.1.4:179
+  Local Address:                 10.201.1.5:40925
+  (R) reflector client:          not-client
+  same confederation:            no
+  send aggr confed as-path:      yes
+  peering type:                  Unspecified
+  Connect-Retry interval:        15
+  Open Delay:                    0
+  Idle Hold:                     15
+  Prefix limit:                  5000
+  Holdtime:                      9 (config 9)
+  Keep-Alive interval:           3 (config 3)
+  Update messages:               in       22, out        2
+  Total messages:                in    24475, out    28590
+  Last update age:               2
+  Last error:                    
+  Flap counts:                   1, established 1 times
+  (R) ORF entries:               0
+  Nexthop set to self:           no
+  use 3rd party as next-hop:     yes
+  override nexthop to peer:      no
+  ----------
+  remove private AS number:      no
+  ------------
+  Capability:                    Multiprotocol Extensions(1)  value: IPv4 Unicast
+  Capability:                    Route Refresh(yes)
+  Capability:                    unknown(yes)
+  Capability:                    Graceful Restart(64)  value: 0078
+  Capability:                    4-Byte AS Number(65)  value: 65400
+  Capability:                    unknown(69)  value: 00010101
+  Capability:                    Enhanced Route Refresh(yes)
+  Capability:                    unknown(71)  value: 00010180000000
+  Capability:                    unknown(73)  value: 0B62722D6167672D73772D3100
+  Capability:                    Route Refresh (Cisco)(yes)
+  ----------
+  Prefix counter for:            bgpAfiIpv4 / unicast
+  Incoming Prefix:               Accepted 4, Rejected 0, Policy Rej 0, Total 4
+  Outgoing Prefix:               1
+  Advertised Prefix:             1
+  ==========
+  Peer:                          agg2-svc (id 4)
+  virtual router:                default
+  Peer router id:                10.201.255.2
+  Remote AS:                     65400
+  Peer group:                    fabric (id 1)
+  Peer status:                   Established, for 73357 seconds
+  Password set:                  no
+  Passive:                       no
+  Multi-hop TTL:                 1
+  Remote Address:                10.201.1.6:179
+  Local Address:                 10.201.1.7:40537
+  (R) reflector client:          not-client
+  same confederation:            no
+  send aggr confed as-path:      yes
+  peering type:                  Unspecified
+  Connect-Retry interval:        15
+  Open Delay:                    0
+  Idle Hold:                     15
+  Prefix limit:                  5000
+  Holdtime:                      9 (config 9)
+  Keep-Alive interval:           3 (config 3)
+  Update messages:               in       22, out        2
+  Total messages:                in    24475, out    28628
+  Last update age:               2
+  Last error:                    
+  Flap counts:                   1, established 1 times
+  (R) ORF entries:               0
+  Nexthop set to self:           no
+  use 3rd party as next-hop:     yes
+  override nexthop to peer:      no
+  ----------
+  remove private AS number:      no
+  ------------
+  Capability:                    Multiprotocol Extensions(1)  value: IPv4 Unicast
+  Capability:                    Route Refresh(yes)
+  Capability:                    unknown(yes)
+  Capability:                    Graceful Restart(64)  value: 0078
+  Capability:                    4-Byte AS Number(65)  value: 65400
+  Capability:                    unknown(69)  value: 00010101
+  Capability:                    Enhanced Route Refresh(yes)
+  Capability:                    unknown(71)  value: 00010180000000
+  Capability:                    unknown(73)  value: 0B62722D6167672D73772D3200
+  Capability:                    Route Refresh (Cisco)(yes)
+  ----------
+  Prefix counter for:            bgpAfiIpv4 / unicast
+  Incoming Prefix:               Accepted 4, Rejected 0, Policy Rej 0, Total 4
+  Outgoing Prefix:               1
+  Advertised Prefix:             1
+
+
+==============================================================================
+fw-sec# show routing protocol bgp loc-rib
+==============================================================================
+
+
+  
+VIRTUAL ROUTER: default (id 1)
+  ==========
+  Prefix             Nexthop          Peer       Weight   LocPrf Org      MED flap AS-Path
+ *10.167.10.0/24     10.201.0.4       agg1-k8s        0      100 i/c        0    0 65400,65114,65100,65111
+ *10.167.10.11/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65114,65100,65111
+ *10.167.10.12/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65114,65100,65111
+ *10.167.10.13/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65114,65100,65111
+ *10.167.20.0/24     10.201.0.4       agg1-k8s        0      100 i/c        0    0 65400,65114,65100,65112
+ *10.167.20.11/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65114,65100,65112
+ *10.167.20.12/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65114,65100,65112
+ *10.167.20.13/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65114,65100,65112
+ *10.168.10.0/24     10.201.0.4       agg1-k8s        0      100 i/c        0    0 65400,65213,65200,65211
+ *10.168.10.11/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65213,65200,65211
+ *10.168.10.21/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65213,65200,65211
+ *10.168.10.22/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65213,65200,65211
+ *10.168.10.23/32    10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65213,65200,65211
+ *10.201.20.0/30     10.201.0.4       agg1-k8s        0      100 igp        0    0 65400
+ *10.201.20.8/30     10.201.0.4       agg1-k8s        0      100 igp        0    0 65400
+ *192.168.202.0/32   10.201.0.4       agg1-k8s        0      100 igp        0    0 65400
+ *192.168.202.1/32   10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65114,65100,65111,65010
+ *192.168.202.2/32   10.201.0.4       agg1-k8s        0      100 igp        0    0 65400,65213,65200,65211,65020
+ *192.168.202.3/32   10.201.0.4       agg1-k8s        0      100 igp        0    0 65400
+ *192.168.202.4/32   10.201.0.4       agg1-k8s        0      100 igp        0    0 65400
+ *10.167.30.0/24     10.201.1.4       agg1-svc        0      100 i/c        0    0 65400,65114,65100,65113
+ *10.167.30.10/32    10.201.1.4       agg1-svc        0      100 igp        0    0 65400,65114,65100,65113
+ *10.168.30.0/24     10.201.1.4       agg1-svc        0      100 i/c        0    0 65400,65213,65200,65212
+ *10.168.30.10/32    10.201.1.4       agg1-svc        0      100 igp        0    0 65400,65213,65200,65212
+  10.167.10.0/24     10.201.0.6       agg2-k8s        0      100 i/c        0    0 65400,65114,65100,65111
+  10.167.10.11/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65114,65100,65111
+  10.167.10.12/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65114,65100,65111
+  10.167.10.13/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65114,65100,65111
+  10.167.20.0/24     10.201.0.6       agg2-k8s        0      100 i/c        0    0 65400,65114,65100,65112
+  10.167.20.11/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65114,65100,65112
+  10.167.20.12/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65114,65100,65112
+  10.167.20.13/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65114,65100,65112
+  10.168.10.0/24     10.201.0.6       agg2-k8s        0      100 i/c        0    0 65400,65213,65200,65211
+  10.168.10.11/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65213,65200,65211
+  10.168.10.21/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65213,65200,65211
+  10.168.10.22/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65213,65200,65211
+  10.168.10.23/32    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65213,65200,65211
+ *10.201.20.4/30     10.201.0.6       agg2-k8s        0      100 igp        0    0 65400
+ *10.201.20.12/30    10.201.0.6       agg2-k8s        0      100 igp        0    0 65400
+  192.168.202.0/32   10.201.0.6       agg2-k8s        0      100 igp        0    0 65400
+  192.168.202.1/32   10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65114,65100,65111,65010
+  192.168.202.2/32   10.201.0.6       agg2-k8s        0      100 igp        0    0 65400,65213,65200,65211,65020
+  192.168.202.3/32   10.201.0.6       agg2-k8s        0      100 igp        0    0 65400
+  192.168.202.4/32   10.201.0.6       agg2-k8s        0      100 igp        0    0 65400
+  10.167.30.0/24     10.201.1.6       agg2-svc        0      100 i/c        0    0 65400,65114,65100,65113
+  10.167.30.10/32    10.201.1.6       agg2-svc        0      100 igp        0    0 65400,65114,65100,65113
+  10.168.30.0/24     10.201.1.6       agg2-svc        0      100 i/c        0    0 65400,65213,65200,65212
+  10.168.30.10/32    10.201.1.6       agg2-svc        0      100 igp        0    0 65400,65213,65200,65212
+ *0.0.0.0/0          10.80.15.1       Local           0      100 i/c        0    0 
+
+total routes shown: 49
+
+
+==============================================================================
+fw-sec# show routing route
+==============================================================================
+
+
+flags: A:active, ?:loose, C:connect, H:host, S:static, ~:internal, R:rip, O:ospf, B:bgp, 
+       Oi:ospf intra-area, Oo:ospf inter-area, O1:ospf ext-type-1, O2:ospf ext-type-2, E:ecmp, M:multicast
+
+  
+VIRTUAL ROUTER: default (id 1)
+  ==========
+destination                                 nexthop                                 metric flags      age   interface          next-AS    
+0.0.0.0/0                                   10.80.15.1                              10     A S              ethernet1/3                   
+10.80.15.0/24                               10.80.15.22                             0      A C              ethernet1/3                   
+10.80.15.22/32                              0.0.0.0                                 0      A H                                            
+10.167.10.0/24                              10.201.0.4                                     A?B        3616                     65400      
+10.167.10.11/32                             10.201.0.4                                     A?B        3616                     65400      
+10.167.10.12/32                             10.201.0.4                                     A?B        3616                     65400      
+10.167.10.13/32                             10.201.0.4                                     A?B        45380                    65400      
+10.167.20.0/24                              10.201.0.4                                     A?B        73356                    65400      
+10.167.20.11/32                             10.201.0.4                                     A?B        50012                    65400      
+10.167.20.12/32                             10.201.0.4                                     A?B        3616                     65400      
+10.167.20.13/32                             10.201.0.4                                     A?B        3616                     65400      
+10.167.30.0/24                              10.201.1.4                                     A?B        3616                     65400      
+10.167.30.10/32                             10.201.1.4                                     A?B        3616                     65400      
+10.168.10.0/24                              10.201.0.4                                     A?B        73356                    65400      
+10.168.10.11/32                             10.201.0.4                                     A?B        3604                     65400      
+10.168.10.21/32                             10.201.0.4                                     A?B        73356                    65400      
+10.168.10.22/32                             10.201.0.4                                     A?B        73356                    65400      
+10.168.10.23/32                             10.201.0.4                                     A?B        73356                    65400      
+10.168.30.0/24                              10.201.1.4                                     A?B        3604                     65400      
+10.168.30.10/32                             10.201.1.4                                     A?B        3604                     65400      
+10.201.0.4/31                               10.201.0.5                              0      A C              ethernet1/1.100               
+10.201.0.5/32                               0.0.0.0                                 0      A H                                            
+10.201.0.6/31                               10.201.0.7                              0      A C              ethernet1/2.100               
+10.201.0.7/32                               0.0.0.0                                 0      A H                                            
+10.201.1.4/31                               10.201.1.5                              0      A C              ethernet1/1.200               
+10.201.1.5/32                               0.0.0.0                                 0      A H                                            
+10.201.1.6/31                               10.201.1.7                              0      A C              ethernet1/2.200               
+10.201.1.7/32                               0.0.0.0                                 0      A H                                            
+10.201.20.0/30                              10.201.0.4                              0      A?B        73356                    65400      
+10.201.20.4/30                              10.201.0.6                              0      A?B        73356                    65400      
+10.201.20.8/30                              10.201.0.4                              0      A?B        73356                    65400      
+10.201.20.12/30                             10.201.0.6                              0      A?B        73356                    65400      
+192.168.202.0/32                            10.201.0.4                                     A?B        73356                    65400      
+192.168.202.1/32                            10.201.0.4                                     A?B        3616                     65400      
+192.168.202.2/32                            10.201.0.4                                     A?B        3604                     65400      
+192.168.202.3/32                            10.201.0.4                                     A?B        73356                    65400      
+192.168.202.4/32                            10.201.0.4                                     A?B        73356                    65400      
+total routes shown: 37
+
+
+==============================================================================
+fw-sec# show arp all
+==============================================================================
+
+
+maximum of entries supported :      32000
+default timeout:                    1800 seconds
+total ARP entries in table :        6
+total ARP entries shown :           6
+status: s - static, c - complete, e - expiring, i - incomplete
+
+interface                ip address      hw address        port              status   ttl  
+--------------------------------------------------------------------------------
+ethernet1/3              10.80.15.21     aa:c1:ab:4e:4d:2f ethernet1/3                c      380  
+ethernet1/3              10.80.15.103    aa:c1:ab:a7:dd:e5 ethernet1/3                c      1278 
+ethernet1/1.100          10.201.0.4      aa:c1:ab:1f:a8:cd ethernet1/1                c      1536 
+ethernet1/1.200          10.201.1.4      aa:c1:ab:1f:a8:cd ethernet1/1                c      1540 
+ethernet1/2.100          10.201.0.6      aa:c1:ab:65:01:c9 ethernet1/2                c      1535 
+ethernet1/2.200          10.201.1.6      aa:c1:ab:65:01:c9 ethernet1/2                c      1539 
+
+
+==============================================================================
+fw-sec# show session info
+==============================================================================
+
+
+target-dp:                                       *.dp0
+--------------------------------------------------------------------------------
+Number of sessions supported:                    1100000
+Number of allocated sessions:                    54
+Number of active TCP sessions:                   8
+Number of active UDP sessions:                   46
+Number of active ICMP sessions:                  0
+Number of active GTPc sessions:                  0
+Number of active HTTP2-5gc sessions:             0
+Number of active GTPu sessions:                  0
+Number of pending GTPu sessions:                 0
+Number of active BCAST sessions:                 0
+Number of active MCAST sessions:                 0
+Number of active predict sessions:               0
+Number of active SCTP sessions:                  0
+Number of active SCTP associations:              0
+Number of active PFCP sessions:                  0
+Number of active IMSI sessions:                  0
+Session table utilization:                       0%
+Number of sessions created since bootup:         105083
+Packet rate:                                     22/s
+Throughput:                                      15 kbps
+New connection establish rate:                   0 cps
+--------------------------------------------------------------------------------
+Session timeout
+  TCP default timeout:                           3600 secs
+  TCP session timeout before SYN-ACK received:      5 secs
+  TCP session timeout before 3-way handshaking:    10 secs
+  TCP half-closed session timeout:                 30 secs
+  TCP session timeout in TIME_WAIT:                15 secs
+  TCP session delayed ack timeout:                 25 millisecs
+  TCP session timeout for unverified RST:          30 secs
+  UDP default timeout:                             30 secs
+  ICMP default timeout:                             6 secs
+  SCTP default timeout:                          3600 secs
+  SCTP timeout before INIT-ACK received:            5 secs
+  SCTP timeout before COOKIE received:             60 secs
+  SCTP timeout before SHUTDOWN received:           30 secs
+  5GC delete timeout:                              15 secs
+  other IP default timeout:                        30 secs
+  Captive Portal session timeout:                  30 secs
+  Session timeout in discard state:
+    TCP: 90 secs, UDP: 60 secs, SCTP: 60 secs, other IP protocols: 60 secs
+--------------------------------------------------------------------------------
+Session accelerated aging:                       True
+  Accelerated aging threshold:                   80% of utilization
+  Scaling factor:                                2 X
+--------------------------------------------------------------------------------
+Session setup
+  TCP - reject non-SYN first packet:             True
+  Hardware session offloading:                   False
+  Software Cut Through:                          False
+  Run-to-completion mode:                        True
+  Tunnel acceleration:                           True
+  IPv6 firewalling:                              True
+  Strict TCP/IP checksum:                        True
+  Strict TCP RST sequence:                       True
+  Reject TCP small initial window:               False
+  Reject TCP SYN with different seq/options:     True
+  Teardown session if forward zone changes:      False
+  Do not refresh discard sessions:               False
+  ICMP Unreachable Packet Rate:                  0 pps
+--------------------------------------------------------------------------------
+Application trickling scan parameters:
+  Timeout to determine application trickling:    10 secs
+  Resource utilization threshold to start scan:  80%
+  Scan scaling factor over regular aging:        8
+--------------------------------------------------------------------------------
+Session behavior when resource limit is reached: drop
+--------------------------------------------------------------------------------
+Pcap token bucket rate                         : 10485760
+--------------------------------------------------------------------------------
+Max pending queued mcast packets per session   : 0
+--------------------------------------------------------------------------------
+
+
+==============================================================================
+fw-sec# show session all
+==============================================================================
+
+
+--------------------------------------------------------------------------------
+ID          Application    State   Type Flag  Src[Sport]/Zone/Proto (translated IP[Port])
+Vsys                                          Dst[Dport]/Zone (translated IP[Port])
+--------------------------------------------------------------------------------
+210463       dns-base       ACTIVE  FLOW       10.168.10.21[45500]/k8s/17  (10.168.10.21[45500])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210381       dns-base       ACTIVE  FLOW       10.167.20.11[56936]/k8s/17  (10.167.20.11[56936])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210419       dns-base       ACTIVE  FLOW       10.168.10.21[55320]/k8s/17  (10.168.10.21[55320])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210339       dns-base       ACTIVE  FLOW  NS   10.167.30.10[45637]/svc/17  (10.80.15.21[34630])
+vsys1                                          8.8.8.8[53]/internet  (8.8.8.8[53])
+210443       dns-base       ACTIVE  FLOW       10.168.10.21[34853]/k8s/17  (10.168.10.21[34853])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+30           undecided      ACTIVE  FLOW       10.201.0.3[44119]/k8s/6  (10.201.0.3[44119])
+vsys1                                          10.201.0.2[179]/k8s  (10.201.0.2[179])
+210371       dns-base       ACTIVE  FLOW       10.168.10.21[54281]/k8s/17  (10.168.10.21[54281])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210449       dns-base       ACTIVE  FLOW       10.167.20.11[49223]/k8s/17  (10.167.20.11[49223])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210401       dns-base       ACTIVE  FLOW       10.167.20.11[49634]/k8s/17  (10.167.20.11[49634])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210373       dns-base       ACTIVE  FLOW       10.167.20.11[48767]/k8s/17  (10.167.20.11[48767])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210379       dns-base       ACTIVE  FLOW       10.168.10.21[44310]/k8s/17  (10.168.10.21[44310])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210423       dns-base       ACTIVE  FLOW       10.168.10.21[34514]/k8s/17  (10.168.10.21[34514])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210393       dns-base       ACTIVE  FLOW       10.167.20.11[59547]/k8s/17  (10.167.20.11[59547])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210461       dns-base       ACTIVE  FLOW       10.167.20.11[39809]/k8s/17  (10.167.20.11[39809])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210385       dns-base       ACTIVE  FLOW       10.167.20.11[58523]/k8s/17  (10.167.20.11[58523])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210427       dns-base       ACTIVE  FLOW       10.168.10.21[34364]/k8s/17  (10.168.10.21[34364])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210409       dns-base       ACTIVE  FLOW       10.167.20.11[58503]/k8s/17  (10.167.20.11[58503])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210369       dns-base       ACTIVE  FLOW       10.167.20.11[58645]/k8s/17  (10.167.20.11[58645])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210389       dns-base       ACTIVE  FLOW       10.167.20.11[54316]/k8s/17  (10.167.20.11[54316])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210425       dns-base       ACTIVE  FLOW       10.167.20.11[34817]/k8s/17  (10.167.20.11[34817])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210441       dns-base       ACTIVE  FLOW       10.167.20.11[43589]/k8s/17  (10.167.20.11[43589])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210407       dns-base       ACTIVE  FLOW       10.168.10.21[47133]/k8s/17  (10.168.10.21[47133])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210455       dns-base       ACTIVE  FLOW       10.168.10.21[40062]/k8s/17  (10.168.10.21[40062])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210439       dns-base       ACTIVE  FLOW       10.168.10.21[53190]/k8s/17  (10.168.10.21[53190])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210383       dns-base       ACTIVE  FLOW       10.168.10.21[48213]/k8s/17  (10.168.10.21[48213])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210375       dns-base       ACTIVE  FLOW  NS   10.168.30.10[33772]/svc/17  (10.80.15.21[16399])
+vsys1                                          1.1.1.1[53]/internet  (1.1.1.1[53])
+26           undecided      ACTIVE  FLOW       10.201.1.3[39673]/svc/6  (10.201.1.3[39673])
+vsys1                                          10.201.1.2[179]/svc  (10.201.1.2[179])
+210337       dns-base       ACTIVE  FLOW  NS   10.167.30.10[45637]/svc/17  (10.80.15.21[10200])
+vsys1                                          1.1.1.1[53]/internet  (1.1.1.1[53])
+210299       dns-base       ACTIVE  FLOW  NS   10.168.30.10[44476]/svc/17  (10.80.15.21[2401])
+vsys1                                          8.8.8.8[53]/internet  (8.8.8.8[53])
+210453       dns-base       ACTIVE  FLOW       10.167.20.11[58032]/k8s/17  (10.167.20.11[58032])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210451       dns-base       ACTIVE  FLOW       10.168.10.21[33944]/k8s/17  (10.168.10.21[33944])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210421       dns-base       ACTIVE  FLOW       10.167.20.11[39879]/k8s/17  (10.167.20.11[39879])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210387       dns-base       ACTIVE  FLOW       10.168.10.21[58859]/k8s/17  (10.168.10.21[58859])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210403       dns-base       ACTIVE  FLOW       10.168.10.21[39052]/k8s/17  (10.168.10.21[39052])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+82           bgp            ACTIVE  FLOW       10.201.1.7[40537]/svc/6  (10.201.1.7[40537])
+vsys1                                          10.201.1.6[179]/svc  (10.201.1.6[179])
+210411       dns-base       ACTIVE  FLOW       10.168.10.21[42954]/k8s/17  (10.168.10.21[42954])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210391       dns-base       ACTIVE  FLOW       10.168.10.21[51929]/k8s/17  (10.168.10.21[51929])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+320          bgp            ACTIVE  FLOW       10.201.0.7[34367]/k8s/6  (10.201.0.7[34367])
+vsys1                                          10.201.0.6[179]/k8s  (10.201.0.6[179])
+210431       dns-base       ACTIVE  FLOW       10.168.10.21[59096]/k8s/17  (10.168.10.21[59096])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210445       dns-base       ACTIVE  FLOW       10.167.20.11[53976]/k8s/17  (10.167.20.11[53976])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210301       dns-base       ACTIVE  FLOW  NS   10.168.30.10[44476]/svc/17  (10.80.15.21[4101])
+vsys1                                          1.1.1.1[53]/internet  (1.1.1.1[53])
+210447       dns-base       ACTIVE  FLOW       10.168.10.21[49026]/k8s/17  (10.168.10.21[49026])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210377       dns-base       ACTIVE  FLOW  NS   10.168.30.10[33772]/svc/17  (10.80.15.21[60087])
+vsys1                                          8.8.8.8[53]/internet  (8.8.8.8[53])
+210429       dns-base       ACTIVE  FLOW       10.167.20.11[41841]/k8s/17  (10.167.20.11[41841])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210405       dns-base       ACTIVE  FLOW       10.167.20.11[59301]/k8s/17  (10.167.20.11[59301])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210415       dns-base       ACTIVE  FLOW       10.168.10.21[37596]/k8s/17  (10.168.10.21[37596])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+210413       dns-base       ACTIVE  FLOW       10.167.20.11[34230]/k8s/17  (10.167.20.11[34230])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210457       dns-base       ACTIVE  FLOW       10.167.20.11[57075]/k8s/17  (10.167.20.11[57075])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+84           bgp            ACTIVE  FLOW       10.201.0.5[41861]/k8s/6  (10.201.0.5[41861])
+vsys1                                          10.201.0.4[179]/k8s  (10.201.0.4[179])
+24           bgp            ACTIVE  FLOW       10.201.0.0[37542]/k8s/6  (10.201.0.0[37542])
+vsys1                                          10.201.0.1[179]/k8s  (10.201.0.1[179])
+210417       dns-base       ACTIVE  FLOW       10.167.20.11[58337]/k8s/17  (10.167.20.11[58337])
+vsys1                                          10.167.30.10[53]/svc  (10.167.30.10[53])
+210459       dns-base       ACTIVE  FLOW       10.168.10.21[49536]/k8s/17  (10.168.10.21[49536])
+vsys1                                          10.168.30.10[53]/svc  (10.168.30.10[53])
+23           undecided      ACTIVE  FLOW       10.201.1.0[42792]/svc/6  (10.201.1.0[42792])
+vsys1                                          10.201.1.1[179]/svc  (10.201.1.1[179])
+83           bgp            ACTIVE  FLOW       10.201.1.5[40925]/svc/6  (10.201.1.5[40925])
+vsys1                                          10.201.1.4[179]/svc  (10.201.1.4[179])
+
+==============================================================================
+fw-sec# show running security-policy
+==============================================================================
+
+
+"k8s-to-svc; index: 1" {
+        from k8s;
+        source any;
+        source-region none;
+        to svc;
+        destination any;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service [0:dns-base/tcp/any/53 1:dns-base/tcp/any/853 2:dns-base/udp/any/53 3:dns-base/udp/any/5353 4:ntp-base/tcp/any/123 5:ntp-base/udp/any/123 6:ping/icmp/any/any 7:ntp-non-rfc/tcp/any/123 8:ntp-non-rfc/udp/any/123 9:dns-non-rfc/tcp/any/53 10:dns-non-rfc/udp/any/53 11:dns-non-rfc/udp/any/5353 ];
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"k8s-to-internet; index: 2" {
+        from k8s;
+        source any;
+        source-region none;
+        to internet;
+        destination any;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"svc-to-internet; index: 3" {
+        from svc;
+        source any;
+        source-region none;
+        to internet;
+        destination any;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"internet-to-k8s; index: 4" {
+        from internet;
+        source any;
+        source-region none;
+        to k8s;
+        destination [ 10.80.15.52 10.80.15.42 10.80.15.50 10.80.15.54 10.80.15.53 10.80.15.51 10.80.15.40 ];
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service [0:ssl/any/any/any 1:web-browsing/any/any/any ];
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"internet-to-svc; index: 5" {
+        from internet;
+        source any;
+        source-region none;
+        to svc;
+        destination 10.80.15.41;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service [0:dns-base/tcp/any/53 1:dns-base/tcp/any/853 2:dns-base/udp/any/53 3:dns-base/udp/any/5353 4:dns-non-rfc/tcp/any/53 5:dns-non-rfc/udp/any/53 6:dns-non-rfc/udp/any/5353 ];
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"svc-to-k8s; index: 6" {
+        from svc;
+        source any;
+        source-region none;
+        to k8s;
+        destination 10.167.10.100;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"internet-to-api; index: 7" {
+        from internet;
+        source any;
+        source-region none;
+        to k8s;
+        destination [ 10.80.15.42 10.80.15.40 ];
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/tcp/any/6443;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"intrazone-default; index: 8" {
+        from any;
+        source any;
+        source-region none;
+        to any;
+        destination any;
+        destination-region none;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+        type intrazone;
+}
+
+"interzone-default; index: 9" {
+        from any;
+        source any;
+        source-region none;
+        to any;
+        destination any;
+        destination-region none;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action deny;
+        icmp-unreachable: no
+        terminal yes;
+        type interzone;
+}
+
+dynamic url: no
+
+
+
+==============================================================================
+fw-sec# show counter interface all
+==============================================================================
+
+
+
+Hardware interface counters:
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/1
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Physical port counters read from MAC:
+--------------------------------------------------------------------------------
+rx-broadcast                  0
+rx-bytes                      46615403
+rx-multicast                  0
+rx-unicast                    479197
+tx-broadcast                  0
+tx-bytes                      46003939
+tx-multicast                  0
+tx-unicast                    473961                    
+--------------------------------------------------------------------------------
+
+Hardware interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           55107346
+bytes transmitted                        46000208
+packets received                         584778
+packets transmitted                      474032
+receive incoming errors                  0
+receive discarded                        0
+receive errors                           838
+packets dropped                          0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/2
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Physical port counters read from MAC:
+--------------------------------------------------------------------------------
+rx-broadcast                  0
+rx-bytes                      46617469
+rx-multicast                  0
+rx-unicast                    479224
+tx-broadcast                  0
+tx-bytes                      46005134
+tx-multicast                  0
+tx-unicast                    473973                    
+--------------------------------------------------------------------------------
+
+Hardware interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           55111929
+bytes transmitted                        46002930
+packets received                         584834
+packets transmitted                      474041
+receive incoming errors                  0
+receive discarded                        0
+receive errors                           838
+packets dropped                          0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/3
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Physical port counters read from MAC:
+--------------------------------------------------------------------------------
+rx-broadcast                  0
+rx-bytes                      742895
+rx-multicast                  0
+rx-unicast                    12374
+tx-broadcast                  0
+tx-bytes                      9952
+tx-multicast                  0
+tx-unicast                    146                    
+--------------------------------------------------------------------------------
+
+Hardware interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           742543
+bytes transmitted                        8278
+packets received                         12368
+packets transmitted                      146
+receive incoming errors                  0
+receive discarded                        0
+receive errors                           0
+packets dropped                          0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/5
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Physical port counters read from MAC:
+--------------------------------------------------------------------------------
+rx-broadcast                  0
+rx-bytes                      12279679
+rx-multicast                  0
+rx-unicast                    166969
+tx-broadcast                  0
+tx-bytes                      12231536
+tx-multicast                  0
+tx-unicast                    166159                    
+--------------------------------------------------------------------------------
+
+Hardware interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           12280267
+bytes transmitted                        11938468
+packets received                         166978
+packets transmitted                      166168
+receive incoming errors                  0
+receive discarded                        0
+receive errors                           0
+packets dropped                          0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/6
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Physical port counters read from MAC:
+--------------------------------------------------------------------------------
+rx-broadcast                  0
+rx-bytes                      332159068
+rx-multicast                  0
+rx-unicast                    748126
+tx-broadcast                  0
+tx-bytes                      108241428
+tx-multicast                  0
+tx-unicast                    243787                    
+--------------------------------------------------------------------------------
+
+Hardware interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           332179492
+bytes transmitted                        108246312
+packets received                         748172
+packets transmitted                      243798
+receive incoming errors                  0
+receive discarded                        0
+receive errors                           0
+packets dropped                          0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/7
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Physical port counters read from MAC:
+--------------------------------------------------------------------------------
+rx-broadcast                  0
+rx-bytes                      5508
+rx-multicast                  0
+rx-unicast                    54
+tx-broadcast                  0
+tx-bytes                      552
+tx-multicast                  0
+tx-unicast                    6                    
+--------------------------------------------------------------------------------
+
+Hardware interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           0
+bytes transmitted                        552
+packets received                         0
+packets transmitted                      6
+receive incoming errors                  0
+receive discarded                        0
+receive errors                           0
+packets dropped                          0
+--------------------------------------------------------------------------------
+
+
+Logical interface counters:
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/1
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           538340
+bytes transmitted                        0
+packets received                         2447
+packets transmitted                      0
+receive errors                           0
+packets dropped                          2447
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 0
+arp not found                            0
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/1.100
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           45996459
+bytes transmitted                        41727588
+packets received                         474539
+packets transmitted                      420645
+receive errors                           0
+packets dropped                          11
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 3
+arp not found                            1
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/1.200
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           8500831
+bytes transmitted                        4272620
+packets received                         106954
+packets transmitted                      53387
+receive errors                           0
+packets dropped                          3
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 3
+arp not found                            1
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/2
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           538340
+bytes transmitted                        0
+packets received                         2447
+packets transmitted                      0
+receive errors                           0
+packets dropped                          2447
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 0
+arp not found                            0
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/2.100
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           45995332
+bytes transmitted                        41727044
+packets received                         474524
+packets transmitted                      420618
+receive errors                           0
+packets dropped                          2
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 2
+arp not found                            0
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/2.200
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           8506541
+bytes transmitted                        4275886
+packets received                         107025
+packets transmitted                      53423
+receive errors                           0
+packets dropped                          2
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 2
+arp not found                            0
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/3
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           742543
+bytes transmitted                        8278
+packets received                         12368
+packets transmitted                      146
+receive errors                           0
+packets dropped                          0
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 0
+arp not found                            0
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/5
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           12280267
+bytes transmitted                        11938468
+packets received                         166978
+packets transmitted                      166168
+receive errors                           0
+packets dropped                          0
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 0
+arp not found                            0
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/6
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           332179492
+bytes transmitted                        108246312
+packets received                         748172
+packets transmitted                      243798
+receive errors                           0
+packets dropped                          0
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 0
+arp not found                            0
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+Interface: ethernet1/7
+Logical interface counters read from CPU:
+--------------------------------------------------------------------------------
+bytes received                           0
+bytes transmitted                        552
+packets received                         0
+packets transmitted                      6
+receive errors                           0
+packets dropped                          0
+packets dropped by flow state check      0
+forwarding errors                        0
+no route                                 0
+arp not found                            0
+neighbor not found                       0
+neighbor info pending                    0
+mac not found                            0
+packets routed to different zone         0
+land attacks                             0
+ping-of-death attacks                    0
+teardrop attacks                         0
+ip spoof attacks                         0
+mac spoof attacks                        0
+ICMP fragment                            0
+layer2 encapsulated packets              0
+layer2 decapsulated packets              0
+tcp cps                                  0
+udp cps                                  0
+sctp cps                                 0
+other cps                                0
+--------------------------------------------------------------------------------
+
+

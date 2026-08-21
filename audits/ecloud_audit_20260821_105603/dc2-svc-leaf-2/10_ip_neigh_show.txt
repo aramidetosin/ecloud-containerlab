@@ -1,0 +1,18 @@
+
+10.168.30.10 dev vlan230-v0 lladdr 50:00:00:23:00:01 STALE 
+10.2.0.15 dev vlan3102_l3 lladdr 0c:00:25:72:c3:92 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp2 lladdr aa:c1:ab:43:10:8a PERMANENT proto zebra 
+10.2.0.16 dev vlan3102_l3 lladdr 0c:00:07:c2:a9:c8 extern_learn NOARP proto zebra 
+10.2.0.13 dev vlan3102_l3 lladdr 0c:00:72:20:c3:b3 extern_learn NOARP proto zebra 
+10.2.0.15 dev vxlan99 lladdr 0c:00:25:72:c3:92 extern_learn NOARP proto zebra 
+10.168.30.10 dev vlan230 lladdr 50:00:00:23:00:01 REACHABLE proto zebra 
+10.0.0.3 dev eth0 lladdr 52:55:0a:00:00:03 REACHABLE 
+169.254.0.1 dev swp1 lladdr aa:c1:ab:25:5e:60 PERMANENT proto zebra 
+10.2.0.16 dev vxlan99 lladdr 0c:00:07:c2:a9:c8 extern_learn NOARP proto zebra 
+10.0.0.2 dev eth0 lladdr 52:55:0a:00:00:02 REACHABLE 
+10.2.0.13 dev vxlan99 lladdr 0c:00:72:20:c3:b3 extern_learn NOARP proto zebra 
+fe80::5200:ff:fe23:1 dev vlan230-v0 lladdr 50:00:00:23:00:01 STALE 
+fe80::2 dev eth0 lladdr 52:56:00:00:00:02 router STALE 
+fe80::a8c1:abff:fe43:108a dev swp2 lladdr aa:c1:ab:43:10:8a router REACHABLE 
+fe80::5200:ff:fe23:1 dev vlan230 lladdr 50:00:00:23:00:01 REACHABLE proto zebra 
+fe80::a8c1:abff:fe25:5e60 dev swp1 lladdr aa:c1:ab:25:5e:60 router REACHABLE 

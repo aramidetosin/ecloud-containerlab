@@ -1,0 +1,10 @@
+
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eth0             UP             0c:00:39:b6:71:00 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp1             UP             aa:c1:ab:5b:ca:b6 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp2             UP             aa:c1:ab:4c:8b:5b <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp3             UP             aa:c1:ab:8e:89:8d <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp4             UP             aa:c1:ab:25:5e:60 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp5             UP             aa:c1:ab:bd:df:8a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp6             UP             aa:c1:ab:2c:07:3e <BROADCAST,MULTICAST,UP,LOWER_UP> 
+mgmt             UP             06:09:23:83:9b:46 <NOARP,MASTER,UP,LOWER_UP> 

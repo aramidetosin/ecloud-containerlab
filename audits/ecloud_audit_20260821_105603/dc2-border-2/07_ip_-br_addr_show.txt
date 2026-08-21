@@ -1,0 +1,18 @@
+
+lo               UNKNOWN        127.0.0.1/8 10.2.0.16/32 ::1/128 
+eth0             UP             10.0.0.15/24 fec0::e00:a6ff:fe04:7c00/64 fe80::e00:a6ff:fe04:7c00/64 
+swp1             UP             fe80::a8c1:abff:fe84:5fa0/64 
+swp2             UP             fe80::a8c1:abff:fefd:6887/64 
+swp3             UP             fe80::a8c1:abff:fe18:674d/64 
+swp4             UP             fe80::a8c1:abff:fe64:7c55/64 
+mgmt             UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp3.100@swp3    UP             fe80::a8c1:abff:fe18:674d/64 
+tenant-k8s       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp4.100@swp4    UP             fe80::a8c1:abff:fe64:7c55/64 
+vxlan99          UNKNOWN        fe80::78be:cbff:fedd:34e3/64 
+br_l3vni         UP             fe80::e00:c2ff:fea6:481/64 
+vlan3101_l3@br_l3vni UP             fe80::e00:7ff:fec2:a9c8/64 
+swp3.200@swp3    UP             fe80::a8c1:abff:fe18:674d/64 
+tenant-svc       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp4.200@swp4    UP             fe80::a8c1:abff:fe64:7c55/64 
+vlan3102_l3@br_l3vni UP             fe80::e00:7ff:fec2:a9c8/64 

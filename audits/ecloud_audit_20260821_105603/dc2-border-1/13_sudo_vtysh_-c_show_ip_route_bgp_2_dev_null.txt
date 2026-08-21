@@ -1,0 +1,20 @@
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+B>* 10.2.0.1/32 [20/0] via fe80::a8c1:abff:febd:df8a, swp1, weight 1, 20:32:42
+B>* 10.2.0.2/32 [20/0] via fe80::a8c1:abff:fe8c:871a, swp2, weight 1, 20:32:42
+B>* 10.2.0.11/32 [20/0] via fe80::a8c1:abff:fe8c:871a, swp2, weight 1, 20:32:42
+  *                     via fe80::a8c1:abff:febd:df8a, swp1, weight 1, 20:32:42
+B>* 10.2.0.12/32 [20/0] via fe80::a8c1:abff:fe8c:871a, swp2, weight 1, 20:32:42
+  *                     via fe80::a8c1:abff:febd:df8a, swp1, weight 1, 20:32:42
+B>* 10.2.0.13/32 [20/0] via fe80::a8c1:abff:fe8c:871a, swp2, weight 1, 20:32:42
+  *                     via fe80::a8c1:abff:febd:df8a, swp1, weight 1, 20:32:42
+B>* 10.2.0.14/32 [20/0] via fe80::a8c1:abff:fe8c:871a, swp2, weight 1, 20:32:42
+  *                     via fe80::a8c1:abff:febd:df8a, swp1, weight 1, 20:32:42
+B>* 10.2.0.16/32 [20/0] via fe80::a8c1:abff:fe8c:871a, swp2, weight 1, 20:32:42
+  *                     via fe80::a8c1:abff:febd:df8a, swp1, weight 1, 20:32:42

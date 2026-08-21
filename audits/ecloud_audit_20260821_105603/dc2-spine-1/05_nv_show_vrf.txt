@@ -1,0 +1,9 @@
+
+Name     Table  Summary                
+-------  -----  -----------------------
+default  254    IP Address: 10.2.0.1/32
+                IP Address: 127.0.0.1/8
+                IP Address:     ::1/128
+mgmt     1001   IP Address: 127.0.0.1/8
+                IP Address: 127.0.1.1/8
+                IP Address:     ::1/128

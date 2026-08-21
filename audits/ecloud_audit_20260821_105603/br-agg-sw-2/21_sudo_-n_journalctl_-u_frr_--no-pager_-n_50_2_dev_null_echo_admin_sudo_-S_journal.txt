@@ -1,0 +1,51 @@
+
+Aug 20 10:23:39 br-agg-sw-2 bgpd[2297]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:39 br-agg-sw-2 staticd[2335]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:39 br-agg-sw-2 zebra[2218]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:39 br-agg-sw-2 watchfrr[2138]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 20 10:23:39 br-agg-sw-2 watchfrr[2138]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 20 10:23:39 br-agg-sw-2 watchfrr[2138]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 20 10:23:39 br-agg-sw-2 watchfrr[2138]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 20 10:23:39 br-agg-sw-2 watchfrr[2138]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 20 10:23:39 br-agg-sw-2 frrinit.sh[2095]: Started watchfrr.
+Aug 20 10:23:39 br-agg-sw-2 systemd[1]: Started frr.service - FRRouting.
+Aug 20 10:23:39 br-agg-sw-2 bgpd[2297]: [J7484-2SYXF][EC 33554465] swp2.100 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-2 bgpd[2297]: [J7484-2SYXF][EC 33554465] swp2.200 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-2 bgpd[2297]: [J7484-2SYXF][EC 33554465] swp1.200 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-2 bgpd[2297]: [J7484-2SYXF][EC 33554465] swp6.100 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-2 bgpd[2297]: [J7484-2SYXF][EC 33554465] swp6.200 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:40 br-agg-sw-2 bgpd[2297]: [J7484-2SYXF][EC 33554465] swp5.100 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:40 br-agg-sw-2 bgpd[2297]: [J7484-2SYXF][EC 33554465] swp5.200 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2.100(leaf-border-2) in vrf tenant-k8s Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2.200(leaf-border-2) in vrf tenant-svc Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp6.200(dc2-border-2) in vrf tenant-svc Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp6.100(dc2-border-2) in vrf tenant-k8s Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp5.200(dc2-border-1) in vrf tenant-svc Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp5.100(dc2-border-1) in vrf tenant-k8s Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1.100(leaf-border-1) in vrf tenant-k8s Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1.200(leaf-border-1) in vrf tenant-svc Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [YZBG0-KRQST][EC 33554503] 10.201.20.6 unrecognized capability code: 75 - ignored
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.20.6(gobgp-1) in vrf tenant-k8s Up
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [YZBG0-KRQST][EC 33554503] 10.201.20.14 unrecognized capability code: 75 - ignored
+Aug 20 10:23:44 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.20.14(gobgp-2) in vrf tenant-k8s Up
+Aug 20 10:23:45 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2.100 in vrf tenant-k8s
+Aug 20 10:23:45 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp5.200 in vrf tenant-svc
+Aug 20 10:23:45 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp6.200 in vrf tenant-svc
+Aug 20 10:23:45 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2.200 in vrf tenant-svc
+Aug 20 10:23:45 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1.100 in vrf tenant-k8s
+Aug 20 10:23:45 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp5.100 in vrf tenant-k8s
+Aug 20 10:23:45 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp6.100 in vrf tenant-k8s
+Aug 20 10:23:45 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1.200 in vrf tenant-svc
+Aug 20 10:23:53 br-agg-sw-2 zebra[2218]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+Aug 20 10:23:53 br-agg-sw-2 zebra[2218]: [WPPMZ-G9797] if_zebra_speed_update: swp7 old speed: 0 new speed: 1000
+Aug 20 10:23:53 br-agg-sw-2 zebra[2218]: [WPPMZ-G9797] if_zebra_speed_update: swp8 old speed: 0 new speed: 1000
+Aug 20 10:23:53 br-agg-sw-2 zebra[2218]: [WPPMZ-G9797] if_zebra_speed_update: swp1.100 old speed: 0 new speed: 1000
+Aug 20 10:23:53 br-agg-sw-2 zebra[2218]: [WPPMZ-G9797] if_zebra_speed_update: swp1.200 old speed: 0 new speed: 1000
+Aug 20 10:32:55 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.0.3(Unknown) in vrf tenant-k8s Up
+Aug 20 10:32:55 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.1.3(Unknown) in vrf tenant-svc Up
+Aug 20 10:32:55 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.201.0.3 in vrf tenant-k8s
+Aug 20 10:32:55 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.201.1.3 in vrf tenant-svc
+Aug 20 10:33:55 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.1.7(Unknown) in vrf tenant-svc Up
+Aug 20 10:33:55 br-agg-sw-2 bgpd[2297]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.0.7(Unknown) in vrf tenant-k8s Up
+Aug 20 10:33:55 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.201.1.7 in vrf tenant-svc
+Aug 20 10:33:55 br-agg-sw-2 bgpd[2297]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.201.0.7 in vrf tenant-k8s

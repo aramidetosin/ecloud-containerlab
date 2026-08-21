@@ -1,0 +1,19 @@
+
+Interface:    swp1, via: LLDP, RID: 2, Time: 0 day, 20:32:36
+    SysName:      dc2-k8s-leaf-1
+    PortDescr:    swp1
+Interface:    swp2, via: LLDP, RID: 1, Time: 0 day, 20:32:36
+    SysName:      dc2-k8s-leaf-2
+    PortDescr:    swp1
+Interface:    swp3, via: LLDP, RID: 4, Time: 0 day, 20:32:36
+    SysName:      dc2-svc-leaf-1
+    PortDescr:    swp1
+Interface:    swp4, via: LLDP, RID: 5, Time: 0 day, 20:32:36
+    SysName:      dc2-svc-leaf-2
+    PortDescr:    swp1
+Interface:    swp5, via: LLDP, RID: 3, Time: 0 day, 20:32:36
+    SysName:      dc2-border-1
+    PortDescr:    swp1
+Interface:    swp6, via: LLDP, RID: 6, Time: 0 day, 20:32:34
+    SysName:      dc2-border-2
+    PortDescr:    swp1

@@ -1,0 +1,8 @@
+
+10.2.0.1 nhid 47 proto bgp metric 20 
+10.2.0.2 nhid 41 proto bgp metric 20 
+10.2.0.11 nhid 48 proto bgp metric 20 
+10.2.0.13 nhid 48 proto bgp metric 20 
+10.2.0.14 nhid 48 proto bgp metric 20 
+10.2.0.15 nhid 48 proto bgp metric 20 
+10.2.0.16 nhid 48 proto bgp metric 20 

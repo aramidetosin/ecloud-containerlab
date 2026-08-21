@@ -1,0 +1,20 @@
+
+Interface  Admin Status  Oper Status  Speed  MTU    Type      Remote Host        Remote Port  Summary                                 
+---------  ------------  -----------  -----  -----  --------  -----------------  -----------  ----------------------------------------
+eth0       up            up           1G     1500   eth                                       IP Address:                 10.0.0.15/24
+                                                                                              IP Address:  fe80::e00:3aff:fe21:a300/64
+                                                                                              IP Address:  fec0::e00:3aff:fe21:a300/64
+lo         up            unknown             65536  loopback                                  IP Address:                  10.0.0.1/32
+                                                                                              IP Address:                  127.0.0.1/8
+                                                                                              IP Address:                      ::1/128
+mgmt       up            up                  65575  vrf                                       IP Address:                  127.0.0.1/8
+                                                                                              IP Address:                  127.0.1.1/8
+                                                                                              IP Address:                      ::1/128
+swp1       up            up           1G     9216   swp       leaf-k8s-master-1  swp1         IP Address: fe80::a8c1:abff:fea9:a4b9/64
+swp2       up            up           1G     9216   swp       leaf-k8s-master-2  swp1         IP Address: fe80::a8c1:abff:feae:b544/64
+swp3       up            up           1G     9216   swp       leaf-k8s-worker-1  swp1         IP Address: fe80::a8c1:abff:fea1:8916/64
+swp4       up            up           1G     9216   swp       leaf-k8s-worker-2  swp1         IP Address: fe80::a8c1:abff:fe3d:d788/64
+swp5       up            up           1G     9216   swp       leaf-service-1     swp1         IP Address: fe80::a8c1:abff:fe13:4d5b/64
+swp6       up            up           1G     9216   swp       leaf-service-2     swp1         IP Address: fe80::a8c1:abff:fe88:d6c4/64
+swp7       up            up           1G     9216   swp       leaf-border-1      swp1         IP Address: fe80::a8c1:abff:fe9d:f94f/64
+swp8       up            up           1G     9216   swp       leaf-border-2      swp1         IP Address:  fe80::a8c1:abff:fe3d:20d/64

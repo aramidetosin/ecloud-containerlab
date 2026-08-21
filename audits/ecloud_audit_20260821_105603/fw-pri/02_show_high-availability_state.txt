@@ -1,0 +1,47 @@
+
+
+Group 1: 
+  Mode: Active-Active
+  Local Information:
+    Version: 1
+    Mode: Active-Active
+    State: active-primary (last 20 hours)
+    Device Information:
+      Management IPv4 Address: 10.0.0.15/24
+      Management IPv6 Address: 
+      Jumbo-Frames enabled; MTU 9216
+    HA1 Control Links Joint Configuration:
+      Encryption Enabled: no
+    Election Option Information:
+      Priority: 100
+      Preemptive: no
+    Version Compatibility:
+      Software Version: Match
+      Application Content Compatibility: Match
+      IOT Content Compatibility: Match
+      Anti-Virus Compatibility: Match
+      Threat Content Compatibility: Match
+      VPN Client Software Compatibility: Match
+      Global Protect Client Software Compatibility: Match
+      VM License Type: Match
+      Plugin Information:
+        DLP-compat: Match
+        VMS-compat: Match
+    State Synchronization: Complete; type: ethernet
+  Peer Information:
+    Connection status: up
+    Version: 1
+    Mode: Active-Active
+    State: active-secondary (last 20 hours)
+    Device Information:
+      Management IPv4 Address: 10.0.0.15/24
+      Management IPv6 Address: 
+      Jumbo-Frames enabled; MTU 9216
+      Connection up; Primary HA1 link
+    Election Option Information:
+      Priority: 100
+      Preemptive: no
+  Configuration Synchronization:
+    Enabled: no
+    Running Configuration: not synchronized
+      Out-of-sync Reason: Peer disconnected with commit

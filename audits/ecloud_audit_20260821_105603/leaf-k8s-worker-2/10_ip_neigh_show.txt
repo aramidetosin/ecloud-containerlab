@@ -1,0 +1,31 @@
+
+10.0.0.18 dev vxlan99 lladdr 0c:00:c3:af:c3:a0 extern_learn NOARP proto zebra 
+10.167.20.13 dev vlan120 lladdr 50:00:00:10:00:01 REACHABLE proto zebra 
+10.0.0.11 dev vxlan99 lladdr 0c:00:7c:44:c3:97 extern_learn NOARP proto zebra 
+10.0.0.2 dev eth0 lladdr 52:55:0a:00:00:02 REACHABLE 
+10.0.0.12 dev vxlan99 lladdr 0c:00:0e:6b:6b:06 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp1 lladdr aa:c1:ab:3d:d7:88 PERMANENT proto zebra 
+10.167.20.11 dev vlan120-v0 lladdr 50:00:00:0e:00:01 STALE 
+10.0.0.17 dev vlan3001_l3 lladdr 0c:00:c2:92:31:c8 extern_learn NOARP proto zebra 
+10.0.0.13 dev vlan3001_l3 lladdr 0c:00:c2:98:18:c9 extern_learn NOARP proto zebra 
+10.167.20.12 dev vlan120-v0 lladdr 50:00:00:0f:00:01 STALE 
+10.167.20.11 dev vlan120 lladdr 50:00:00:0e:00:01 REACHABLE proto zebra 
+10.0.0.3 dev eth0 lladdr 52:55:0a:00:00:03 REACHABLE 
+10.0.0.13 dev vxlan99 lladdr 0c:00:c2:98:18:c9 extern_learn NOARP proto zebra 
+10.0.0.17 dev vxlan99 lladdr 0c:00:c2:92:31:c8 extern_learn NOARP proto zebra 
+10.167.20.12 dev vlan120 lladdr 50:00:00:0f:00:01 REACHABLE proto zebra 
+10.0.0.18 dev vlan3001_l3 lladdr 0c:00:c3:af:c3:a0 extern_learn NOARP proto zebra 
+10.0.0.11 dev vlan3001_l3 lladdr 0c:00:7c:44:c3:97 extern_learn NOARP proto zebra 
+10.167.20.13 dev vlan120-v0 lladdr 50:00:00:10:00:01 STALE 
+10.167.20.2 dev vlan120 lladdr 0c:00:c2:98:18:c9 REACHABLE 
+10.0.0.12 dev vlan3001_l3 lladdr 0c:00:0e:6b:6b:06 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp2 lladdr aa:c1:ab:6d:c5:82 PERMANENT proto zebra 
+fe80::5200:ff:fe0e:1 dev vlan120-v0 lladdr 50:00:00:0e:00:01 STALE 
+fe80::5200:ff:fe10:1 dev vlan120 lladdr 50:00:00:10:00:01 REACHABLE proto zebra 
+fe80::5200:ff:fe0f:1 dev vlan120 lladdr 50:00:00:0f:00:01 REACHABLE proto zebra 
+fe80::5200:ff:fe10:1 dev vlan120-v0 lladdr 50:00:00:10:00:01 STALE 
+fe80::a8c1:abff:fe3d:d788 dev swp1 lladdr aa:c1:ab:3d:d7:88 router REACHABLE 
+fe80::2 dev eth0 lladdr 52:56:00:00:00:02 router STALE 
+fe80::5200:ff:fe0e:1 dev vlan120 lladdr 50:00:00:0e:00:01 REACHABLE proto zebra 
+fe80::5200:ff:fe0f:1 dev vlan120-v0 lladdr 50:00:00:0f:00:01 STALE 
+fe80::a8c1:abff:fe6d:c582 dev swp2 lladdr aa:c1:ab:6d:c5:82 router REACHABLE 

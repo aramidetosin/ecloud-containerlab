@@ -1,0 +1,13 @@
+
+Interface:    swp1, via: LLDP, RID: 3, Time: 0 day, 20:32:48
+    SysName:      leaf-border-1
+    PortDescr:    swp3
+Interface:    swp2, via: LLDP, RID: 2, Time: 0 day, 20:32:48
+    SysName:      leaf-border-2
+    PortDescr:    swp3
+Interface:    swp5, via: LLDP, RID: 1, Time: 0 day, 20:32:48
+    SysName:      dc2-border-1
+    PortDescr:    swp3
+Interface:    swp6, via: LLDP, RID: 4, Time: 0 day, 20:32:46
+    SysName:      dc2-border-2
+    PortDescr:    swp3

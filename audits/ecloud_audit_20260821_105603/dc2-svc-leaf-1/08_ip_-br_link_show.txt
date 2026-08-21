@@ -1,0 +1,16 @@
+
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eth0             UP             0c:00:c5:7a:07:00 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp1             UP             aa:c1:ab:eb:33:9c <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp2             UP             aa:c1:ab:65:bd:a3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp3             UP             aa:c1:ab:ae:13:a9 <BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP> 
+mgmt             UP             5a:71:e5:d1:f3:72 <NOARP,MASTER,UP,LOWER_UP> 
+vxlan48          UNKNOWN        8e:29:29:78:85:d2 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+bond1            UP             aa:c1:ab:ae:13:a9 <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> 
+br_default       UP             0c:00:72:20:c3:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vlan230@br_default UP             0c:00:72:20:c3:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+tenant-svc       UP             76:35:31:05:9a:c9 <NOARP,MASTER,UP,LOWER_UP> 
+vlan230-v0@vlan230 UP             00:00:5e:00:02:30 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vxlan99          UNKNOWN        c2:36:23:3b:95:37 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br_l3vni         UP             0c:00:72:20:c3:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vlan3102_l3@br_l3vni UP             0c:00:72:20:c3:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 

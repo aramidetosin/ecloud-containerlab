@@ -1,0 +1,20 @@
+
+lo               UNKNOWN        127.0.0.1/8 10.0.0.13/32 ::1/128 
+eth0             UP             10.0.0.15/24 fec0::e00:99ff:fed3:9700/64 fe80::e00:99ff:fed3:9700/64 
+swp1             UP             fe80::a8c1:abff:fef3:3cd0/64 
+swp2             UP             fe80::a8c1:abff:fe03:43d6/64 
+swp3             UP             
+swp4             UP             
+swp5             UP             
+mgmt             UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+vxlan48          UNKNOWN        fe80::70c9:efff:fe1d:51d6/64 
+bond3            UP             
+bond2            UP             
+bond1            UP             
+br_default       UP             fe80::e00:c2ff:fe99:c399/64 
+vlan120@br_default UP             10.167.20.2/24 fe80::e00:c2ff:fe98:18c9/64 
+tenant-k8s       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+vlan120-v0@vlan120 UP             10.167.20.1/24 metric 1024 fe80::200:5eff:fe00:120/64 
+vxlan99          UNKNOWN        fe80::28b8:b7ff:fe6b:1ca/64 
+br_l3vni         UP             fe80::e00:c2ff:fe99:c399/64 
+vlan3001_l3@br_l3vni UP             fe80::e00:c2ff:fe98:18c9/64 

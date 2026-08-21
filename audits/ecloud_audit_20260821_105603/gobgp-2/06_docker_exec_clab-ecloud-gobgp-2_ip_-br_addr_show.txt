@@ -1,0 +1,5 @@
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0@if3239      UP             172.29.140.43/24 
+eth1@if3379      UP             10.201.20.10/30 fe80::a8c1:abff:fecc:7a02/64 
+eth2@if3381      UP             10.201.20.14/30 fe80::a8c1:abff:fe86:ebfe/64 
+

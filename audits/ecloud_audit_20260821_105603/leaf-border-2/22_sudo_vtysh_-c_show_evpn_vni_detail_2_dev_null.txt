@@ -1,0 +1,29 @@
+
+VNI: 50002
+  Type: L3
+  Tenant VRF: tenant-svc
+  Vlan: 3002
+  Bridge: br_l3vni
+  Local Vtep Ip: 10.0.0.18
+  Vxlan-Intf: vxlan99
+  SVI-If: vlan3002_l3
+  State: Up
+  VNI Filter: none
+  System MAC: 0c:00:c3:af:c3:a0
+  Router MAC: 0c:00:c3:af:c3:a0
+  L2 VNIs: 
+
+VNI: 50001
+  Type: L3
+  Tenant VRF: tenant-k8s
+  Vlan: 3001
+  Bridge: br_l3vni
+  Local Vtep Ip: 10.0.0.18
+  Vxlan-Intf: vxlan99
+  SVI-If: vlan3001_l3
+  State: Up
+  VNI Filter: none
+  System MAC: 0c:00:c3:af:c3:a0
+  Router MAC: 0c:00:c3:af:c3:a0
+  L2 VNIs: 
+

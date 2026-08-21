@@ -1,0 +1,3184 @@
+
+==============================================================================
+leaf-border-2# ip -d link show type vxlan | head -40
+==============================================================================
+
+11: vxlan99: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9216 qdisc noqueue master br_l3vni state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether f2:f7:e4:57:24:48 brd ff:ff:ff:ff:ff:ff promiscuity 1  allmulti 1 minmtu 68 maxmtu 65535 
+    vxlan external vnifilter id 0 local 10.0.0.18 srcport 0 0 dstport 4789 nolearning ttl 64 ageing 1800 udpcsum noudp6zerocsumtx noudp6zerocsumrx 
+    bridge_slave state forwarding priority 8 cost 100 hairpin off guard off root_block off fastleave off learning off flood on port_id 0x8001 port_no 0x1 designated_port 32769 designated_cost 0 designated_bridge 8000.c:0:4d:5b:c2:9f designated_root 8000.c:0:4d:5b:c2:9f hold_timer    0.00 message_age_timer    0.00 forward_delay_timer    0.00 topology_change_ack 0 config_pending 0 proxy_arp off proxy_arp_wifi off mcast_router 1 mcast_fast_leave off mcast_flood on bcast_flood on mcast_to_unicast off neigh_suppress on group_fwd_mask 0 group_fwd_mask_str 0x0 group_fwd_maskhi 0x0 group_fwd_maskhi_str 0x0 vlan_tunnel on isolated off locked off addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 last_change 1787221414183 carrier_up_count 0 carrier_down_count 0 carrier_changes 0 
+
+==============================================================================
+leaf-border-2# nv show system
+==============================================================================
+
+                 operational                                  applied      
+---------------  -------------------------------------------  -------------
+build            Cumulus Linux 5.12.0                                      
+uptime           20:32:58                                                  
+hostname         leaf-border-2                                leaf-border-2
+product-name     Cumulus Linux                                             
+product-release  5.12.0                                                    
+platform         N/A                                                       
+system-memory    1.29 GB used / 1.96 GB free / 3.57 GB total               
+swap-memory      0 Bytes used / 0 Bytes free / 0 Bytes total               
+health-status    OK                                                        
+date-time        2026-08-21 06:56:11                                       
+status           N/A                                                       
+timezone         Etc/UTC                                                   
+maintenance                                                                
+  mode           disabled                                                  
+  ports          enabled                                                   
+version                                                                    
+  kernel         6.1.0-cl-1-amd64                                          
+  build-date     Mon Feb 03 17:42:08 UTC 2025                              
+  image          5.12.0.0037                                               
+  onie           N/A                                                       
+
+==============================================================================
+leaf-border-2# nv show interface
+==============================================================================
+
+Interface    Admin Status  Oper Status  Speed  MTU    Type      Remote Host  Remote Port  Summary                                 
+-----------  ------------  -----------  -----  -----  --------  -----------  -----------  ----------------------------------------
+br_default   up            down                9216   bridge                                                                      
+br_l3vni     up            up                  9216   bridge                              IP Address:  fe80::e00:4dff:fe5b:c29f/64
+eth0         up            up           1G     1500   eth                                 IP Address:                 10.0.0.15/24
+                                                                                          IP Address:  fe80::e00:4dff:fe5b:9a00/64
+                                                                                          IP Address:  fec0::e00:4dff:fe5b:9a00/64
+lo           up            unknown             65536  loopback                            IP Address:                 10.0.0.18/32
+                                                                                          IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                      ::1/128
+mgmt         up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+swp1         up            up           1G     9216   swp       spine-1      swp8         IP Address: fe80::a8c1:abff:fe70:933a/64
+swp2         up            up           1G     9216   swp       spine-2      swp8         IP Address: fe80::a8c1:abff:fe3c:af2d/64
+swp3         up            up           1G     9216   swp       br-agg-sw-1  swp2         IP Address: fe80::a8c1:abff:febe:899d/64
+swp3.100     up            up                  9216   sub                                 IP Address: fe80::a8c1:abff:febe:899d/64
+swp3.200     up            up                  9216   sub                                 IP Address: fe80::a8c1:abff:febe:899d/64
+swp4         up            up           1G     9216   swp       br-agg-sw-2  swp2         IP Address: fe80::a8c1:abff:fee7:b38a/64
+swp4.100     up            up                  9216   sub                                 IP Address: fe80::a8c1:abff:fee7:b38a/64
+swp4.200     up            up                  9216   sub                                 IP Address: fe80::a8c1:abff:fee7:b38a/64
+tenant-k8s   up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+tenant-svc   up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+vlan3001_l3  up            up                  9216   svi                                 IP Address:  fe80::e00:c3ff:feaf:c3a0/64
+vlan3002_l3  up            up                  9216   svi                                 IP Address:  fe80::e00:c3ff:feaf:c3a0/64
+vxlan99      up            unknown             9216   vxlan                               IP Address: fe80::f0f7:e4ff:fe57:2448/64
+
+==============================================================================
+leaf-border-2# nv show router bgp
+==============================================================================
+
+                                applied    
+------------------------------  -----------
+enable                          on         
+autonomous-system               65114      
+router-id                       10.0.0.18  
+policy-update-timer             5          
+graceful-shutdown               off        
+wait-for-install                off        
+graceful-restart                           
+  mode                          helper-only
+  restart-time                  120        
+  path-selection-deferral-time  360        
+  stale-routes-time             360        
+convergence-wait                           
+  time                          0          
+  establish-wait-time           0          
+queue-limit                                
+  input                         10000      
+  output                        10000      
+
+==============================================================================
+leaf-border-2# nv show vrf
+==============================================================================
+
+Name        Table  Summary                 
+----------  -----  ------------------------
+default     254    IP Address: 10.0.0.18/32
+                   IP Address:  127.0.0.1/8
+                   IP Address:      ::1/128
+mgmt        1001   IP Address:  127.0.0.1/8
+                   IP Address:  127.0.1.1/8
+                   IP Address:      ::1/128
+tenant-k8s  1002   evpn.vlan:          3001
+                   evpn.vni:          50001
+                   IP Address:  127.0.0.1/8
+                   IP Address:  127.0.1.1/8
+                   IP Address:      ::1/128
+tenant-svc  1003   evpn.vlan:          3002
+                   evpn.vni:          50002
+                   IP Address:  127.0.0.1/8
+                   IP Address:  127.0.1.1/8
+                   IP Address:      ::1/128
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S lldpctl 2>/dev/null | grep -E 'Interface|SysName|PortDescr'
+==============================================================================
+
+Interface:    swp1, via: LLDP, RID: 2, Time: 0 day, 20:32:36
+    SysName:      spine-1
+    PortDescr:    swp8
+Interface:    swp2, via: LLDP, RID: 1, Time: 0 day, 20:32:36
+    SysName:      spine-2
+    PortDescr:    swp8
+Interface:    swp3, via: LLDP, RID: 4, Time: 0 day, 20:32:34
+    SysName:      br-agg-sw-1
+    PortDescr:    swp2
+Interface:    swp4, via: LLDP, RID: 3, Time: 0 day, 20:32:32
+    SysName:      br-agg-sw-2
+    PortDescr:    swp2
+
+==============================================================================
+leaf-border-2# ip -br addr show
+==============================================================================
+
+lo               UNKNOWN        127.0.0.1/8 10.0.0.18/32 ::1/128 
+eth0             UP             10.0.0.15/24 fec0::e00:4dff:fe5b:9a00/64 fe80::e00:4dff:fe5b:9a00/64 
+swp1             UP             fe80::a8c1:abff:fe70:933a/64 
+swp2             UP             fe80::a8c1:abff:fe3c:af2d/64 
+swp3             UP             fe80::a8c1:abff:febe:899d/64 
+swp4             UP             fe80::a8c1:abff:fee7:b38a/64 
+mgmt             UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp3.100@swp3    UP             fe80::a8c1:abff:febe:899d/64 
+tenant-k8s       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp4.100@swp4    UP             fe80::a8c1:abff:fee7:b38a/64 
+vxlan99          UNKNOWN        fe80::f0f7:e4ff:fe57:2448/64 
+br_l3vni         UP             fe80::e00:4dff:fe5b:c29f/64 
+vlan3001_l3@br_l3vni UP             fe80::e00:c3ff:feaf:c3a0/64 
+swp3.200@swp3    UP             fe80::a8c1:abff:febe:899d/64 
+tenant-svc       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp4.200@swp4    UP             fe80::a8c1:abff:fee7:b38a/64 
+vlan3002_l3@br_l3vni UP             fe80::e00:c3ff:feaf:c3a0/64 
+br_default       DOWN           
+
+==============================================================================
+leaf-border-2# ip -br link show
+==============================================================================
+
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eth0             UP             0c:00:4d:5b:9a:00 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp1             UP             aa:c1:ab:70:93:3a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp2             UP             aa:c1:ab:3c:af:2d <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp3             UP             aa:c1:ab:be:89:9d <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp4             UP             aa:c1:ab:e7:b3:8a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+mgmt             UP             8e:c4:f1:4d:c3:e6 <NOARP,MASTER,UP,LOWER_UP> 
+swp3.100@swp3    UP             aa:c1:ab:be:89:9d <BROADCAST,MULTICAST,UP,LOWER_UP> 
+tenant-k8s       UP             0e:5a:18:a5:f5:f1 <NOARP,MASTER,UP,LOWER_UP> 
+swp4.100@swp4    UP             aa:c1:ab:e7:b3:8a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vxlan99          UNKNOWN        f2:f7:e4:57:24:48 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br_l3vni         UP             0c:00:4d:5b:c2:9f <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vlan3001_l3@br_l3vni UP             0c:00:c3:af:c3:a0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp3.200@swp3    UP             aa:c1:ab:be:89:9d <BROADCAST,MULTICAST,UP,LOWER_UP> 
+tenant-svc       UP             56:d1:2c:89:24:fe <NOARP,MASTER,UP,LOWER_UP> 
+swp4.200@swp4    UP             aa:c1:ab:e7:b3:8a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vlan3002_l3@br_l3vni UP             0c:00:c3:af:c3:a0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br_default       DOWN           0c:00:4d:5b:c2:9f <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+
+==============================================================================
+leaf-border-2# ip route show
+==============================================================================
+
+10.0.0.1 nhid 55 proto bgp metric 20 
+10.0.0.2 nhid 45 proto bgp metric 20 
+10.0.0.11 nhid 56 proto bgp metric 20 
+10.0.0.12 nhid 56 proto bgp metric 20 
+10.0.0.13 nhid 56 proto bgp metric 20 
+10.0.0.14 nhid 56 proto bgp metric 20 
+10.0.0.15 nhid 56 proto bgp metric 20 
+10.0.0.16 nhid 56 proto bgp metric 20 
+10.0.0.17 nhid 56 proto bgp metric 20 
+
+==============================================================================
+leaf-border-2# ip neigh show
+==============================================================================
+
+10.0.0.12 dev vxlan99 lladdr 0c:00:0e:6b:6b:06 extern_learn NOARP proto zebra 
+10.0.0.17 dev vlan3002_l3 lladdr 0c:00:c2:92:31:c8 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp3.200 lladdr aa:c1:ab:82:c1:09 PERMANENT proto zebra 
+10.0.0.14 dev vlan3001_l3 lladdr 0c:00:1b:c3:9e:42 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp1 lladdr aa:c1:ab:3d:02:0d PERMANENT proto zebra 
+10.0.0.16 dev vxlan99 lladdr 0c:00:6d:18:76:04 extern_learn NOARP proto zebra 
+10.0.0.11 dev vxlan99 lladdr 0c:00:7c:44:c3:97 extern_learn NOARP proto zebra 
+10.0.0.13 dev vlan3001_l3 lladdr 0c:00:c2:98:18:c9 extern_learn NOARP proto zebra 
+10.0.0.2 dev eth0 lladdr 52:55:0a:00:00:02 REACHABLE 
+169.254.0.1 dev swp4.200 lladdr aa:c1:ab:12:7c:ca PERMANENT proto zebra 
+10.0.0.15 dev vxlan99 lladdr 0c:00:c3:a2:c3:a2 extern_learn NOARP proto zebra 
+10.0.0.16 dev vlan3002_l3 lladdr 0c:00:6d:18:76:04 extern_learn NOARP proto zebra 
+10.0.0.17 dev vlan3001_l3 lladdr 0c:00:c2:92:31:c8 extern_learn NOARP proto zebra 
+10.0.0.15 dev vlan3002_l3 lladdr 0c:00:c3:a2:c3:a2 extern_learn NOARP proto zebra 
+10.0.0.12 dev vlan3001_l3 lladdr 0c:00:0e:6b:6b:06 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp4.100 lladdr aa:c1:ab:12:7c:ca PERMANENT proto zebra 
+10.0.0.3 dev eth0 lladdr 52:55:0a:00:00:03 REACHABLE 
+10.0.0.14 dev vxlan99 lladdr 0c:00:1b:c3:9e:42 extern_learn NOARP proto zebra 
+10.0.0.11 dev vlan3001_l3 lladdr 0c:00:7c:44:c3:97 extern_learn NOARP proto zebra 
+10.0.0.13 dev vxlan99 lladdr 0c:00:c2:98:18:c9 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp2 lladdr aa:c1:ab:f6:a4:2c PERMANENT proto zebra 
+10.0.0.17 dev vxlan99 lladdr 0c:00:c2:92:31:c8 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp3.100 lladdr aa:c1:ab:82:c1:09 PERMANENT proto zebra 
+fe80::a8c1:abff:fe12:7cca dev swp4 lladdr aa:c1:ab:12:7c:ca router REACHABLE 
+fe80::a8c1:abff:fef6:a42c dev swp2 lladdr aa:c1:ab:f6:a4:2c router REACHABLE 
+fe80::a8c1:abff:fe82:c109 dev swp3.100 lladdr aa:c1:ab:82:c1:09 router REACHABLE 
+fe80::a8c1:abff:fe12:7cca dev swp4.100 lladdr aa:c1:ab:12:7c:ca router REACHABLE 
+fe80::2 dev eth0 lladdr 52:56:00:00:00:02 router STALE 
+fe80::a8c1:abff:fe12:7cca dev swp4.200 lladdr aa:c1:ab:12:7c:ca router REACHABLE 
+fe80::a8c1:abff:fe82:c109 dev swp3.200 lladdr aa:c1:ab:82:c1:09 router REACHABLE 
+fe80::a8c1:abff:fe82:c109 dev swp3 lladdr aa:c1:ab:82:c1:09 router REACHABLE 
+fe80::a8c1:abff:fe3d:20d dev swp1 lladdr aa:c1:ab:3d:02:0d router REACHABLE 
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show version' 2>/dev/null
+==============================================================================
+
+FRRouting 8.4.3 (leaf-border-2) on Linux(6.1.0-cl-1-amd64).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+configured with:
+    '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--libexecdir=${prefix}/lib/x86_64-linux-gnu' '--disable-maintainer-mode' '--enable-exampledir=/usr/share/doc/frr/examples/' '--localstatedir=/var/run/frr' '--sbindir=/usr/lib/frr' '--sysconfdir=/etc/frr' '--with-vtysh-pager=/usr/bin/pager' '--libdir=/usr/lib/x86_64-linux-gnu/frr' '--with-moduledir=/usr/lib/x86_64-linux-gnu/frr/modules' '--disable-dependency-tracking' '--disable-dev-build' '--enable-systemd=yes' '--enable-rpki' '--disable-pim6d' '--with-libpam' '--enable-doc' '--enable-doc-html' '--enable-snmp' '--enable-fpm' '--disable-zeromq' '--enable-ospfapi' '--disable-bgp-vnc' '--enable-multipath=128' '--enable-user=frr' '--enable-group=frr' '--enable-vty-group=frrvty' '--enable-configfile-mask=0640' '--enable-logfile-mask=0640' '--disable-address-sanitizer' '--enable-protobuf' '--enable-cumulus=yes' '--enable-csmgr=yes' '--enable-datacenter=yes' '--enable-bfdd=no' '--enable-sharpd=yes' '--enable-grpc=yes' '--enable-bgp-lttng=yes' '--enable-zebra-lttng=yes' '--with-log-timestamp-precision=6' 'build_alias=x86_64-linux-gnu' 'PYTHON=python3'
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp ipv4 unicast summary' 2>/dev/null
+==============================================================================
+
+BGP router identifier 10.0.0.18, local AS number 65114 vrf-id 0
+BGP table version 40
+RIB entries 19, using 4256 bytes of memory
+Peers 2, using 40 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+spine-1(swp1)   4      65100     25298     25296        0    0    0 20:32:35           59       10 N/A
+spine-2(swp2)   4      65100     25299     25296        0    0    0 20:32:35           59       10 N/A
+
+Total number of neighbors 2
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show ip route bgp' 2>/dev/null
+==============================================================================
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+B>* 10.0.0.1/32 [20/0] via fe80::a8c1:abff:fe3d:20d, swp1, weight 1, 20:32:34
+B>* 10.0.0.2/32 [20/0] via fe80::a8c1:abff:fef6:a42c, swp2, weight 1, 20:32:34
+B>* 10.0.0.11/32 [20/0] via fe80::a8c1:abff:fe3d:20d, swp1, weight 1, 12:38:58
+  *                     via fe80::a8c1:abff:fef6:a42c, swp2, weight 1, 12:38:58
+B>* 10.0.0.12/32 [20/0] via fe80::a8c1:abff:fe3d:20d, swp1, weight 1, 12:38:58
+  *                     via fe80::a8c1:abff:fef6:a42c, swp2, weight 1, 12:38:58
+B>* 10.0.0.13/32 [20/0] via fe80::a8c1:abff:fe3d:20d, swp1, weight 1, 20:32:34
+  *                     via fe80::a8c1:abff:fef6:a42c, swp2, weight 1, 20:32:34
+B>* 10.0.0.14/32 [20/0] via fe80::a8c1:abff:fe3d:20d, swp1, weight 1, 20:32:34
+  *                     via fe80::a8c1:abff:fef6:a42c, swp2, weight 1, 20:32:34
+B>* 10.0.0.15/32 [20/0] via fe80::a8c1:abff:fe3d:20d, swp1, weight 1, 12:57:49
+  *                     via fe80::a8c1:abff:fef6:a42c, swp2, weight 1, 12:57:49
+B>* 10.0.0.16/32 [20/0] via fe80::a8c1:abff:fe3d:20d, swp1, weight 1, 12:57:44
+  *                     via fe80::a8c1:abff:fef6:a42c, swp2, weight 1, 12:57:44
+B>* 10.0.0.17/32 [20/0] via fe80::a8c1:abff:fe3d:20d, swp1, weight 1, 20:32:34
+  *                     via fe80::a8c1:abff:fef6:a42c, swp2, weight 1, 20:32:34
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show interface brief' 2>/dev/null
+==============================================================================
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+br_default      up      default         
+br_l3vni        up      default         
+lo              up      default         10.0.0.18/32
+swp1            up      default         
+swp2            up      default         
+swp3            up      default         
+swp4            up      default         
+vxlan99         up      default         
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+eth0            up      mgmt            10.0.0.15/24
+                                        + fec0::e00:4dff:fe5b:9a00/64
+mgmt            up      mgmt            
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+swp3.100        up      tenant-k8s      
+swp4.100        up      tenant-k8s      
+tenant-k8s      up      tenant-k8s      
+vlan3001_l3     up      tenant-k8s      
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+swp3.200        up      tenant-svc      
+swp4.200        up      tenant-svc      
+tenant-svc      up      tenant-svc      
+vlan3002_l3     up      tenant-svc      
+
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn summary' 2>/dev/null
+==============================================================================
+
+BGP router identifier 10.0.0.18, local AS number 65114 vrf-id 0
+BGP table version 0
+RIB entries 73, using 16 KiB of memory
+Peers 2, using 40 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+spine-1(swp1)   4      65100     25298     25296        0    0    0 20:32:35          132      146 N/A
+spine-2(swp2)   4      65100     25299     25296        0    0    0 20:32:35          132      146 N/A
+
+Total number of neighbors 2
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn' 2>/dev/null
+==============================================================================
+
+BGP table version is 308, local router ID is 10.0.0.18
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+EVPN type-1 prefix: [1]:[EthTag]:[ESI]:[IPlen]:[VTEP-IP]:[Frag-id]
+EVPN type-2 prefix: [2]:[EthTag]:[MAClen]:[MAC]:[IPlen]:[IP]
+EVPN type-3 prefix: [3]:[EthTag]:[IPlen]:[OrigIP]
+EVPN type-4 prefix: [4]:[ESI]:[IPlen]:[OrigIP]
+EVPN type-5 prefix: [5]:[EthTag]:[IPlen]:[IP]
+
+   Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 10.0.0.11:2
+*> [1]:[0]:[03:44:38:39:be:ef:11:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:11:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:11:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[0c:00:7c:44:c3:97]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]:[32]:[10.167.10.11]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]:[128]:[fe80::5200:ff:fe0b:1]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]:[32]:[10.167.10.12]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]:[128]:[fe80::5200:ff:fe0c:1]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]:[32]:[10.167.10.13]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]:[128]:[fe80::5200:ff:fe0d:1]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*> [3]:[0]:[32]:[10.0.0.11]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+Route Distinguisher: 10.0.0.11:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:11:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:11:00:00:01]:[32]:[10.0.0.11]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.11:4
+*> [1]:[4294967295]:[03:44:38:39:be:ef:11:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:11:00:00:02]:[32]:[10.0.0.11]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.11:5
+*> [1]:[4294967295]:[03:44:38:39:be:ef:11:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:11:00:00:03]:[32]:[10.0.0.11]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.11:7
+*> [5]:[0]:[24]:[10.167.10.0]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 ?
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 ?
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [5]:[0]:[32]:[192.168.202.0]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [5]:[0]:[32]:[192.168.202.1]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [5]:[0]:[32]:[192.168.202.3]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [5]:[0]:[32]:[192.168.202.4]
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*                   10.0.0.11 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+Route Distinguisher: 10.0.0.12:2
+*> [1]:[0]:[03:44:38:39:be:ef:11:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:11:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:11:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[0c:00:0e:6b:6b:06]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]:[32]:[10.167.10.11]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]:[128]:[fe80::5200:ff:fe0b:1]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]:[32]:[10.167.10.12]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]:[128]:[fe80::5200:ff:fe0c:1]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]:[32]:[10.167.10.13]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]:[128]:[fe80::5200:ff:fe0d:1]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*> [3]:[0]:[32]:[10.0.0.12]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+Route Distinguisher: 10.0.0.12:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:11:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:11:00:00:01]:[32]:[10.0.0.12]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.12:4
+*> [1]:[4294967295]:[03:44:38:39:be:ef:11:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:11:00:00:02]:[32]:[10.0.0.12]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.12:5
+*> [1]:[4294967295]:[03:44:38:39:be:ef:11:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:11:00:00:03]:[32]:[10.0.0.12]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:11 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.12:7
+*> [5]:[0]:[24]:[10.167.10.0]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 ?
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 ?
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [5]:[0]:[32]:[192.168.202.0]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [5]:[0]:[32]:[192.168.202.1]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [5]:[0]:[32]:[192.168.202.3]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [5]:[0]:[32]:[192.168.202.4]
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*                   10.0.0.12 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+Route Distinguisher: 10.0.0.13:2
+*> [1]:[0]:[03:44:38:39:be:ef:12:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:12:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:12:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[0c:00:c2:98:18:c9]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]:[32]:[10.167.20.11]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]:[128]:[fe80::5200:ff:fe0e:1]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]:[32]:[10.167.20.12]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]:[128]:[fe80::5200:ff:fe0f:1]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:10:00:01]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:10:00:01]:[32]:[10.167.20.13]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [2]:[0]:[48]:[50:00:00:10:00:01]:[128]:[fe80::5200:ff:fe10:1]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*> [3]:[0]:[32]:[10.0.0.13]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+Route Distinguisher: 10.0.0.13:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:12:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:12:00:00:01]:[32]:[10.0.0.13]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.13:4
+*> [1]:[4294967295]:[03:44:38:39:be:ef:12:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:12:00:00:02]:[32]:[10.0.0.13]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.13:5
+*> [1]:[4294967295]:[03:44:38:39:be:ef:12:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:12:00:00:03]:[32]:[10.0.0.13]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.13:7
+*> [5]:[0]:[24]:[10.167.20.0]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 ?
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 ?
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [5]:[0]:[32]:[192.168.202.0]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [5]:[0]:[32]:[192.168.202.1]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [5]:[0]:[32]:[192.168.202.3]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [5]:[0]:[32]:[192.168.202.4]
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*                   10.0.0.13 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+Route Distinguisher: 10.0.0.14:2
+*> [1]:[0]:[03:44:38:39:be:ef:12:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:12:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:12:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[0c:00:1b:c3:9e:42]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]:[32]:[10.167.20.11]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]:[128]:[fe80::5200:ff:fe0e:1]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]:[32]:[10.167.20.12]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]:[128]:[fe80::5200:ff:fe0f:1]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:10:00:01]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:10:00:01]:[32]:[10.167.20.13]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [2]:[0]:[48]:[50:00:00:10:00:01]:[128]:[fe80::5200:ff:fe10:1]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*> [3]:[0]:[32]:[10.0.0.14]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+Route Distinguisher: 10.0.0.14:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:12:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:12:00:00:01]:[32]:[10.0.0.14]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.14:4
+*> [1]:[4294967295]:[03:44:38:39:be:ef:12:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:12:00:00:02]:[32]:[10.0.0.14]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.14:5
+*> [1]:[4294967295]:[03:44:38:39:be:ef:12:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:12:00:00:03]:[32]:[10.0.0.14]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:12 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.14:7
+*> [5]:[0]:[24]:[10.167.20.0]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 ?
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 ?
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [5]:[0]:[32]:[192.168.202.0]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [5]:[0]:[32]:[192.168.202.1]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [5]:[0]:[32]:[192.168.202.3]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [5]:[0]:[32]:[192.168.202.4]
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*                   10.0.0.14 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+Route Distinguisher: 10.0.0.15:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:13:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8 ESI-label-Rt:AA
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:13:00:00:01]:[32]:[10.0.0.15]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:13 DF: (alg: 2, pref: 32767)
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:13 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.15:4
+*> [1]:[0]:[03:44:38:39:be:ef:13:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[0c:00:c3:a2:c3:a2]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[50:00:00:11:00:01]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[50:00:00:11:00:01]:[32]:[10.167.30.10]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 RT:65113:50002 ET:8 Rmac:0c:00:c3:a2:c3:a2
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 RT:65113:50002 ET:8 Rmac:0c:00:c3:a2:c3:a2
+*> [2]:[0]:[48]:[50:00:00:11:00:01]:[128]:[fe80::5200:ff:fe11:1]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*> [3]:[0]:[32]:[10.0.0.15]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+Route Distinguisher: 10.0.0.15:6
+*> [5]:[0]:[24]:[10.167.30.0]
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 ?
+                    RT:65113:50002 ET:8 Rmac:0c:00:c3:a2:c3:a2
+*                   10.0.0.15 (spine-2)
+                                                           0 65100 65113 ?
+                    RT:65113:50002 ET:8 Rmac:0c:00:c3:a2:c3:a2
+Route Distinguisher: 10.0.0.16:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:13:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8 ESI-label-Rt:AA
+*                   10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:13:00:00:01]:[32]:[10.0.0.16]
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:13 DF: (alg: 2, pref: 32767)
+*                   10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:13 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.0.0.16:4
+*> [1]:[0]:[03:44:38:39:be:ef:13:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*                   10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[0c:00:6d:18:76:04]
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*                   10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[50:00:00:11:00:01]
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*                   10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[50:00:00:11:00:01]:[32]:[10.167.30.10]
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 RT:65113:50002 ET:8 Rmac:0c:00:6d:18:76:04
+*                   10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 RT:65113:50002 ET:8 Rmac:0c:00:6d:18:76:04
+*> [2]:[0]:[48]:[50:00:00:11:00:01]:[128]:[fe80::5200:ff:fe11:1]
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*                   10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*> [3]:[0]:[32]:[10.0.0.16]
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*                   10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+Route Distinguisher: 10.0.0.16:6
+*> [5]:[0]:[24]:[10.167.30.0]
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 ?
+                    RT:65113:50002 ET:8 Rmac:0c:00:6d:18:76:04
+*                   10.0.0.16 (spine-1)
+                                                           0 65100 65113 ?
+                    RT:65113:50002 ET:8 Rmac:0c:00:6d:18:76:04
+Route Distinguisher: 10.0.0.17:2
+*> [5]:[0]:[0]:[0.0.0.0]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65300 ?
+                    RT:65114:50002 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65300 ?
+                    RT:65114:50002 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[24]:[10.168.30.0]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65212 ?
+                    RT:65114:50002 RT:65212:50102 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65212 ?
+                    RT:65114:50002 RT:65212:50102 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.30.10]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65212 i
+                    RT:65000:10230 RT:65114:50002 RT:65212:50102 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65212 i
+                    RT:65000:10230 RT:65114:50002 RT:65212:50102 ET:8 Rmac:0c:00:c2:92:31:c8
+Route Distinguisher: 10.0.0.17:3
+*> [5]:[0]:[0]:[0.0.0.0]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65300 ?
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65300 ?
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[24]:[10.168.10.0]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 ?
+                    RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 ?
+                    RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[30]:[10.201.20.0]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[30]:[10.201.20.4]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[30]:[10.201.20.8]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[30]:[10.201.20.12]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.10.11]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.10.21]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.10.22]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.10.23]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[192.168.202.2]
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 65020 i
+                    RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*                   10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 65020 i
+                    RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+Route Distinguisher: 10.0.0.18:2
+*> [5]:[0]:[0]:[0.0.0.0]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65300 ?
+                    ET:8 RT:65114:50002 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[24]:[10.168.30.0]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65212 ?
+                    RT:65212:50102 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50002
+*> [5]:[0]:[32]:[10.168.30.10]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65212 i
+                    RT:65000:10230 RT:65212:50102 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50002
+Route Distinguisher: 10.0.0.18:3
+*> [5]:[0]:[0]:[0.0.0.0]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65300 ?
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[24]:[10.168.10.0]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 ?
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[30]:[10.201.20.0]
+                    10.0.0.18 (leaf-border-2)
+                                             0             0 65400 i
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[30]:[10.201.20.4]
+                    10.0.0.18 (leaf-border-2)
+                                             0             0 65400 i
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[30]:[10.201.20.8]
+                    10.0.0.18 (leaf-border-2)
+                                             0             0 65400 i
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[30]:[10.201.20.12]
+                    10.0.0.18 (leaf-border-2)
+                                             0             0 65400 i
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[32]:[10.168.10.11]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[32]:[10.168.10.21]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[32]:[10.168.10.22]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[32]:[10.168.10.23]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[32]:[192.168.202.2]
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+
+Displayed 146 out of 278 total prefixes
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type macip' 2>/dev/null
+==============================================================================
+
+BGP table version is 308, local router ID is 10.0.0.18
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+EVPN type-1 prefix: [1]:[EthTag]:[ESI]:[IPlen]:[VTEP-IP]:[Frag-id]
+EVPN type-2 prefix: [2]:[EthTag]:[MAClen]:[MAC]:[IPlen]:[IP]
+EVPN type-3 prefix: [3]:[EthTag]:[IPlen]:[OrigIP]
+EVPN type-4 prefix: [4]:[ESI]:[IPlen]:[OrigIP]
+EVPN type-5 prefix: [5]:[EthTag]:[IPlen]:[IP]
+
+   Network          Next Hop            Metric LocPrf Weight Path
+                    Extended Community
+Route Distinguisher: 10.0.0.11:2
+*> [2]:[0]:[48]:[0c:00:7c:44:c3:97] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[0c:00:7c:44:c3:97] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0b:00:01] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0b:00:01] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]:[32]:[10.167.10.11] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*  [2]:[0]:[48]:[50:00:00:0b:00:01]:[32]:[10.167.10.11] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]:[128]:[fe80::5200:ff:fe0b:1] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0b:00:01]:[128]:[fe80::5200:ff:fe0b:1] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0c:00:01] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0c:00:01] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]:[32]:[10.167.10.12] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*  [2]:[0]:[48]:[50:00:00:0c:00:01]:[32]:[10.167.10.12] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]:[128]:[fe80::5200:ff:fe0c:1] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0c:00:01]:[128]:[fe80::5200:ff:fe0c:1] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0d:00:01] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0d:00:01] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]:[32]:[10.167.10.13] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*  [2]:[0]:[48]:[50:00:00:0d:00:01]:[32]:[10.167.10.13] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]:[128]:[fe80::5200:ff:fe0d:1] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0d:00:01]:[128]:[fe80::5200:ff:fe0d:1] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+Route Distinguisher: 10.0.0.12:2
+*> [2]:[0]:[48]:[0c:00:0e:6b:6b:06] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[0c:00:0e:6b:6b:06] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0b:00:01] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0b:00:01] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]:[32]:[10.167.10.11] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*  [2]:[0]:[48]:[50:00:00:0b:00:01]:[32]:[10.167.10.11] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [2]:[0]:[48]:[50:00:00:0b:00:01]:[128]:[fe80::5200:ff:fe0b:1] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0b:00:01]:[128]:[fe80::5200:ff:fe0b:1] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:01
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0c:00:01] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0c:00:01] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]:[32]:[10.167.10.12] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*  [2]:[0]:[48]:[50:00:00:0c:00:01]:[32]:[10.167.10.12] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [2]:[0]:[48]:[50:00:00:0c:00:01]:[128]:[fe80::5200:ff:fe0c:1] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0c:00:01]:[128]:[fe80::5200:ff:fe0c:1] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:02
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0d:00:01] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0d:00:01] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]:[32]:[10.167.10.13] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*  [2]:[0]:[48]:[50:00:00:0d:00:01]:[32]:[10.167.10.13] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [2]:[0]:[48]:[50:00:00:0d:00:01]:[128]:[fe80::5200:ff:fe0d:1] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+*  [2]:[0]:[48]:[50:00:00:0d:00:01]:[128]:[fe80::5200:ff:fe0d:1] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    ESI:03:44:38:39:be:ef:11:00:00:03
+                    RT:65000:10110 ET:8
+Route Distinguisher: 10.0.0.13:2
+*> [2]:[0]:[48]:[0c:00:c2:98:18:c9] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[0c:00:c2:98:18:c9] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0e:00:01] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:0e:00:01] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]:[32]:[10.167.20.11] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*  [2]:[0]:[48]:[50:00:00:0e:00:01]:[32]:[10.167.20.11] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]:[128]:[fe80::5200:ff:fe0e:1] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:0e:00:01]:[128]:[fe80::5200:ff:fe0e:1] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0f:00:01] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:0f:00:01] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]:[32]:[10.167.20.12] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*  [2]:[0]:[48]:[50:00:00:0f:00:01]:[32]:[10.167.20.12] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]:[128]:[fe80::5200:ff:fe0f:1] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:0f:00:01]:[128]:[fe80::5200:ff:fe0f:1] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:10:00:01] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:10:00:01] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:10:00:01]:[32]:[10.167.20.13] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*  [2]:[0]:[48]:[50:00:00:10:00:01]:[32]:[10.167.20.13] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [2]:[0]:[48]:[50:00:00:10:00:01]:[128]:[fe80::5200:ff:fe10:1] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:10:00:01]:[128]:[fe80::5200:ff:fe10:1] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+Route Distinguisher: 10.0.0.14:2
+*> [2]:[0]:[48]:[0c:00:1b:c3:9e:42] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[0c:00:1b:c3:9e:42] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0e:00:01] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:0e:00:01] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]:[32]:[10.167.20.11] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*  [2]:[0]:[48]:[50:00:00:0e:00:01]:[32]:[10.167.20.11] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [2]:[0]:[48]:[50:00:00:0e:00:01]:[128]:[fe80::5200:ff:fe0e:1] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:0e:00:01]:[128]:[fe80::5200:ff:fe0e:1] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:01
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0f:00:01] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:0f:00:01] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]:[32]:[10.167.20.12] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*  [2]:[0]:[48]:[50:00:00:0f:00:01]:[32]:[10.167.20.12] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [2]:[0]:[48]:[50:00:00:0f:00:01]:[128]:[fe80::5200:ff:fe0f:1] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:0f:00:01]:[128]:[fe80::5200:ff:fe0f:1] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:02
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:10:00:01] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:10:00:01] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*> [2]:[0]:[48]:[50:00:00:10:00:01]:[32]:[10.167.20.13] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*  [2]:[0]:[48]:[50:00:00:10:00:01]:[32]:[10.167.20.13] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [2]:[0]:[48]:[50:00:00:10:00:01]:[128]:[fe80::5200:ff:fe10:1] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+*  [2]:[0]:[48]:[50:00:00:10:00:01]:[128]:[fe80::5200:ff:fe10:1] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    ESI:03:44:38:39:be:ef:12:00:00:03
+                    RT:65000:10120 ET:8
+Route Distinguisher: 10.0.0.15:4
+*> [2]:[0]:[48]:[0c:00:c3:a2:c3:a2] RD 10.0.0.15:4
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*  [2]:[0]:[48]:[0c:00:c3:a2:c3:a2] RD 10.0.0.15:4
+                    10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[50:00:00:11:00:01] RD 10.0.0.15:4
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*  [2]:[0]:[48]:[50:00:00:11:00:01] RD 10.0.0.15:4
+                    10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[50:00:00:11:00:01]:[32]:[10.167.30.10] RD 10.0.0.15:4
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 RT:65113:50002 ET:8 Rmac:0c:00:c3:a2:c3:a2
+*  [2]:[0]:[48]:[50:00:00:11:00:01]:[32]:[10.167.30.10] RD 10.0.0.15:4
+                    10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 RT:65113:50002 ET:8 Rmac:0c:00:c3:a2:c3:a2
+*> [2]:[0]:[48]:[50:00:00:11:00:01]:[128]:[fe80::5200:ff:fe11:1] RD 10.0.0.15:4
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*  [2]:[0]:[48]:[50:00:00:11:00:01]:[128]:[fe80::5200:ff:fe11:1] RD 10.0.0.15:4
+                    10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+Route Distinguisher: 10.0.0.16:4
+*> [2]:[0]:[48]:[0c:00:6d:18:76:04] RD 10.0.0.16:4
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*  [2]:[0]:[48]:[0c:00:6d:18:76:04] RD 10.0.0.16:4
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[50:00:00:11:00:01] RD 10.0.0.16:4
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*  [2]:[0]:[48]:[50:00:00:11:00:01] RD 10.0.0.16:4
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*> [2]:[0]:[48]:[50:00:00:11:00:01]:[32]:[10.167.30.10] RD 10.0.0.16:4
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 RT:65113:50002 ET:8 Rmac:0c:00:6d:18:76:04
+*  [2]:[0]:[48]:[50:00:00:11:00:01]:[32]:[10.167.30.10] RD 10.0.0.16:4
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 RT:65113:50002 ET:8 Rmac:0c:00:6d:18:76:04
+*> [2]:[0]:[48]:[50:00:00:11:00:01]:[128]:[fe80::5200:ff:fe11:1] RD 10.0.0.16:4
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+*  [2]:[0]:[48]:[50:00:00:11:00:01]:[128]:[fe80::5200:ff:fe11:1] RD 10.0.0.16:4
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    ESI:03:44:38:39:be:ef:13:00:00:01
+                    RT:65000:10130 ET:8
+
+Displayed 48 prefixes (96 paths) (of requested type)
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type multicast' 2>/dev/null
+==============================================================================
+
+BGP table version is 308, local router ID is 10.0.0.18
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+EVPN type-1 prefix: [1]:[EthTag]:[ESI]:[IPlen]:[VTEP-IP]:[Frag-id]
+EVPN type-2 prefix: [2]:[EthTag]:[MAClen]:[MAC]:[IPlen]:[IP]
+EVPN type-3 prefix: [3]:[EthTag]:[IPlen]:[OrigIP]
+EVPN type-4 prefix: [4]:[ESI]:[IPlen]:[OrigIP]
+EVPN type-5 prefix: [5]:[EthTag]:[IPlen]:[IP]
+
+   Network          Next Hop            Metric LocPrf Weight Path
+                    Extended Community
+Route Distinguisher: 10.0.0.11:2
+*> [3]:[0]:[32]:[10.0.0.11] RD 10.0.0.11:2
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*  [3]:[0]:[32]:[10.0.0.11] RD 10.0.0.11:2
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+Route Distinguisher: 10.0.0.12:2
+*> [3]:[0]:[32]:[10.0.0.12] RD 10.0.0.12:2
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+*  [3]:[0]:[32]:[10.0.0.12] RD 10.0.0.12:2
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 i
+                    RT:65000:10110 ET:8
+Route Distinguisher: 10.0.0.13:2
+*> [3]:[0]:[32]:[10.0.0.13] RD 10.0.0.13:2
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*  [3]:[0]:[32]:[10.0.0.13] RD 10.0.0.13:2
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+Route Distinguisher: 10.0.0.14:2
+*> [3]:[0]:[32]:[10.0.0.14] RD 10.0.0.14:2
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+*  [3]:[0]:[32]:[10.0.0.14] RD 10.0.0.14:2
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 i
+                    RT:65000:10120 ET:8
+Route Distinguisher: 10.0.0.15:4
+*> [3]:[0]:[32]:[10.0.0.15] RD 10.0.0.15:4
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*  [3]:[0]:[32]:[10.0.0.15] RD 10.0.0.15:4
+                    10.0.0.15 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+Route Distinguisher: 10.0.0.16:4
+*> [3]:[0]:[32]:[10.0.0.16] RD 10.0.0.16:4
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+*  [3]:[0]:[32]:[10.0.0.16] RD 10.0.0.16:4
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 i
+                    RT:65000:10130 ET:8
+
+Displayed 6 prefixes (12 paths) (of requested type)
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type prefix' 2>/dev/null
+==============================================================================
+
+BGP table version is 35, local router ID is 10.0.0.18
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+EVPN type-1 prefix: [1]:[EthTag]:[ESI]:[IPlen]:[VTEP-IP]:[Frag-id]
+EVPN type-2 prefix: [2]:[EthTag]:[MAClen]:[MAC]:[IPlen]:[IP]
+EVPN type-3 prefix: [3]:[EthTag]:[IPlen]:[OrigIP]
+EVPN type-4 prefix: [4]:[ESI]:[IPlen]:[OrigIP]
+EVPN type-5 prefix: [5]:[EthTag]:[IPlen]:[IP]
+
+   Network          Next Hop            Metric LocPrf Weight Path
+                    Extended Community
+Route Distinguisher: 10.0.0.11:7
+*> [5]:[0]:[24]:[10.167.10.0] RD 10.0.0.11:7
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 ?
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*  [5]:[0]:[24]:[10.167.10.0] RD 10.0.0.11:7
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 ?
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [5]:[0]:[32]:[192.168.202.0] RD 10.0.0.11:7
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*  [5]:[0]:[32]:[192.168.202.0] RD 10.0.0.11:7
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [5]:[0]:[32]:[192.168.202.1] RD 10.0.0.11:7
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*  [5]:[0]:[32]:[192.168.202.1] RD 10.0.0.11:7
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [5]:[0]:[32]:[192.168.202.3] RD 10.0.0.11:7
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*  [5]:[0]:[32]:[192.168.202.3] RD 10.0.0.11:7
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*> [5]:[0]:[32]:[192.168.202.4] RD 10.0.0.11:7
+                    10.0.0.11 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+*  [5]:[0]:[32]:[192.168.202.4] RD 10.0.0.11:7
+                    10.0.0.11 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:7c:44:c3:97
+Route Distinguisher: 10.0.0.12:7
+*> [5]:[0]:[24]:[10.167.10.0] RD 10.0.0.12:7
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 ?
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*  [5]:[0]:[24]:[10.167.10.0] RD 10.0.0.12:7
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 ?
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [5]:[0]:[32]:[192.168.202.0] RD 10.0.0.12:7
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*  [5]:[0]:[32]:[192.168.202.0] RD 10.0.0.12:7
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [5]:[0]:[32]:[192.168.202.1] RD 10.0.0.12:7
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*  [5]:[0]:[32]:[192.168.202.1] RD 10.0.0.12:7
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [5]:[0]:[32]:[192.168.202.3] RD 10.0.0.12:7
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*  [5]:[0]:[32]:[192.168.202.3] RD 10.0.0.12:7
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*> [5]:[0]:[32]:[192.168.202.4] RD 10.0.0.12:7
+                    10.0.0.12 (spine-1)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+*  [5]:[0]:[32]:[192.168.202.4] RD 10.0.0.12:7
+                    10.0.0.12 (spine-2)
+                                                           0 65100 65111 65010 i
+                    RT:65111:50001 ET:8 Rmac:0c:00:0e:6b:6b:06
+Route Distinguisher: 10.0.0.13:7
+*> [5]:[0]:[24]:[10.167.20.0] RD 10.0.0.13:7
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 ?
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*  [5]:[0]:[24]:[10.167.20.0] RD 10.0.0.13:7
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 ?
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [5]:[0]:[32]:[192.168.202.0] RD 10.0.0.13:7
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*  [5]:[0]:[32]:[192.168.202.0] RD 10.0.0.13:7
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [5]:[0]:[32]:[192.168.202.1] RD 10.0.0.13:7
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*  [5]:[0]:[32]:[192.168.202.1] RD 10.0.0.13:7
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [5]:[0]:[32]:[192.168.202.3] RD 10.0.0.13:7
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*  [5]:[0]:[32]:[192.168.202.3] RD 10.0.0.13:7
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*> [5]:[0]:[32]:[192.168.202.4] RD 10.0.0.13:7
+                    10.0.0.13 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+*  [5]:[0]:[32]:[192.168.202.4] RD 10.0.0.13:7
+                    10.0.0.13 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:c2:98:18:c9
+Route Distinguisher: 10.0.0.14:7
+*> [5]:[0]:[24]:[10.167.20.0] RD 10.0.0.14:7
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 ?
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*  [5]:[0]:[24]:[10.167.20.0] RD 10.0.0.14:7
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 ?
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [5]:[0]:[32]:[192.168.202.0] RD 10.0.0.14:7
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*  [5]:[0]:[32]:[192.168.202.0] RD 10.0.0.14:7
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [5]:[0]:[32]:[192.168.202.1] RD 10.0.0.14:7
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*  [5]:[0]:[32]:[192.168.202.1] RD 10.0.0.14:7
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [5]:[0]:[32]:[192.168.202.3] RD 10.0.0.14:7
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*  [5]:[0]:[32]:[192.168.202.3] RD 10.0.0.14:7
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*> [5]:[0]:[32]:[192.168.202.4] RD 10.0.0.14:7
+                    10.0.0.14 (spine-1)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+*  [5]:[0]:[32]:[192.168.202.4] RD 10.0.0.14:7
+                    10.0.0.14 (spine-2)
+                                                           0 65100 65112 65010 i
+                    RT:65112:50001 ET:8 Rmac:0c:00:1b:c3:9e:42
+Route Distinguisher: 10.0.0.15:6
+*> [5]:[0]:[24]:[10.167.30.0] RD 10.0.0.15:6
+                    10.0.0.15 (spine-1)
+                                                           0 65100 65113 ?
+                    RT:65113:50002 ET:8 Rmac:0c:00:c3:a2:c3:a2
+*  [5]:[0]:[24]:[10.167.30.0] RD 10.0.0.15:6
+                    10.0.0.15 (spine-2)
+                                                           0 65100 65113 ?
+                    RT:65113:50002 ET:8 Rmac:0c:00:c3:a2:c3:a2
+Route Distinguisher: 10.0.0.16:6
+*> [5]:[0]:[24]:[10.167.30.0] RD 10.0.0.16:6
+                    10.0.0.16 (spine-2)
+                                                           0 65100 65113 ?
+                    RT:65113:50002 ET:8 Rmac:0c:00:6d:18:76:04
+*  [5]:[0]:[24]:[10.167.30.0] RD 10.0.0.16:6
+                    10.0.0.16 (spine-1)
+                                                           0 65100 65113 ?
+                    RT:65113:50002 ET:8 Rmac:0c:00:6d:18:76:04
+Route Distinguisher: 10.0.0.17:2
+*> [5]:[0]:[0]:[0.0.0.0] RD 10.0.0.17:2
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65300 ?
+                    RT:65114:50002 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[0]:[0.0.0.0] RD 10.0.0.17:2
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65300 ?
+                    RT:65114:50002 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[24]:[10.168.30.0] RD 10.0.0.17:2
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65212 ?
+                    RT:65114:50002 RT:65212:50102 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[24]:[10.168.30.0] RD 10.0.0.17:2
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65212 ?
+                    RT:65114:50002 RT:65212:50102 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.30.10] RD 10.0.0.17:2
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65212 i
+                    RT:65000:10230 RT:65114:50002 RT:65212:50102 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[32]:[10.168.30.10] RD 10.0.0.17:2
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65212 i
+                    RT:65000:10230 RT:65114:50002 RT:65212:50102 ET:8 Rmac:0c:00:c2:92:31:c8
+Route Distinguisher: 10.0.0.17:3
+*> [5]:[0]:[0]:[0.0.0.0] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65300 ?
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[0]:[0.0.0.0] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65300 ?
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[24]:[10.168.10.0] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 ?
+                    RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[24]:[10.168.10.0] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 ?
+                    RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[30]:[10.201.20.0] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[30]:[10.201.20.0] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[30]:[10.201.20.4] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[30]:[10.201.20.4] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[30]:[10.201.20.8] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[30]:[10.201.20.8] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[30]:[10.201.20.12] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[30]:[10.201.20.12] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 i
+                    RT:65114:50001 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.10.11] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[32]:[10.168.10.11] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.10.21] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[32]:[10.168.10.21] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.10.22] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[32]:[10.168.10.22] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[10.168.10.23] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[32]:[10.168.10.23] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*> [5]:[0]:[32]:[192.168.202.2] RD 10.0.0.17:3
+                    10.0.0.17 (spine-1)
+                                                           0 65100 65114 65400 65213 65200 65211 65020 i
+                    RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+*  [5]:[0]:[32]:[192.168.202.2] RD 10.0.0.17:3
+                    10.0.0.17 (spine-2)
+                                                           0 65100 65114 65400 65213 65200 65211 65020 i
+                    RT:65114:50001 RT:65211:50101 ET:8 Rmac:0c:00:c2:92:31:c8
+Route Distinguisher: 10.0.0.18:2
+*> [5]:[0]:[0]:[0.0.0.0] RD 10.0.0.18:2
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65300 ?
+                    ET:8 RT:65114:50002 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[24]:[10.168.30.0] RD 10.0.0.18:2
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65212 ?
+                    RT:65212:50102 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50002
+*> [5]:[0]:[32]:[10.168.30.10] RD 10.0.0.18:2
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65212 i
+                    RT:65000:10230 RT:65212:50102 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50002
+Route Distinguisher: 10.0.0.18:3
+*> [5]:[0]:[0]:[0.0.0.0] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65300 ?
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[24]:[10.168.10.0] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 ?
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[30]:[10.201.20.0] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                             0             0 65400 i
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[30]:[10.201.20.4] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                             0             0 65400 i
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[30]:[10.201.20.8] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                             0             0 65400 i
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[30]:[10.201.20.12] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                             0             0 65400 i
+                    ET:8 RT:65114:50001 Rmac:0c:00:c3:af:c3:a0
+*> [5]:[0]:[32]:[10.168.10.11] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[32]:[10.168.10.21] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[32]:[10.168.10.22] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[32]:[10.168.10.23] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 i
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+*> [5]:[0]:[32]:[192.168.202.2] RD 10.0.0.18:3
+                    10.0.0.18 (leaf-border-2)
+                                                           0 65400 65213 65200 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:af:c3:a0 ET:8 RT:65114:50001
+
+Displayed 50 prefixes (86 paths) (of requested type)
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show running-config' 2>/dev/null
+==============================================================================
+
+Building configuration...
+
+Current configuration:
+!
+frr version 8.4.3
+frr defaults datacenter
+hostname leaf-border-2
+log syslog informational
+agentx
+service integrated-vtysh-config
+!
+vrf tenant-k8s
+ vni 50001
+exit-vrf
+!
+vrf tenant-svc
+ vni 50002
+exit-vrf
+!
+router bgp 65114
+ bgp router-id 10.0.0.18
+ neighbor swp1 interface remote-as external
+ neighbor swp1 advertisement-interval 0
+ neighbor swp1 timers 3 9
+ neighbor swp1 timers connect 10
+ neighbor swp2 interface remote-as external
+ neighbor swp2 advertisement-interval 0
+ neighbor swp2 timers 3 9
+ neighbor swp2 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  neighbor swp1 allowas-in 1
+  neighbor swp2 allowas-in 1
+  maximum-paths 64
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  neighbor swp1 activate
+  neighbor swp1 allowas-in 1
+  neighbor swp2 activate
+  neighbor swp2 allowas-in 1
+  advertise-all-vni
+ exit-address-family
+exit
+!
+router bgp 65114 vrf tenant-svc
+ bgp router-id 10.0.0.18
+ neighbor swp3.200 interface remote-as external
+ neighbor swp3.200 advertisement-interval 0
+ neighbor swp3.200 timers 1 3
+ neighbor swp3.200 timers connect 10
+ neighbor swp4.200 interface remote-as external
+ neighbor swp4.200 advertisement-interval 0
+ neighbor swp4.200 timers 1 3
+ neighbor swp4.200 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  maximum-paths 4
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  advertise ipv4 unicast
+ exit-address-family
+exit
+!
+router bgp 65114 vrf tenant-k8s
+ bgp router-id 10.0.0.18
+ neighbor swp3.100 interface remote-as external
+ neighbor swp3.100 advertisement-interval 0
+ neighbor swp3.100 timers 1 3
+ neighbor swp3.100 timers connect 10
+ neighbor swp4.100 interface remote-as external
+ neighbor swp4.100 advertisement-interval 0
+ neighbor swp4.100 timers 1 3
+ neighbor swp4.100 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  maximum-paths 4
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  advertise ipv4 unicast
+ exit-address-family
+exit
+!
+end
+
+==============================================================================
+leaf-border-2# sudo -n journalctl -u frr --no-pager -n 50 2>/dev/null || echo admin | sudo -S journalctl -u frr --no-pager -n 50 2>/dev/null
+==============================================================================
+
+Aug 20 10:23:45 leaf-border-2 bgpd[2234]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp3.100 in vrf tenant-k8s
+Aug 20 10:23:50 leaf-border-2 zebra[2183]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+Aug 20 10:23:50 leaf-border-2 zebra[2183]: [WPPMZ-G9797] if_zebra_speed_update: swp3.100 old speed: 0 new speed: 1000
+Aug 20 10:23:50 leaf-border-2 zebra[2183]: [WPPMZ-G9797] if_zebra_speed_update: swp3.200 old speed: 0 new speed: 1000
+Aug 21 05:56:22 leaf-border-2 systemd[1]: Reloading frr.service - FRRouting...
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28532]: Stopping watchfrr, pid 2099, cnt 1200 ....
+Aug 21 05:56:22 leaf-border-2 watchfrr[2099]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 21 05:56:22 leaf-border-2 watchfrr[2099]: [NG1AJ-FP2TQ] Terminating on signal
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28532]: Stopped watchfrr.
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28532]: Starting watchfrr with command: '   /usr/lib/frr/watchfrr  -d  -F datacenter   zebra bgpd staticd'.
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [T83RR-8SM5G] watchfrr 8.4.3 starting: vty@0
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28532]: Started watchfrr.
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28582]: Waiting for children to finish applying config...
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: [28589|bgpd] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28597]: [28597|watchfrr] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28599]: [28599|staticd] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28583]: [28583|zebra] sending configuration
+Aug 21 05:56:22 leaf-border-2 bgpd[2234]: [YCCZ5-BCH28][EC 33554466] 0: Failed to create L2VNI 50001, it is configured as L3VNI
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: % Failed to create VNI
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: line 125: % Unknown command[3]: router bgp 65114
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: line 126: % Unknown command[3]:  address-family l2vpn evpn
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: line 127: % Unknown command[3]:   vni 50001
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: line 128: % Unknown command[3]:    route-target import 65000:50001
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28597]: [28597|watchfrr] done
+Aug 21 05:56:22 leaf-border-2 staticd[2295]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28599]: [28599|staticd] done
+Aug 21 05:56:22 leaf-border-2 zebra[2183]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28583]: [28583|zebra] done
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28606]: Waiting for children to finish applying config...
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: [28613|bgpd] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28621]: [28621|watchfrr] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28623]: [28623|staticd] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28607]: [28607|zebra] sending configuration
+Aug 21 05:56:22 leaf-border-2 bgpd[2234]: [YCCZ5-BCH28][EC 33554466] 0: Failed to create L2VNI 50001, it is configured as L3VNI
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: % Failed to create VNI
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: line 113: % Unknown command[3]: router bgp 65114
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: line 114: % Unknown command[3]:  address-family l2vpn evpn
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: line 115: % Unknown command[3]:   vni 50001
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: line 116: % Unknown command[3]:    route-target import 65000:50001
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28621]: [28621|watchfrr] done
+Aug 21 05:56:22 leaf-border-2 staticd[2295]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28623]: [28623|staticd] done
+Aug 21 05:56:22 leaf-border-2 zebra[2183]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28607]: [28607|zebra] done
+Aug 21 05:56:22 leaf-border-2 systemd[1]: Reloaded frr.service - FRRouting.
+Aug 21 05:56:23 leaf-border-2 zebra[2183]: [R48QG-9REZ0][EC 4043309067] DPlane returned an invalid result code for attempt of installation of 41[if 16] into the kernel
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show evpn vni detail' 2>/dev/null
+==============================================================================
+
+VNI: 50002
+  Type: L3
+  Tenant VRF: tenant-svc
+  Vlan: 3002
+  Bridge: br_l3vni
+  Local Vtep Ip: 10.0.0.18
+  Vxlan-Intf: vxlan99
+  SVI-If: vlan3002_l3
+  State: Up
+  VNI Filter: none
+  System MAC: 0c:00:c3:af:c3:a0
+  Router MAC: 0c:00:c3:af:c3:a0
+  L2 VNIs: 
+
+VNI: 50001
+  Type: L3
+  Tenant VRF: tenant-k8s
+  Vlan: 3001
+  Bridge: br_l3vni
+  Local Vtep Ip: 10.0.0.18
+  Vxlan-Intf: vxlan99
+  SVI-If: vlan3001_l3
+  State: Up
+  VNI Filter: none
+  System MAC: 0c:00:c3:af:c3:a0
+  Router MAC: 0c:00:c3:af:c3:a0
+  L2 VNIs: 
+
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show evpn mac vni all' 2>/dev/null
+==============================================================================
+
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show evpn arp-cache vni all' 2>/dev/null
+==============================================================================
+
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show evpn next-hops vni all' 2>/dev/null
+==============================================================================
+
+VNI 50002 #Next-Hops 3
+
+IP              RMAC             
+10.0.0.17       0c:00:c2:92:31:c8
+10.0.0.15       0c:00:c3:a2:c3:a2
+10.0.0.16       0c:00:6d:18:76:04
+
+VNI 50001 #Next-Hops 5
+
+IP              RMAC             
+10.0.0.17       0c:00:c2:92:31:c8
+10.0.0.12       0c:00:0e:6b:6b:06
+10.0.0.14       0c:00:1b:c3:9e:42
+10.0.0.13       0c:00:c2:98:18:c9
+10.0.0.11       0c:00:7c:44:c3:97
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show evpn rmac vni all' 2>/dev/null
+==============================================================================
+
+VNI 50002 #RMACs 3
+
+RMAC              Remote VTEP          
+0c:00:c3:a2:c3:a2 10.0.0.15            
+0c:00:6d:18:76:04 10.0.0.16            
+0c:00:c2:92:31:c8 10.0.0.17            
+
+VNI 50001 #RMACs 5
+
+RMAC              Remote VTEP          
+0c:00:0e:6b:6b:06 10.0.0.12            
+0c:00:7c:44:c3:97 10.0.0.11            
+0c:00:c2:98:18:c9 10.0.0.13            
+0c:00:c2:92:31:c8 10.0.0.17            
+0c:00:1b:c3:9e:42 10.0.0.14            
+
+==============================================================================
+leaf-border-2# ip -d link show type vxlan
+==============================================================================
+
+11: vxlan99: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9216 qdisc noqueue master br_l3vni state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether f2:f7:e4:57:24:48 brd ff:ff:ff:ff:ff:ff promiscuity 1  allmulti 1 minmtu 68 maxmtu 65535 
+    vxlan external vnifilter id 0 local 10.0.0.18 srcport 0 0 dstport 4789 nolearning ttl 64 ageing 1800 udpcsum noudp6zerocsumtx noudp6zerocsumrx 
+    bridge_slave state forwarding priority 8 cost 100 hairpin off guard off root_block off fastleave off learning off flood on port_id 0x8001 port_no 0x1 designated_port 32769 designated_cost 0 designated_bridge 8000.c:0:4d:5b:c2:9f designated_root 8000.c:0:4d:5b:c2:9f hold_timer    0.00 message_age_timer    0.00 forward_delay_timer    0.00 topology_change_ack 0 config_pending 0 proxy_arp off proxy_arp_wifi off mcast_router 1 mcast_fast_leave off mcast_flood on bcast_flood on mcast_to_unicast off neigh_suppress on group_fwd_mask 0 group_fwd_mask_str 0x0 group_fwd_maskhi 0x0 group_fwd_maskhi_str 0x0 vlan_tunnel on isolated off locked off addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 last_change 1787221414183 carrier_up_count 0 carrier_down_count 0 carrier_changes 0 
+
+==============================================================================
+leaf-border-2# bridge vlan show
+==============================================================================
+
+port              vlan-id  
+vxlan99           3001
+                  3002
+br_l3vni          1 PVID Egress Untagged
+                  3001
+                  3002
+br_default        1 PVID Egress Untagged
+
+==============================================================================
+leaf-border-2# bridge fdb show | grep -i vxlan | head -60
+==============================================================================
+
+0c:00:c2:92:31:c8 dev vxlan99 vlan 3002 extern_learn master br_l3vni 
+0c:00:6d:18:76:04 dev vxlan99 vlan 3002 extern_learn master br_l3vni 
+0c:00:c3:a2:c3:a2 dev vxlan99 vlan 3002 extern_learn master br_l3vni 
+0c:00:c2:92:31:c8 dev vxlan99 vlan 3001 extern_learn master br_l3vni 
+0c:00:1b:c3:9e:42 dev vxlan99 vlan 3001 extern_learn master br_l3vni 
+0c:00:c2:98:18:c9 dev vxlan99 vlan 3001 extern_learn master br_l3vni 
+0c:00:0e:6b:6b:06 dev vxlan99 vlan 3001 extern_learn master br_l3vni 
+0c:00:7c:44:c3:97 dev vxlan99 vlan 3001 extern_learn master br_l3vni 
+f2:f7:e4:57:24:48 dev vxlan99 master br_l3vni permanent
+0c:00:6d:18:76:04 dev vxlan99 dst 10.0.0.16 src_vni 50002 self extern_learn 
+0c:00:c3:a2:c3:a2 dev vxlan99 dst 10.0.0.15 src_vni 50002 self extern_learn 
+0c:00:0e:6b:6b:06 dev vxlan99 dst 10.0.0.12 src_vni 50001 self extern_learn 
+0c:00:c2:92:31:c8 dev vxlan99 dst 10.0.0.17 src_vni 50002 self extern_learn 
+0c:00:c2:92:31:c8 dev vxlan99 dst 10.0.0.17 src_vni 50001 self extern_learn 
+0c:00:7c:44:c3:97 dev vxlan99 dst 10.0.0.11 src_vni 50001 self extern_learn 
+0c:00:c2:98:18:c9 dev vxlan99 dst 10.0.0.13 src_vni 50001 self extern_learn 
+0c:00:1b:c3:9e:42 dev vxlan99 dst 10.0.0.14 src_vni 50001 self extern_learn 
+
+==============================================================================
+leaf-border-2# nv show nve vxlan
+==============================================================================
+
+                          operational  applied  
+------------------------  -----------  ---------
+enable                    on           on       
+mac-learning              off          off      
+port                      4789         4789     
+arp-nd-suppress           on           on       
+mtu                       9216         9216     
+flooding                                        
+  enable                  on           on       
+  [head-end-replication]  evpn         evpn     
+source                                          
+  address                 10.0.0.18    10.0.0.18
+mlag                                            
+  shared-address          none         none     
+encapsulation                                   
+  dscp                                          
+    action                derive       derive   
+decapsulation                                   
+  dscp                                          
+    action                derive       derive   
+
+==============================================================================
+leaf-border-2# nv show evpn
+==============================================================================
+
+                       operational   applied      
+---------------------  ------------  -------------
+enable                               on           
+route-advertise                                   
+  nexthop-setting                    system-ip-mac
+  svi-ip               off           off          
+  default-gateway      off           off          
+dad                                               
+  enable               on            on           
+  mac-move-threshold   5             5            
+  move-window          180           180          
+  duplicate-action     warning-only  warning-only 
+[vni]                                50001        
+[vni]                                50002        
+multihoming                                       
+  enable                             off          
+  mac-holdtime         1080                       
+  neighbor-holdtime    1080                       
+  startup-delay        180                        
+  startup-delay-timer  --:--:--                   
+  uplink-count         0                          
+  uplink-active        0                          
+l2vni-count            0                          
+l3vni-count            2                          
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show ip route vrf tenant-k8s' 2>/dev/null
+==============================================================================
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-k8s:
+B>* 0.0.0.0/0 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 00:59:55
+  *                  via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 00:59:55
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:42
+B>* 10.167.10.0/24 [20/0] via 10.0.0.11, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                       via 10.0.0.12, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 10.167.10.11/32 [20/0] via 10.0.0.11, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                        via 10.0.0.12, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 10.167.10.12/32 [20/0] via 10.0.0.11, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                        via 10.0.0.12, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 10.167.10.13/32 [20/0] via 10.0.0.11, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                        via 10.0.0.12, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 10.167.20.0/24 [20/0] via 10.0.0.13, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                       via 10.0.0.14, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 10.167.20.11/32 [20/0] via 10.0.0.13, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                        via 10.0.0.14, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 10.167.20.12/32 [20/0] via 10.0.0.13, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                        via 10.0.0.14, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 10.167.20.13/32 [20/0] via 10.0.0.13, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                        via 10.0.0.14, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 10.168.10.0/24 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 00:59:55
+  *                       via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 00:59:55
+B>* 10.168.10.11/32 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 00:59:48
+  *                        via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 00:59:48
+B>* 10.168.10.21/32 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 00:59:55
+  *                        via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 00:59:55
+B>* 10.168.10.22/32 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 00:59:55
+  *                        via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 00:59:55
+B>* 10.168.10.23/32 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 00:59:55
+  *                        via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 00:59:55
+B>* 10.201.20.0/30 [20/0] via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 20:32:31
+B>* 10.201.20.4/30 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 20:32:32
+B>* 10.201.20.8/30 [20/0] via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 20:32:31
+B>* 10.201.20.12/30 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 20:32:32
+B>* 192.168.202.0/32 [20/0] via 10.0.0.11, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.12, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.13, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.14, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 192.168.202.1/32 [20/0] via 10.0.0.11, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.12, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.13, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.14, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 192.168.202.2/32 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.100, weight 1, 00:59:48
+  *                         via fe80::a8c1:abff:fe82:c109, swp3.100, weight 1, 00:59:48
+B>* 192.168.202.3/32 [20/0] via 10.0.0.11, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.12, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.13, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.14, vlan3001_l3 onlink, weight 1, 00:59:54
+B>* 192.168.202.4/32 [20/0] via 10.0.0.11, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.12, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.13, vlan3001_l3 onlink, weight 1, 00:59:54
+  *                         via 10.0.0.14, vlan3001_l3 onlink, weight 1, 00:59:54
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp vrf tenant-k8s ipv4 unicast summary' 2>/dev/null
+==============================================================================
+
+BGP router identifier 10.0.0.18, local AS number 65114 vrf-id 9
+BGP table version 276
+RIB entries 40, using 8960 bytes of memory
+Peers 2, using 40 KiB of memory
+
+Neighbor              V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+br-agg-sw-1(swp3.100) 4      65400     74121     74134        0    0    0 20:32:33            9       23 N/A
+br-agg-sw-2(swp4.100) 4      65400     74121     74135        0    0    0 20:32:33            9       23 N/A
+
+Total number of neighbors 2
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp vrf tenant-k8s ipv4 unicast' 2>/dev/null
+==============================================================================
+
+BGP table version is 276, local router ID is 10.0.0.18, vrf id 9
+Default local pref 100, local AS 65114
+Status codes:  s suppressed, d damped, h history, u unsorted, * valid, > best, = multipath, + multipath nhg,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 0.0.0.0/0        swp3.100                               0 65400 65300 ?
+*=                  swp4.100                               0 65400 65300 ?
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65300 ?
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65300 ?
+*> 10.167.10.0/24   10.0.0.11(spine-1)<
+                                                           0 65100 65111 ?
+*=                  10.0.0.12(spine-1)<
+                                                           0 65100 65111 ?
+*                   10.0.0.11(spine-2)<
+                                                           0 65100 65111 ?
+*                   10.0.0.12(spine-2)<
+                                                           0 65100 65111 ?
+*> 10.167.10.11/32  10.0.0.11(spine-1)<
+                                                           0 65100 65111 i
+*=                  10.0.0.12(spine-1)<
+                                                           0 65100 65111 i
+*                   10.0.0.11(spine-2)<
+                                                           0 65100 65111 i
+*                   10.0.0.12(spine-2)<
+                                                           0 65100 65111 i
+*> 10.167.10.12/32  10.0.0.11(spine-1)<
+                                                           0 65100 65111 i
+*=                  10.0.0.12(spine-1)<
+                                                           0 65100 65111 i
+*                   10.0.0.11(spine-2)<
+                                                           0 65100 65111 i
+*                   10.0.0.12(spine-2)<
+                                                           0 65100 65111 i
+*> 10.167.10.13/32  10.0.0.11(spine-1)<
+                                                           0 65100 65111 i
+*=                  10.0.0.12(spine-1)<
+                                                           0 65100 65111 i
+*                   10.0.0.11(spine-2)<
+                                                           0 65100 65111 i
+*                   10.0.0.12(spine-2)<
+                                                           0 65100 65111 i
+*> 10.167.20.0/24   10.0.0.13(spine-1)<
+                                                           0 65100 65112 ?
+*=                  10.0.0.14(spine-1)<
+                                                           0 65100 65112 ?
+*                   10.0.0.13(spine-2)<
+                                                           0 65100 65112 ?
+*                   10.0.0.14(spine-2)<
+                                                           0 65100 65112 ?
+*> 10.167.20.11/32  10.0.0.13(spine-1)<
+                                                           0 65100 65112 i
+*=                  10.0.0.14(spine-1)<
+                                                           0 65100 65112 i
+*                   10.0.0.13(spine-2)<
+                                                           0 65100 65112 i
+*                   10.0.0.14(spine-2)<
+                                                           0 65100 65112 i
+*> 10.167.20.12/32  10.0.0.13(spine-1)<
+                                                           0 65100 65112 i
+*=                  10.0.0.14(spine-1)<
+                                                           0 65100 65112 i
+*                   10.0.0.13(spine-2)<
+                                                           0 65100 65112 i
+*                   10.0.0.14(spine-2)<
+                                                           0 65100 65112 i
+*> 10.167.20.13/32  10.0.0.13(spine-1)<
+                                                           0 65100 65112 i
+*=                  10.0.0.14(spine-1)<
+                                                           0 65100 65112 i
+*                   10.0.0.13(spine-2)<
+                                                           0 65100 65112 i
+*                   10.0.0.14(spine-2)<
+                                                           0 65100 65112 i
+*> 10.168.10.0/24   swp4.100                               0 65400 65213 65200 65211 ?
+*=                  swp3.100                               0 65400 65213 65200 65211 ?
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65213 65200 65211 ?
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65213 65200 65211 ?
+*> 10.168.10.11/32  swp3.100                               0 65400 65213 65200 65211 i
+*=                  swp4.100                               0 65400 65213 65200 65211 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65213 65200 65211 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65213 65200 65211 i
+*> 10.168.10.21/32  swp3.100                               0 65400 65213 65200 65211 i
+*=                  swp4.100                               0 65400 65213 65200 65211 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65213 65200 65211 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65213 65200 65211 i
+*> 10.168.10.22/32  swp3.100                               0 65400 65213 65200 65211 i
+*=                  swp4.100                               0 65400 65213 65200 65211 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65213 65200 65211 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65213 65200 65211 i
+*> 10.168.10.23/32  swp3.100                               0 65400 65213 65200 65211 i
+*=                  swp4.100                               0 65400 65213 65200 65211 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65213 65200 65211 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65213 65200 65211 i
+*> 10.201.20.0/30   swp3.100                 0             0 65400 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 i
+*> 10.201.20.4/30   swp4.100                 0             0 65400 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 i
+*> 10.201.20.8/30   swp3.100                 0             0 65400 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 i
+*> 10.201.20.12/30  swp4.100                 0             0 65400 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 i
+*> 192.168.202.0/32 10.0.0.11(spine-1)<
+                                                           0 65100 65111 65010 i
+*=                  10.0.0.12(spine-1)<
+                                                           0 65100 65111 65010 i
+*=                  10.0.0.13(spine-1)<
+                                                           0 65100 65112 65010 i
+*=                  10.0.0.14(spine-1)<
+                                                           0 65100 65112 65010 i
+*                   10.0.0.11(spine-2)<
+                                                           0 65100 65111 65010 i
+*                   10.0.0.12(spine-2)<
+                                                           0 65100 65111 65010 i
+*                   10.0.0.13(spine-2)<
+                                                           0 65100 65112 65010 i
+*                   10.0.0.14(spine-2)<
+                                                           0 65100 65112 65010 i
+*> 192.168.202.1/32 10.0.0.11(spine-1)<
+                                                           0 65100 65111 65010 i
+*=                  10.0.0.12(spine-1)<
+                                                           0 65100 65111 65010 i
+*=                  10.0.0.13(spine-1)<
+                                                           0 65100 65112 65010 i
+*=                  10.0.0.14(spine-1)<
+                                                           0 65100 65112 65010 i
+*                   10.0.0.11(spine-2)<
+                                                           0 65100 65111 65010 i
+*                   10.0.0.12(spine-2)<
+                                                           0 65100 65111 65010 i
+*                   10.0.0.13(spine-2)<
+                                                           0 65100 65112 65010 i
+*                   10.0.0.14(spine-2)<
+                                                           0 65100 65112 65010 i
+*> 192.168.202.2/32 swp3.100                               0 65400 65213 65200 65211 65020 i
+*=                  swp4.100                               0 65400 65213 65200 65211 65020 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65213 65200 65211 65020 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65213 65200 65211 65020 i
+*> 192.168.202.3/32 10.0.0.11(spine-1)<
+                                                           0 65100 65111 65010 i
+*=                  10.0.0.12(spine-1)<
+                                                           0 65100 65111 65010 i
+*=                  10.0.0.13(spine-1)<
+                                                           0 65100 65112 65010 i
+*=                  10.0.0.14(spine-1)<
+                                                           0 65100 65112 65010 i
+*                   10.0.0.11(spine-2)<
+                                                           0 65100 65111 65010 i
+*                   10.0.0.12(spine-2)<
+                                                           0 65100 65111 65010 i
+*                   10.0.0.13(spine-2)<
+                                                           0 65100 65112 65010 i
+*                   10.0.0.14(spine-2)<
+                                                           0 65100 65112 65010 i
+*> 192.168.202.4/32 10.0.0.11(spine-1)<
+                                                           0 65100 65111 65010 i
+*=                  10.0.0.12(spine-1)<
+                                                           0 65100 65111 65010 i
+*=                  10.0.0.13(spine-1)<
+                                                           0 65100 65112 65010 i
+*=                  10.0.0.14(spine-1)<
+                                                           0 65100 65112 65010 i
+*                   10.0.0.11(spine-2)<
+                                                           0 65100 65111 65010 i
+*                   10.0.0.12(spine-2)<
+                                                           0 65100 65111 65010 i
+*                   10.0.0.13(spine-2)<
+                                                           0 65100 65112 65010 i
+*                   10.0.0.14(spine-2)<
+                                                           0 65100 65112 65010 i
+
+Displayed  23 routes and 104 total paths
+
+==============================================================================
+leaf-border-2# ip route show vrf tenant-k8s
+==============================================================================
+
+default nhid 275 proto bgp metric 20 
+unreachable default metric 4278198272 
+10.167.10.0/24 nhid 276 proto bgp metric 20 
+10.167.10.11 nhid 276 proto bgp metric 20 
+10.167.10.12 nhid 276 proto bgp metric 20 
+10.167.10.13 nhid 276 proto bgp metric 20 
+10.167.20.0/24 nhid 277 proto bgp metric 20 
+10.167.20.11 nhid 277 proto bgp metric 20 
+10.167.20.12 nhid 277 proto bgp metric 20 
+10.167.20.13 nhid 277 proto bgp metric 20 
+10.168.10.0/24 nhid 275 proto bgp metric 20 
+10.168.10.11 nhid 275 proto bgp metric 20 
+10.168.10.21 nhid 275 proto bgp metric 20 
+10.168.10.22 nhid 275 proto bgp metric 20 
+10.168.10.23 nhid 275 proto bgp metric 20 
+10.201.20.0/30 nhid 62 proto bgp metric 20 
+10.201.20.4/30 nhid 60 proto bgp metric 20 
+10.201.20.8/30 nhid 62 proto bgp metric 20 
+10.201.20.12/30 nhid 60 proto bgp metric 20 
+127.0.0.0/8 dev tenant-k8s proto kernel scope link src 127.0.0.1 
+192.168.202.0 nhid 278 proto bgp metric 20 
+192.168.202.1 nhid 278 proto bgp metric 20 
+192.168.202.2 nhid 275 proto bgp metric 20 
+192.168.202.3 nhid 278 proto bgp metric 20 
+192.168.202.4 nhid 278 proto bgp metric 20 
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show ip route vrf tenant-svc' 2>/dev/null
+==============================================================================
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-svc:
+B>* 0.0.0.0/0 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.200, weight 1, 00:59:56
+  *                  via fe80::a8c1:abff:fe82:c109, swp3.200, weight 1, 00:59:56
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:43
+B>* 10.167.30.0/24 [20/0] via 10.0.0.15, vlan3002_l3 onlink, weight 1, 00:59:55
+  *                       via 10.0.0.16, vlan3002_l3 onlink, weight 1, 00:59:55
+B>* 10.167.30.10/32 [20/0] via 10.0.0.15, vlan3002_l3 onlink, weight 1, 00:59:55
+  *                        via 10.0.0.16, vlan3002_l3 onlink, weight 1, 00:59:55
+B>* 10.168.30.0/24 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.200, weight 1, 00:59:49
+  *                       via fe80::a8c1:abff:fe82:c109, swp3.200, weight 1, 00:59:49
+B>* 10.168.30.10/32 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.200, weight 1, 00:59:49
+  *                        via fe80::a8c1:abff:fe82:c109, swp3.200, weight 1, 00:59:49
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp vrf tenant-svc ipv4 unicast summary' 2>/dev/null
+==============================================================================
+
+BGP router identifier 10.0.0.18, local AS number 65114 vrf-id 15
+BGP table version 27
+RIB entries 6, using 1344 bytes of memory
+Peers 2, using 40 KiB of memory
+
+Neighbor              V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+br-agg-sw-1(swp3.200) 4      65400     73977     73975        0    0    0 20:32:34            3        5 N/A
+br-agg-sw-2(swp4.200) 4      65400     73977     73976        0    0    0 20:32:34            3        5 N/A
+
+Total number of neighbors 2
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp vrf tenant-svc ipv4 unicast' 2>/dev/null
+==============================================================================
+
+BGP table version is 27, local router ID is 10.0.0.18, vrf id 15
+Default local pref 100, local AS 65114
+Status codes:  s suppressed, d damped, h history, u unsorted, * valid, > best, = multipath, + multipath nhg,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 0.0.0.0/0        swp3.200                               0 65400 65300 ?
+*=                  swp4.200                               0 65400 65300 ?
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65300 ?
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65300 ?
+*> 10.167.30.0/24   10.0.0.15(spine-1)<
+                                                           0 65100 65113 ?
+*                   10.0.0.16(spine-2)<
+                                                           0 65100 65113 ?
+*=                  10.0.0.16(spine-1)<
+                                                           0 65100 65113 ?
+*                   10.0.0.15(spine-2)<
+                                                           0 65100 65113 ?
+*> 10.167.30.10/32  10.0.0.15(spine-1)<
+                                                           0 65100 65113 i
+*=                  10.0.0.16(spine-1)<
+                                                           0 65100 65113 i
+*                   10.0.0.15(spine-2)<
+                                                           0 65100 65113 i
+*                   10.0.0.16(spine-2)<
+                                                           0 65100 65113 i
+*> 10.168.30.0/24   swp4.200                               0 65400 65213 65200 65212 ?
+*=                  swp3.200                               0 65400 65213 65200 65212 ?
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65213 65200 65212 ?
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65213 65200 65212 ?
+*> 10.168.30.10/32  swp3.200                               0 65400 65213 65200 65212 i
+*=                  swp4.200                               0 65400 65213 65200 65212 i
+*                   10.0.0.17(spine-1)<
+                                                           0 65100 65114 65400 65213 65200 65212 i
+*                   10.0.0.17(spine-2)<
+                                                           0 65100 65114 65400 65213 65200 65212 i
+
+Displayed  5 routes and 20 total paths
+
+==============================================================================
+leaf-border-2# ip route show vrf tenant-svc
+==============================================================================
+
+default nhid 285 proto bgp metric 20 
+unreachable default metric 4278198272 
+10.167.30.0/24 nhid 286 proto bgp metric 20 
+10.167.30.10 nhid 286 proto bgp metric 20 
+10.168.30.0/24 nhid 285 proto bgp metric 20 
+10.168.30.10 nhid 285 proto bgp metric 20 
+127.0.0.0/8 dev tenant-svc proto kernel scope link src 127.0.0.1 
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show evpn mac vni 50001' 2>/dev/null
+==============================================================================
+
+% VNI 50001 does not exist
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn vni 50001' 2>/dev/null
+==============================================================================
+
+VNI: 50001 (known to the kernel)
+  Type: L3
+  Tenant VRF: tenant-k8s
+  RD: 10.0.0.18:3
+  Originator IP: 10.0.0.18
+  MAC-VRF Site-of-Origin: 
+  Advertise-gw-macip : n/a
+  Advertise-svi-macip : n/a
+  Advertise-pip: Yes
+  System-IP: 10.0.0.18
+  System-MAC: 0c:00:c3:af:c3:a0
+  Router-MAC: 0c:00:c3:af:c3:a0
+  Import Route Target:
+    65114:50001
+  Export Route Target:
+    65114:50001
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show evpn mac vni 50002' 2>/dev/null
+==============================================================================
+
+% VNI 50002 does not exist
+
+==============================================================================
+leaf-border-2# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn vni 50002' 2>/dev/null
+==============================================================================
+
+VNI: 50002 (known to the kernel)
+  Type: L3
+  Tenant VRF: tenant-svc
+  RD: 10.0.0.18:2
+  Originator IP: 10.0.0.18
+  MAC-VRF Site-of-Origin: 
+  Advertise-gw-macip : n/a
+  Advertise-svi-macip : n/a
+  Advertise-pip: Yes
+  System-IP: 10.0.0.18
+  System-MAC: 0c:00:c3:af:c3:a0
+  Router-MAC: 0c:00:c3:af:c3:a0
+  Import Route Target:
+    65114:50002
+  Export Route Target:
+    65114:50002

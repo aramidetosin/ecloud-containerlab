@@ -1,0 +1,150 @@
+
+
+Group 1: 
+  Mode: Active-Active
+  Local Information:
+    Version: 1
+    Mode: Active-Active
+    State: active-primary (last 20 hours)
+    Device Information:
+      Model: PA-VM
+      Serial: 
+      Management IPv4 Address: 10.0.0.15/24
+      Management IPv6 Address: 
+      Jumbo-Frames enabled; MTU 9216
+    HA1 Control Links Joint Configuration:
+      Link Monitor Interval: 3000 ms
+      Encryption Enabled: no
+    HA1 Control Link Information:
+      IP Address: 10.210.0.1/30
+      MAC Address: aa:c1:ab:9c:f6:aa
+      Interface: ethernet1/5
+      Link State: Up; Setting: 10Gb/s-full
+      Key Imported : no
+    HA2 Data Link Information:
+      MAC Address: aa:c1:ab:a0:ee:b4
+      Interface: ethernet1/6
+      Link State: Up; Setting: 10Gb/s-full
+    HA3 Packet-Forwarding Link Information:
+      MAC Address: aa:c1:ab:2e:24:fb
+      Interface: ethernet1/7
+      Link State: Up; Setting: 10Gb/s-full
+    Election Option Information:
+      Priority: 100
+      Preemptive: no
+      Promotion Hold Interval: 2000 ms
+      Hello Message Interval: 8000 ms
+      Heartbeat Ping Interval: 2000 ms
+      Max # of Flaps: 3
+      Preemption Hold Interval: 1 min
+      Monitor Fail Hold Up Interval: 0 ms
+      Addon Master Hold Up Interval: 500 ms
+    Active-Active Mode:
+      Device-id: 0
+      Tentative Hold Interval: 60 sec
+      Network Config Sync Virtual-Router: no
+      Network Config Sync QOS: no
+      Session Owner Selection Session Processing Rule: first-packet
+      Session Owner Selection Session Setup Rule: ip-modulo
+    Version Information:
+      Build Release: 12.1.2
+      URL Database: 0000.00.00.000
+      Application Content: 9010-9583
+      IOT Content: Not Installed
+      Anti-Virus: Not Installed
+      Threat Content: 0
+      VPN Client Software: Not Installed
+      Global Protect Client Software: Not Installed
+      VM License Type: vm16000
+      Plugin Information:
+        DLP: 6.0.1
+        VMS: 6.1.0
+    Version Compatibility:
+      Software Version: Match
+      Application Content Compatibility: Match
+      IOT Content Compatibility: Match
+      Anti-Virus Compatibility: Match
+      Threat Content Compatibility: Match
+      VPN Client Software Compatibility: Match
+      Global Protect Client Software Compatibility: Match
+      VM License Type: Match
+      Plugin Information:
+        DLP-compat: Match
+        VMS-compat: Match
+    State Synchronization: Complete; type: ethernet
+  Peer Information:
+    Connection status: up
+    Version: 1
+    Mode: Active-Active
+    State: active-secondary (last 20 hours)
+    Device Information:
+      Model: PA-VM
+      Serial: 
+      Management IPv4 Address: 10.0.0.15/24
+      Management IPv6 Address: 
+      Jumbo-Frames enabled; MTU 9216
+    HA1 Control Link Information:
+      IP Address: 10.210.0.2
+      MAC Address: aa:c1:ab:00:8e:fa
+      Connection up; Primary HA1 link
+    HA2 Data Link Information:
+      MAC Address: aa:c1:ab:a7:0b:cd
+    HA3 Packet-Forwarding Link Information:
+      MAC Address: aa:c1:ab:25:64:ff
+    Election Option Information:
+      Priority: 100
+      Preemptive: no
+    Active-Active Mode:
+      Device-id: 1
+      Tentative Hold Interval: 60 sec
+      Session Owner Selection Session Processing Rule: first-packet
+      Session Owner Selection Session Setup Rule: ip-modulo
+    Version Information:
+      Build Release: 12.1.2
+      URL Database: 0000.00.00.000
+      Application Content: 9010-9583
+      IOT Content: Not Installed
+      Anti-Virus: Not Installed
+      Threat Content: 0
+      VPN Client Software: Not Installed
+      Global Protect Client Software: Not Installed
+      VM License Type: vm16000
+      Plugin Information:
+        DLP: 6.0.1
+        VMS: 6.1.0
+  Initial Monitor Hold inactive; Allow Network/Links to Settle:
+    Link and path monitoring failures honored
+  Tentative hold time inactive
+  Link Monitoring Information:
+    Enabled: yes
+    Failure condition: any
+    Group ae1-members:
+      Enabled: yes
+      Failure condition: all
+      Interface ethernet1/1: up
+      Interface ethernet1/2: up
+  Path Monitoring Information:
+    Enabled: yes
+    Failure condition: any
+    Virtual-Wire Groups:
+      No Virtual-Wire path monitoring groups
+    VLAN Groups:
+      No VLAN path monitoring groups
+    Virtual-Router Groups:
+      Virtual-Router  name: default
+        Enabled: yes
+        Failure condition: all
+        Ping Interval: 200 ms
+        Ping Count: 10
+        Destination Group: grp1
+          Enabled: yes
+          Failure condition: any
+        Destination Group: transit
+          Enabled: yes
+          Failure condition: all
+          Destination IP Address: 10.201.0.0: up
+          Destination IP Address: 10.201.0.2: up
+  Configuration Synchronization:
+    Enabled: no
+    Running Configuration: not synchronized
+      Out-of-sync Reason: Peer disconnected with commit

@@ -1,0 +1,21 @@
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-svc:
+B>* 0.0.0.0/0 [20/0] via 10.201.1.1, swp3.200, weight 1, 20:23:34
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:51
+B>* 10.167.30.0/24 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.200, weight 1, 01:00:07
+  *                       via fe80::a8c1:abff:febe:899d, swp2.200, weight 1, 01:00:07
+B>* 10.167.30.10/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.200, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.200, weight 1, 01:00:07
+B>* 10.168.30.0/24 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.200, weight 1, 00:59:54
+  *                       via fe80::a8c1:abff:fe6b:f1fb, swp5.200, weight 1, 00:59:54
+B>* 10.168.30.10/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.200, weight 1, 00:59:54
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.200, weight 1, 00:59:54
+C>* 10.201.1.0/31 is directly connected, swp3.200, 20:32:51
+C>* 10.201.1.4/31 is directly connected, swp4.200, 20:32:51

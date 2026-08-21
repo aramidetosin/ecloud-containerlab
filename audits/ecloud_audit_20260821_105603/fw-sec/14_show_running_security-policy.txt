@@ -1,0 +1,176 @@
+
+
+"k8s-to-svc; index: 1" {
+        from k8s;
+        source any;
+        source-region none;
+        to svc;
+        destination any;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service [0:dns-base/tcp/any/53 1:dns-base/tcp/any/853 2:dns-base/udp/any/53 3:dns-base/udp/any/5353 4:ntp-base/tcp/any/123 5:ntp-base/udp/any/123 6:ping/icmp/any/any 7:ntp-non-rfc/tcp/any/123 8:ntp-non-rfc/udp/any/123 9:dns-non-rfc/tcp/any/53 10:dns-non-rfc/udp/any/53 11:dns-non-rfc/udp/any/5353 ];
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"k8s-to-internet; index: 2" {
+        from k8s;
+        source any;
+        source-region none;
+        to internet;
+        destination any;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"svc-to-internet; index: 3" {
+        from svc;
+        source any;
+        source-region none;
+        to internet;
+        destination any;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"internet-to-k8s; index: 4" {
+        from internet;
+        source any;
+        source-region none;
+        to k8s;
+        destination [ 10.80.15.52 10.80.15.42 10.80.15.50 10.80.15.54 10.80.15.53 10.80.15.51 10.80.15.40 ];
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service [0:ssl/any/any/any 1:web-browsing/any/any/any ];
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"internet-to-svc; index: 5" {
+        from internet;
+        source any;
+        source-region none;
+        to svc;
+        destination 10.80.15.41;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service [0:dns-base/tcp/any/53 1:dns-base/tcp/any/853 2:dns-base/udp/any/53 3:dns-base/udp/any/5353 4:dns-non-rfc/tcp/any/53 5:dns-non-rfc/udp/any/53 6:dns-non-rfc/udp/any/5353 ];
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"svc-to-k8s; index: 6" {
+        from svc;
+        source any;
+        source-region none;
+        to k8s;
+        destination 10.167.10.100;
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"internet-to-api; index: 7" {
+        from internet;
+        source any;
+        source-region none;
+        to k8s;
+        destination [ 10.80.15.42 10.80.15.40 ];
+        destination-region none;
+        user any;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/tcp/any/6443;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+}
+
+"intrazone-default; index: 8" {
+        from any;
+        source any;
+        source-region none;
+        to any;
+        destination any;
+        destination-region none;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action allow;
+        icmp-unreachable: no
+        terminal yes;
+        type intrazone;
+}
+
+"interzone-default; index: 9" {
+        from any;
+        source any;
+        source-region none;
+        to any;
+        destination any;
+        destination-region none;
+        source-device any;
+        destination-device any;
+        source-advanced-device any;
+        destination-advanced-device any;
+        category any;
+        application/service 0:any/any/any/any;
+        action deny;
+        icmp-unreachable: no
+        terminal yes;
+        type interzone;
+}
+
+dynamic url: no
+
+

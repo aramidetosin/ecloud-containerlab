@@ -1,0 +1,25 @@
+
+                       operational   applied      
+---------------------  ------------  -------------
+enable                               on           
+route-advertise                                   
+  nexthop-setting                    system-ip-mac
+  svi-ip               off           off          
+  default-gateway      off           off          
+dad                                               
+  enable               on            on           
+  mac-move-threshold   5             5            
+  move-window          180           180          
+  duplicate-action     warning-only  warning-only 
+[vni]                                50001        
+[vni]                                50002        
+multihoming                                       
+  enable                             off          
+  mac-holdtime         1080                       
+  neighbor-holdtime    1080                       
+  startup-delay        180                        
+  startup-delay-timer  --:--:--                   
+  uplink-count         0                          
+  uplink-active        0                          
+l2vni-count            0                          
+l3vni-count            2                          

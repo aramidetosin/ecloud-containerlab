@@ -1,0 +1,32 @@
+
+Interface    Admin Status  Oper Status  Speed  MTU    Type      Remote Host  Remote Port  Summary                                 
+-----------  ------------  -----------  -----  -----  --------  -----------  -----------  ----------------------------------------
+bond1        up            up           1G     9216   bond                                                                        
+bond2        up            up           1G     9216   bond                                                                        
+bond3        up            up           1G     9216   bond                                                                        
+br_default   up            up                  9216   bridge                              IP Address:  fe80::e00:c2ff:fe99:c399/64
+br_l3vni     up            up                  9216   bridge                              IP Address:  fe80::e00:c2ff:fe99:c399/64
+eth0         up            up           1G     1500   eth                                 IP Address:                 10.0.0.15/24
+                                                                                          IP Address:  fe80::e00:99ff:fed3:9700/64
+                                                                                          IP Address:  fec0::e00:99ff:fed3:9700/64
+lo           up            unknown             65536  loopback                            IP Address:                 10.0.0.13/32
+                                                                                          IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                      ::1/128
+mgmt         up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+swp1         up            up           1G     9216   swp       spine-1      swp3         IP Address: fe80::a8c1:abff:fef3:3cd0/64
+swp2         up            up           1G     9216   swp       spine-2      swp3         IP Address: fe80::a8c1:abff:fe03:43d6/64
+swp3         up            up           1G     9216   swp                                                                         
+swp4         up            up           1G     9216   swp                                                                         
+swp5         up            up           1G     9216   swp                                                                         
+tenant-k8s   up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+vlan120      up            up                  9216   svi                                 IP Address:               10.167.20.2/24
+                                                                                          IP Address:  fe80::e00:c2ff:fe98:18c9/64
+vlan120-v0   up            up                  9216   svi                                 IP Address:               10.167.20.1/24
+                                                                                          IP Address:   fe80::200:5eff:fe00:120/64
+vlan3001_l3  up            up                  9216   svi                                 IP Address:  fe80::e00:c2ff:fe98:18c9/64
+vxlan48      up            unknown             9216   vxlan                               IP Address: fe80::70c9:efff:fe1d:51d6/64
+vxlan99      up            unknown             9216   vxlan                               IP Address:  fe80::28b8:b7ff:fe6b:1ca/64

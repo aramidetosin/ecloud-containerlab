@@ -1,0 +1,1337 @@
+
+==============================================================================
+dc2-spine-1# ip -d link show type vxlan | head -40
+==============================================================================
+
+
+==============================================================================
+dc2-spine-1# nv show system
+==============================================================================
+
+                 operational                                  applied    
+---------------  -------------------------------------------  -----------
+build            Cumulus Linux 5.12.0                                    
+uptime           20:32:55                                                
+hostname         dc2-spine-1                                  dc2-spine-1
+product-name     Cumulus Linux                                           
+product-release  5.12.0                                                  
+platform         N/A                                                     
+system-memory    1.28 GB used / 1.98 GB free / 3.57 GB total             
+swap-memory      0 Bytes used / 0 Bytes free / 0 Bytes total             
+health-status    OK                                                      
+date-time        2026-08-21 06:56:11                                     
+status           N/A                                                     
+timezone         Etc/UTC                                                 
+maintenance                                                              
+  mode           disabled                                                
+  ports          enabled                                                 
+version                                                                  
+  kernel         6.1.0-cl-1-amd64                                        
+  build-date     Mon Feb 03 17:42:08 UTC 2025                            
+  image          5.12.0.0037                                             
+  onie           N/A                                                     
+
+==============================================================================
+dc2-spine-1# nv show interface
+==============================================================================
+
+Interface  Admin Status  Oper Status  Speed  MTU    Type      Remote Host     Remote Port  Summary                                 
+---------  ------------  -----------  -----  -----  --------  --------------  -----------  ----------------------------------------
+eth0       up            up           1G     1500   eth                                    IP Address:                 10.0.0.15/24
+                                                                                           IP Address:  fe80::e00:39ff:feb6:7100/64
+                                                                                           IP Address:  fec0::e00:39ff:feb6:7100/64
+lo         up            unknown             65536  loopback                               IP Address:                  10.2.0.1/32
+                                                                                           IP Address:                  127.0.0.1/8
+                                                                                           IP Address:                      ::1/128
+mgmt       up            up                  65575  vrf                                    IP Address:                  127.0.0.1/8
+                                                                                           IP Address:                  127.0.1.1/8
+                                                                                           IP Address:                      ::1/128
+swp1       up            up           1G     9216   swp       dc2-k8s-leaf-1  swp1         IP Address: fe80::a8c1:abff:fe5b:cab6/64
+swp2       up            up           1G     9216   swp       dc2-k8s-leaf-2  swp1         IP Address: fe80::a8c1:abff:fe4c:8b5b/64
+swp3       up            up           1G     9216   swp       dc2-svc-leaf-1  swp1         IP Address: fe80::a8c1:abff:fe8e:898d/64
+swp4       up            up           1G     9216   swp       dc2-svc-leaf-2  swp1         IP Address: fe80::a8c1:abff:fe25:5e60/64
+swp5       up            up           1G     9216   swp       dc2-border-1    swp1         IP Address: fe80::a8c1:abff:febd:df8a/64
+swp6       up            up           1G     9216   swp       dc2-border-2    swp1         IP Address:  fe80::a8c1:abff:fe2c:73e/64
+
+==============================================================================
+dc2-spine-1# nv show router bgp
+==============================================================================
+
+                                applied    
+------------------------------  -----------
+enable                          on         
+autonomous-system               65200      
+router-id                       10.2.0.1   
+policy-update-timer             5          
+graceful-shutdown               off        
+wait-for-install                off        
+graceful-restart                           
+  mode                          helper-only
+  restart-time                  120        
+  path-selection-deferral-time  360        
+  stale-routes-time             360        
+convergence-wait                           
+  time                          0          
+  establish-wait-time           0          
+queue-limit                                
+  input                         10000      
+  output                        10000      
+
+==============================================================================
+dc2-spine-1# nv show vrf
+==============================================================================
+
+Name     Table  Summary                
+-------  -----  -----------------------
+default  254    IP Address: 10.2.0.1/32
+                IP Address: 127.0.0.1/8
+                IP Address:     ::1/128
+mgmt     1001   IP Address: 127.0.0.1/8
+                IP Address: 127.0.1.1/8
+                IP Address:     ::1/128
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S lldpctl 2>/dev/null | grep -E 'Interface|SysName|PortDescr'
+==============================================================================
+
+Interface:    swp1, via: LLDP, RID: 2, Time: 0 day, 20:32:36
+    SysName:      dc2-k8s-leaf-1
+    PortDescr:    swp1
+Interface:    swp2, via: LLDP, RID: 1, Time: 0 day, 20:32:36
+    SysName:      dc2-k8s-leaf-2
+    PortDescr:    swp1
+Interface:    swp3, via: LLDP, RID: 4, Time: 0 day, 20:32:36
+    SysName:      dc2-svc-leaf-1
+    PortDescr:    swp1
+Interface:    swp4, via: LLDP, RID: 5, Time: 0 day, 20:32:36
+    SysName:      dc2-svc-leaf-2
+    PortDescr:    swp1
+Interface:    swp5, via: LLDP, RID: 3, Time: 0 day, 20:32:36
+    SysName:      dc2-border-1
+    PortDescr:    swp1
+Interface:    swp6, via: LLDP, RID: 6, Time: 0 day, 20:32:34
+    SysName:      dc2-border-2
+    PortDescr:    swp1
+
+==============================================================================
+dc2-spine-1# ip -br addr show
+==============================================================================
+
+lo               UNKNOWN        127.0.0.1/8 10.2.0.1/32 ::1/128 
+eth0             UP             10.0.0.15/24 fec0::e00:39ff:feb6:7100/64 fe80::e00:39ff:feb6:7100/64 
+swp1             UP             fe80::a8c1:abff:fe5b:cab6/64 
+swp2             UP             fe80::a8c1:abff:fe4c:8b5b/64 
+swp3             UP             fe80::a8c1:abff:fe8e:898d/64 
+swp4             UP             fe80::a8c1:abff:fe25:5e60/64 
+swp5             UP             fe80::a8c1:abff:febd:df8a/64 
+swp6             UP             fe80::a8c1:abff:fe2c:73e/64 
+mgmt             UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+
+==============================================================================
+dc2-spine-1# ip -br link show
+==============================================================================
+
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eth0             UP             0c:00:39:b6:71:00 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp1             UP             aa:c1:ab:5b:ca:b6 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp2             UP             aa:c1:ab:4c:8b:5b <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp3             UP             aa:c1:ab:8e:89:8d <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp4             UP             aa:c1:ab:25:5e:60 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp5             UP             aa:c1:ab:bd:df:8a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp6             UP             aa:c1:ab:2c:07:3e <BROADCAST,MULTICAST,UP,LOWER_UP> 
+mgmt             UP             06:09:23:83:9b:46 <NOARP,MASTER,UP,LOWER_UP> 
+
+==============================================================================
+dc2-spine-1# ip route show
+==============================================================================
+
+10.2.0.11 nhid 38 proto bgp metric 20 
+10.2.0.12 nhid 39 proto bgp metric 20 
+10.2.0.13 nhid 30 proto bgp metric 20 
+10.2.0.14 nhid 33 proto bgp metric 20 
+10.2.0.15 nhid 35 proto bgp metric 20 
+10.2.0.16 nhid 31 proto bgp metric 20 
+
+==============================================================================
+dc2-spine-1# ip neigh show
+==============================================================================
+
+169.254.0.1 dev swp4 lladdr aa:c1:ab:5a:c1:5d PERMANENT proto zebra 
+169.254.0.1 dev swp5 lladdr aa:c1:ab:bd:fd:22 PERMANENT proto zebra 
+169.254.0.1 dev swp6 lladdr aa:c1:ab:84:5f:a0 PERMANENT proto zebra 
+10.0.0.2 dev eth0 lladdr 52:55:0a:00:00:02 REACHABLE 
+10.0.0.3 dev eth0 lladdr 52:55:0a:00:00:03 REACHABLE 
+169.254.0.1 dev swp3 lladdr aa:c1:ab:eb:33:9c PERMANENT proto zebra 
+169.254.0.1 dev swp2 lladdr aa:c1:ab:48:90:1f PERMANENT proto zebra 
+169.254.0.1 dev swp1 lladdr aa:c1:ab:af:31:4b PERMANENT proto zebra 
+fe80::2 dev eth0 lladdr 52:56:00:00:00:02 router STALE 
+fe80::a8c1:abff:fe84:5fa0 dev swp6 lladdr aa:c1:ab:84:5f:a0 router REACHABLE 
+fe80::a8c1:abff:feaf:314b dev swp1 lladdr aa:c1:ab:af:31:4b router REACHABLE 
+fe80::a8c1:abff:fe48:901f dev swp2 lladdr aa:c1:ab:48:90:1f router REACHABLE 
+fe80::a8c1:abff:febd:fd22 dev swp5 lladdr aa:c1:ab:bd:fd:22 router REACHABLE 
+fe80::a8c1:abff:fe5a:c15d dev swp4 lladdr aa:c1:ab:5a:c1:5d router REACHABLE 
+fe80::a8c1:abff:feeb:339c dev swp3 lladdr aa:c1:ab:eb:33:9c router REACHABLE 
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show version' 2>/dev/null
+==============================================================================
+
+FRRouting 8.4.3 (dc2-spine-1) on Linux(6.1.0-cl-1-amd64).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+configured with:
+    '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--libexecdir=${prefix}/lib/x86_64-linux-gnu' '--disable-maintainer-mode' '--enable-exampledir=/usr/share/doc/frr/examples/' '--localstatedir=/var/run/frr' '--sbindir=/usr/lib/frr' '--sysconfdir=/etc/frr' '--with-vtysh-pager=/usr/bin/pager' '--libdir=/usr/lib/x86_64-linux-gnu/frr' '--with-moduledir=/usr/lib/x86_64-linux-gnu/frr/modules' '--disable-dependency-tracking' '--disable-dev-build' '--enable-systemd=yes' '--enable-rpki' '--disable-pim6d' '--with-libpam' '--enable-doc' '--enable-doc-html' '--enable-snmp' '--enable-fpm' '--disable-zeromq' '--enable-ospfapi' '--disable-bgp-vnc' '--enable-multipath=128' '--enable-user=frr' '--enable-group=frr' '--enable-vty-group=frrvty' '--enable-configfile-mask=0640' '--enable-logfile-mask=0640' '--disable-address-sanitizer' '--enable-protobuf' '--enable-cumulus=yes' '--enable-csmgr=yes' '--enable-datacenter=yes' '--enable-bfdd=no' '--enable-sharpd=yes' '--enable-grpc=yes' '--enable-bgp-lttng=yes' '--enable-zebra-lttng=yes' '--with-log-timestamp-precision=6' 'build_alias=x86_64-linux-gnu' 'PYTHON=python3'
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show bgp ipv4 unicast summary' 2>/dev/null
+==============================================================================
+
+BGP router identifier 10.2.0.1, local AS number 65200 vrf-id 0
+BGP table version 7
+RIB entries 13, using 2912 bytes of memory
+Peers 6, using 119 KiB of memory
+
+Neighbor             V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+dc2-k8s-leaf-1(swp1) 4      65211     24958     24958        0    0    0 20:32:34            1        7 N/A
+dc2-k8s-leaf-2(swp2) 4      65211     24958     24958        0    0    0 20:32:34            1        7 N/A
+dc2-svc-leaf-1(swp3) 4      65212     24959     24958        0    0    0 20:32:34            1        7 N/A
+dc2-svc-leaf-2(swp4) 4      65212     24959     24958        0    0    0 20:32:34            1        7 N/A
+dc2-border-1(swp5)   4      65213     24966     24958        0    0    0 20:32:34            1        7 N/A
+dc2-border-2(swp6)   4      65213     24966     24958        0    0    0 20:32:34            1        7 N/A
+
+Total number of neighbors 6
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show ip route bgp' 2>/dev/null
+==============================================================================
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+B>* 10.2.0.11/32 [20/0] via fe80::a8c1:abff:feaf:314b, swp1, weight 1, 20:32:33
+B>* 10.2.0.12/32 [20/0] via fe80::a8c1:abff:fe48:901f, swp2, weight 1, 20:32:33
+B>* 10.2.0.13/32 [20/0] via fe80::a8c1:abff:feeb:339c, swp3, weight 1, 20:32:34
+B>* 10.2.0.14/32 [20/0] via fe80::a8c1:abff:fe5a:c15d, swp4, weight 1, 20:32:34
+B>* 10.2.0.15/32 [20/0] via fe80::a8c1:abff:febd:fd22, swp5, weight 1, 20:32:34
+B>* 10.2.0.16/32 [20/0] via fe80::a8c1:abff:fe84:5fa0, swp6, weight 1, 20:32:34
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show interface brief' 2>/dev/null
+==============================================================================
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+lo              up      default         10.2.0.1/32
+swp1            up      default         
+swp2            up      default         
+swp3            up      default         
+swp4            up      default         
+swp5            up      default         
+swp6            up      default         
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+eth0            up      mgmt            10.0.0.15/24
+                                        + fec0::e00:39ff:feb6:7100/64
+mgmt            up      mgmt            
+
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn summary' 2>/dev/null
+==============================================================================
+
+BGP router identifier 10.2.0.1, local AS number 65200 vrf-id 0
+BGP table version 0
+RIB entries 43, using 9632 bytes of memory
+Peers 6, using 119 KiB of memory
+
+Neighbor             V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+dc2-k8s-leaf-1(swp1) 4      65211     24959     24958        0    0    0 20:32:34           31      114 N/A
+dc2-k8s-leaf-2(swp2) 4      65211     24959     24958        0    0    0 20:32:34           31      114 N/A
+dc2-svc-leaf-1(swp3) 4      65212     24959     24958        0    0    0 20:32:34            9      114 N/A
+dc2-svc-leaf-2(swp4) 4      65212     24960     24958        0    0    0 20:32:34            9      114 N/A
+dc2-border-1(swp5)   4      65213     24967     24958        0    0    0 20:32:34           17      114 N/A
+dc2-border-2(swp6)   4      65213     24967     24958        0    0    0 20:32:34           17      114 N/A
+
+Total number of neighbors 6
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn' 2>/dev/null
+==============================================================================
+
+BGP table version is 21, local router ID is 10.2.0.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+EVPN type-1 prefix: [1]:[EthTag]:[ESI]:[IPlen]:[VTEP-IP]:[Frag-id]
+EVPN type-2 prefix: [2]:[EthTag]:[MAClen]:[MAC]:[IPlen]:[IP]
+EVPN type-3 prefix: [3]:[EthTag]:[IPlen]:[OrigIP]
+EVPN type-4 prefix: [4]:[ESI]:[IPlen]:[OrigIP]
+EVPN type-5 prefix: [5]:[EthTag]:[IPlen]:[IP]
+
+   Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 10.2.0.11:2
+*> [1]:[0]:[03:44:38:39:be:ef:19:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:19:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:19:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:19:00:00:04]:[32]:[0.0.0.0]:[0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[0c:00:73:13:c2:bf]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]:[32]:[10.168.10.11]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]:[128]:[fe80::5200:ff:fe1f:1]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:20:00:01]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:20:00:01]:[32]:[10.168.10.21]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [2]:[0]:[48]:[50:00:00:20:00:01]:[128]:[fe80::5200:ff:fe20:1]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:21:00:01]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:21:00:01]:[32]:[10.168.10.22]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [2]:[0]:[48]:[50:00:00:21:00:01]:[128]:[fe80::5200:ff:fe21:1]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:22:00:01]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:22:00:01]:[32]:[10.168.10.23]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [2]:[0]:[48]:[50:00:00:22:00:01]:[128]:[fe80::5200:ff:fe22:1]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 ET:8
+*> [3]:[0]:[32]:[10.2.0.11]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+Route Distinguisher: 10.2.0.11:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:19:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:19:00:00:01]:[32]:[10.2.0.11]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:19 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.11:4
+*> [1]:[4294967295]:[03:44:38:39:be:ef:19:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:19:00:00:02]:[32]:[10.2.0.11]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:19 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.11:5
+*> [1]:[4294967295]:[03:44:38:39:be:ef:19:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:19:00:00:03]:[32]:[10.2.0.11]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:19 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.11:6
+*> [1]:[4294967295]:[03:44:38:39:be:ef:19:00:00:04]:[32]:[0.0.0.0]:[0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:19:00:00:04]:[32]:[10.2.0.11]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:19 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.11:8
+*> [5]:[0]:[24]:[10.168.10.0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                             0             0 65211 ?
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [5]:[0]:[32]:[192.168.202.0]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [5]:[0]:[32]:[192.168.202.2]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [5]:[0]:[32]:[192.168.202.3]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [5]:[0]:[32]:[192.168.202.4]
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+Route Distinguisher: 10.2.0.12:2
+*> [1]:[0]:[03:44:38:39:be:ef:19:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:19:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:19:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [1]:[0]:[03:44:38:39:be:ef:19:00:00:04]:[32]:[0.0.0.0]:[0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[0c:00:c3:bf:c2:a2]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]:[32]:[10.168.10.11]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]:[128]:[fe80::5200:ff:fe1f:1]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:20:00:01]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:20:00:01]:[32]:[10.168.10.21]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [2]:[0]:[48]:[50:00:00:20:00:01]:[128]:[fe80::5200:ff:fe20:1]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:21:00:01]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:21:00:01]:[32]:[10.168.10.22]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [2]:[0]:[48]:[50:00:00:21:00:01]:[128]:[fe80::5200:ff:fe21:1]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:22:00:01]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:22:00:01]:[32]:[10.168.10.23]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [2]:[0]:[48]:[50:00:00:22:00:01]:[128]:[fe80::5200:ff:fe22:1]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 ET:8
+*> [3]:[0]:[32]:[10.2.0.12]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+Route Distinguisher: 10.2.0.12:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:19:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:19:00:00:01]:[32]:[10.2.0.12]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:19 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.12:4
+*> [1]:[4294967295]:[03:44:38:39:be:ef:19:00:00:02]:[32]:[0.0.0.0]:[0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:19:00:00:02]:[32]:[10.2.0.12]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:19 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.12:5
+*> [1]:[4294967295]:[03:44:38:39:be:ef:19:00:00:03]:[32]:[0.0.0.0]:[0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:19:00:00:03]:[32]:[10.2.0.12]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:19 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.12:6
+*> [1]:[4294967295]:[03:44:38:39:be:ef:19:00:00:04]:[32]:[0.0.0.0]:[0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:19:00:00:04]:[32]:[10.2.0.12]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:19 DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.12:8
+*> [5]:[0]:[24]:[10.168.10.0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                             0             0 65211 ?
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [5]:[0]:[32]:[192.168.202.0]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [5]:[0]:[32]:[192.168.202.2]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [5]:[0]:[32]:[192.168.202.3]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [5]:[0]:[32]:[192.168.202.4]
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+Route Distinguisher: 10.2.0.13:2
+*> [1]:[0]:[03:44:38:39:be:ef:1a:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[0c:00:72:20:c3:b3]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[50:00:00:23:00:01]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[50:00:00:23:00:01]:[32]:[10.168.30.10]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 RT:65212:50102 ET:8 Rmac:0c:00:72:20:c3:b3
+*> [2]:[0]:[48]:[50:00:00:23:00:01]:[128]:[fe80::5200:ff:fe23:1]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 ET:8
+*> [3]:[0]:[32]:[10.2.0.13]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+Route Distinguisher: 10.2.0.13:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:1a:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:1a:00:00:01]:[32]:[10.2.0.13]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:1a DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.13:5
+*> [5]:[0]:[24]:[10.168.30.0]
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                             0             0 65212 ?
+                    RT:65212:50102 ET:8 Rmac:0c:00:72:20:c3:b3
+Route Distinguisher: 10.2.0.14:2
+*> [1]:[0]:[03:44:38:39:be:ef:1a:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[0c:00:c3:a3:c3:b9]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[50:00:00:23:00:01]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[50:00:00:23:00:01]:[32]:[10.168.30.10]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 RT:65212:50102 ET:8 Rmac:0c:00:c3:a3:c3:b9
+*> [2]:[0]:[48]:[50:00:00:23:00:01]:[128]:[fe80::5200:ff:fe23:1]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 ET:8
+*> [3]:[0]:[32]:[10.2.0.14]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+Route Distinguisher: 10.2.0.14:3
+*> [1]:[4294967295]:[03:44:38:39:be:ef:1a:00:00:01]:[32]:[0.0.0.0]:[0]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8 ESI-label-Rt:AA
+*> [4]:[03:44:38:39:be:ef:1a:00:00:01]:[32]:[10.2.0.14]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    ET:8 ES-Import-Rt:44:38:39:be:ef:1a DF: (alg: 2, pref: 32767)
+Route Distinguisher: 10.2.0.14:5
+*> [5]:[0]:[24]:[10.168.30.0]
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                             0             0 65212 ?
+                    RT:65212:50102 ET:8 Rmac:0c:00:c3:a3:c3:b9
+Route Distinguisher: 10.2.0.15:2
+*> [5]:[0]:[0]:[0.0.0.0]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65300 ?
+                    RT:65213:50102 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[24]:[10.167.30.0]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65113 ?
+                    RT:65113:50002 RT:65213:50102 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.30.10]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65113 i
+                    RT:65000:10130 RT:65113:50002 RT:65213:50102 ET:8 Rmac:0c:00:25:72:c3:92
+Route Distinguisher: 10.2.0.15:3
+*> [5]:[0]:[0]:[0.0.0.0]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65300 ?
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[24]:[10.167.10.0]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 ?
+                    RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[24]:[10.167.20.0]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65112 ?
+                    RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[30]:[10.201.20.0]
+                    10.2.0.15 (dc2-border-1)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[30]:[10.201.20.4]
+                    10.2.0.15 (dc2-border-1)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[30]:[10.201.20.8]
+                    10.2.0.15 (dc2-border-1)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[30]:[10.201.20.12]
+                    10.2.0.15 (dc2-border-1)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.10.11]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.10.12]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.10.13]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.20.11]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.20.12]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.20.13]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[192.168.202.1]
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 65010 i
+                    RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+Route Distinguisher: 10.2.0.16:2
+*> [5]:[0]:[0]:[0.0.0.0]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65300 ?
+                    RT:65213:50102 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[24]:[10.167.30.0]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65113 ?
+                    RT:65113:50002 RT:65213:50102 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.30.10]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65113 i
+                    RT:65000:10130 RT:65113:50002 RT:65213:50102 ET:8 Rmac:0c:00:07:c2:a9:c8
+Route Distinguisher: 10.2.0.16:3
+*> [5]:[0]:[0]:[0.0.0.0]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65300 ?
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[24]:[10.167.10.0]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 ?
+                    RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[24]:[10.167.20.0]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65112 ?
+                    RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[30]:[10.201.20.0]
+                    10.2.0.16 (dc2-border-2)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[30]:[10.201.20.4]
+                    10.2.0.16 (dc2-border-2)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[30]:[10.201.20.8]
+                    10.2.0.16 (dc2-border-2)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[30]:[10.201.20.12]
+                    10.2.0.16 (dc2-border-2)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.10.11]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.10.12]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.10.13]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.20.11]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.20.12]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.20.13]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[192.168.202.1]
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 65010 i
+                    RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+
+Displayed 114 out of 114 total prefixes
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type macip' 2>/dev/null
+==============================================================================
+
+BGP table version is 21, local router ID is 10.2.0.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+EVPN type-1 prefix: [1]:[EthTag]:[ESI]:[IPlen]:[VTEP-IP]:[Frag-id]
+EVPN type-2 prefix: [2]:[EthTag]:[MAClen]:[MAC]:[IPlen]:[IP]
+EVPN type-3 prefix: [3]:[EthTag]:[IPlen]:[OrigIP]
+EVPN type-4 prefix: [4]:[ESI]:[IPlen]:[OrigIP]
+EVPN type-5 prefix: [5]:[EthTag]:[IPlen]:[IP]
+
+   Network          Next Hop            Metric LocPrf Weight Path
+                    Extended Community
+Route Distinguisher: 10.2.0.11:2
+*> [2]:[0]:[48]:[0c:00:73:13:c2:bf] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:1f:00:01] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]:[32]:[10.168.10.11] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]:[128]:[fe80::5200:ff:fe1f:1] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:20:00:01] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:20:00:01]:[32]:[10.168.10.21] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [2]:[0]:[48]:[50:00:00:20:00:01]:[128]:[fe80::5200:ff:fe20:1] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:21:00:01] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:21:00:01]:[32]:[10.168.10.22] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [2]:[0]:[48]:[50:00:00:21:00:01]:[128]:[fe80::5200:ff:fe21:1] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:22:00:01] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:22:00:01]:[32]:[10.168.10.23] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [2]:[0]:[48]:[50:00:00:22:00:01]:[128]:[fe80::5200:ff:fe22:1] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 ET:8
+Route Distinguisher: 10.2.0.12:2
+*> [2]:[0]:[48]:[0c:00:c3:bf:c2:a2] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:1f:00:01] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]:[32]:[10.168.10.11] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [2]:[0]:[48]:[50:00:00:1f:00:01]:[128]:[fe80::5200:ff:fe1f:1] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:01
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:20:00:01] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:20:00:01]:[32]:[10.168.10.21] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [2]:[0]:[48]:[50:00:00:20:00:01]:[128]:[fe80::5200:ff:fe20:1] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:02
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:21:00:01] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:21:00:01]:[32]:[10.168.10.22] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [2]:[0]:[48]:[50:00:00:21:00:01]:[128]:[fe80::5200:ff:fe21:1] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:03
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:22:00:01] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 ET:8
+*> [2]:[0]:[48]:[50:00:00:22:00:01]:[32]:[10.168.10.23] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [2]:[0]:[48]:[50:00:00:22:00:01]:[128]:[fe80::5200:ff:fe22:1] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    ESI:03:44:38:39:be:ef:19:00:00:04
+                    RT:65000:10210 ET:8
+Route Distinguisher: 10.2.0.13:2
+*> [2]:[0]:[48]:[0c:00:72:20:c3:b3] RD 10.2.0.13:2
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[50:00:00:23:00:01] RD 10.2.0.13:2
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[50:00:00:23:00:01]:[32]:[10.168.30.10] RD 10.2.0.13:2
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 RT:65212:50102 ET:8 Rmac:0c:00:72:20:c3:b3
+*> [2]:[0]:[48]:[50:00:00:23:00:01]:[128]:[fe80::5200:ff:fe23:1] RD 10.2.0.13:2
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 ET:8
+Route Distinguisher: 10.2.0.14:2
+*> [2]:[0]:[48]:[0c:00:c3:a3:c3:b9] RD 10.2.0.14:2
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[50:00:00:23:00:01] RD 10.2.0.14:2
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 ET:8
+*> [2]:[0]:[48]:[50:00:00:23:00:01]:[32]:[10.168.30.10] RD 10.2.0.14:2
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 RT:65212:50102 ET:8 Rmac:0c:00:c3:a3:c3:b9
+*> [2]:[0]:[48]:[50:00:00:23:00:01]:[128]:[fe80::5200:ff:fe23:1] RD 10.2.0.14:2
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    ESI:03:44:38:39:be:ef:1a:00:00:01
+                    RT:65000:10230 ET:8
+
+Displayed 34 prefixes (34 paths) (of requested type)
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type multicast' 2>/dev/null
+==============================================================================
+
+BGP table version is 21, local router ID is 10.2.0.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+EVPN type-1 prefix: [1]:[EthTag]:[ESI]:[IPlen]:[VTEP-IP]:[Frag-id]
+EVPN type-2 prefix: [2]:[EthTag]:[MAClen]:[MAC]:[IPlen]:[IP]
+EVPN type-3 prefix: [3]:[EthTag]:[IPlen]:[OrigIP]
+EVPN type-4 prefix: [4]:[ESI]:[IPlen]:[OrigIP]
+EVPN type-5 prefix: [5]:[EthTag]:[IPlen]:[IP]
+
+   Network          Next Hop            Metric LocPrf Weight Path
+                    Extended Community
+Route Distinguisher: 10.2.0.11:2
+*> [3]:[0]:[32]:[10.2.0.11] RD 10.2.0.11:2
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+Route Distinguisher: 10.2.0.12:2
+*> [3]:[0]:[32]:[10.2.0.12] RD 10.2.0.12:2
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 i
+                    RT:65000:10210 ET:8
+Route Distinguisher: 10.2.0.13:2
+*> [3]:[0]:[32]:[10.2.0.13] RD 10.2.0.13:2
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+Route Distinguisher: 10.2.0.14:2
+*> [3]:[0]:[32]:[10.2.0.14] RD 10.2.0.14:2
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                                           0 65212 i
+                    RT:65000:10230 ET:8
+
+Displayed 4 prefixes (4 paths) (of requested type)
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type prefix' 2>/dev/null
+==============================================================================
+
+BGP table version is 5, local router ID is 10.2.0.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+EVPN type-1 prefix: [1]:[EthTag]:[ESI]:[IPlen]:[VTEP-IP]:[Frag-id]
+EVPN type-2 prefix: [2]:[EthTag]:[MAClen]:[MAC]:[IPlen]:[IP]
+EVPN type-3 prefix: [3]:[EthTag]:[IPlen]:[OrigIP]
+EVPN type-4 prefix: [4]:[ESI]:[IPlen]:[OrigIP]
+EVPN type-5 prefix: [5]:[EthTag]:[IPlen]:[IP]
+
+   Network          Next Hop            Metric LocPrf Weight Path
+                    Extended Community
+Route Distinguisher: 10.2.0.11:8
+*> [5]:[0]:[24]:[10.168.10.0] RD 10.2.0.11:8
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                             0             0 65211 ?
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [5]:[0]:[32]:[192.168.202.0] RD 10.2.0.11:8
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [5]:[0]:[32]:[192.168.202.2] RD 10.2.0.11:8
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [5]:[0]:[32]:[192.168.202.3] RD 10.2.0.11:8
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+*> [5]:[0]:[32]:[192.168.202.4] RD 10.2.0.11:8
+                    10.2.0.11 (dc2-k8s-leaf-1)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:73:13:c2:bf
+Route Distinguisher: 10.2.0.12:8
+*> [5]:[0]:[24]:[10.168.10.0] RD 10.2.0.12:8
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                             0             0 65211 ?
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [5]:[0]:[32]:[192.168.202.0] RD 10.2.0.12:8
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [5]:[0]:[32]:[192.168.202.2] RD 10.2.0.12:8
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [5]:[0]:[32]:[192.168.202.3] RD 10.2.0.12:8
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+*> [5]:[0]:[32]:[192.168.202.4] RD 10.2.0.12:8
+                    10.2.0.12 (dc2-k8s-leaf-2)
+                                                           0 65211 65020 i
+                    RT:65211:50101 ET:8 Rmac:0c:00:c3:bf:c2:a2
+Route Distinguisher: 10.2.0.13:5
+*> [5]:[0]:[24]:[10.168.30.0] RD 10.2.0.13:5
+                    10.2.0.13 (dc2-svc-leaf-1)
+                                             0             0 65212 ?
+                    RT:65212:50102 ET:8 Rmac:0c:00:72:20:c3:b3
+Route Distinguisher: 10.2.0.14:5
+*> [5]:[0]:[24]:[10.168.30.0] RD 10.2.0.14:5
+                    10.2.0.14 (dc2-svc-leaf-2)
+                                             0             0 65212 ?
+                    RT:65212:50102 ET:8 Rmac:0c:00:c3:a3:c3:b9
+Route Distinguisher: 10.2.0.15:2
+*> [5]:[0]:[0]:[0.0.0.0] RD 10.2.0.15:2
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65300 ?
+                    RT:65213:50102 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[24]:[10.167.30.0] RD 10.2.0.15:2
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65113 ?
+                    RT:65113:50002 RT:65213:50102 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.30.10] RD 10.2.0.15:2
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65113 i
+                    RT:65000:10130 RT:65113:50002 RT:65213:50102 ET:8 Rmac:0c:00:25:72:c3:92
+Route Distinguisher: 10.2.0.15:3
+*> [5]:[0]:[0]:[0.0.0.0] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65300 ?
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[24]:[10.167.10.0] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 ?
+                    RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[24]:[10.167.20.0] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65112 ?
+                    RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[30]:[10.201.20.0] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[30]:[10.201.20.4] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[30]:[10.201.20.8] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[30]:[10.201.20.12] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.10.11] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.10.12] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.10.13] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.20.11] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.20.12] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[10.167.20.13] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+*> [5]:[0]:[32]:[192.168.202.1] RD 10.2.0.15:3
+                    10.2.0.15 (dc2-border-1)
+                                                           0 65213 65400 65114 65100 65111 65010 i
+                    RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:25:72:c3:92
+Route Distinguisher: 10.2.0.16:2
+*> [5]:[0]:[0]:[0.0.0.0] RD 10.2.0.16:2
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65300 ?
+                    RT:65213:50102 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[24]:[10.167.30.0] RD 10.2.0.16:2
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65113 ?
+                    RT:65113:50002 RT:65213:50102 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.30.10] RD 10.2.0.16:2
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65113 i
+                    RT:65000:10130 RT:65113:50002 RT:65213:50102 ET:8 Rmac:0c:00:07:c2:a9:c8
+Route Distinguisher: 10.2.0.16:3
+*> [5]:[0]:[0]:[0.0.0.0] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65300 ?
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[24]:[10.167.10.0] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 ?
+                    RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[24]:[10.167.20.0] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65112 ?
+                    RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[30]:[10.201.20.0] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[30]:[10.201.20.4] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[30]:[10.201.20.8] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[30]:[10.201.20.12] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                             0             0 65213 65400 i
+                    RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.10.11] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.10.12] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.10.13] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 i
+                    RT:65000:10110 RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.20.11] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.20.12] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[10.167.20.13] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65112 i
+                    RT:65000:10120 RT:65112:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+*> [5]:[0]:[32]:[192.168.202.1] RD 10.2.0.16:3
+                    10.2.0.16 (dc2-border-2)
+                                                           0 65213 65400 65114 65100 65111 65010 i
+                    RT:65111:50001 RT:65213:50101 ET:8 Rmac:0c:00:07:c2:a9:c8
+
+Displayed 46 prefixes (46 paths) (of requested type)
+
+==============================================================================
+dc2-spine-1# echo admin | sudo -S vtysh -c 'show running-config' 2>/dev/null
+==============================================================================
+
+Building configuration...
+
+Current configuration:
+!
+frr version 8.4.3
+frr defaults datacenter
+hostname dc2-spine-1
+log syslog informational
+log timestamp precision 6
+service integrated-vtysh-config
+!
+router bgp 65200
+ bgp router-id 10.2.0.1
+ neighbor swp1 interface remote-as external
+ neighbor swp1 advertisement-interval 0
+ neighbor swp1 timers 3 9
+ neighbor swp1 timers connect 10
+ neighbor swp2 interface remote-as external
+ neighbor swp2 advertisement-interval 0
+ neighbor swp2 timers 3 9
+ neighbor swp2 timers connect 10
+ neighbor swp3 interface remote-as external
+ neighbor swp3 advertisement-interval 0
+ neighbor swp3 timers 3 9
+ neighbor swp3 timers connect 10
+ neighbor swp4 interface remote-as external
+ neighbor swp4 advertisement-interval 0
+ neighbor swp4 timers 3 9
+ neighbor swp4 timers connect 10
+ neighbor swp5 interface remote-as external
+ neighbor swp5 advertisement-interval 0
+ neighbor swp5 timers 3 9
+ neighbor swp5 timers connect 10
+ neighbor swp6 interface remote-as external
+ neighbor swp6 advertisement-interval 0
+ neighbor swp6 timers 3 9
+ neighbor swp6 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  maximum-paths 64
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  neighbor swp1 activate
+  neighbor swp2 activate
+  neighbor swp3 activate
+  neighbor swp4 activate
+  neighbor swp5 activate
+  neighbor swp6 activate
+  advertise-all-vni
+ exit-address-family
+exit
+!
+end
+
+==============================================================================
+dc2-spine-1# sudo -n journalctl -u frr --no-pager -n 50 2>/dev/null || echo admin | sudo -S journalctl -u frr --no-pager -n 50 2>/dev/null
+==============================================================================
+
+Aug 20 09:28:43 dc2-spine-1 bgpd[2145]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp2 in vrf default
+Aug 20 09:28:55 dc2-spine-1 zebra[2101]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+-- Boot 8f7a5b5c60b740b38bd79d3ace419f4b --
+Aug 20 10:23:37 dc2-spine-1 systemd[1]: Starting frr.service - FRRouting...
+Aug 20 10:23:37 dc2-spine-1 frrinit.sh[1980]: Starting watchfrr with command: '   /usr/lib/frr/watchfrr  -d  -F datacenter   zebra bgpd staticd'.
+Aug 20 10:23:37 dc2-spine-1 watchfrr[2023]: [T83RR-8SM5G] watchfrr 8.4.3 starting: vty@0
+Aug 20 10:23:37 dc2-spine-1 watchfrr[2023]: [ZCJ3S-SPH5S] zebra state -> down : initial connection attempt failed
+Aug 20 10:23:37 dc2-spine-1 watchfrr[2023]: [ZCJ3S-SPH5S] bgpd state -> down : initial connection attempt failed
+Aug 20 10:23:37 dc2-spine-1 watchfrr[2023]: [ZCJ3S-SPH5S] staticd state -> down : initial connection attempt failed
+Aug 20 10:23:37 dc2-spine-1 watchfrr[2023]: [YFT0P-5Q5YX] Forked background command [pid 2025]: /usr/lib/frr/watchfrr.sh restart all
+Aug 20 10:23:37 dc2-spine-1 watchfrr.sh[2047]: Cannot stop zebra: pid file not found
+Aug 20 10:23:38 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp1 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp2 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp3 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp4 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp5 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp6 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-1 zebra[2102]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:01
+Aug 20 10:23:38 dc2-spine-1 bgpd[2147]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:01
+Aug 20 10:23:38 dc2-spine-1 staticd[2208]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:01
+Aug 20 10:23:38 dc2-spine-1 watchfrr[2023]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 20 10:23:38 dc2-spine-1 watchfrr[2023]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 20 10:23:38 dc2-spine-1 watchfrr[2023]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 20 10:23:38 dc2-spine-1 watchfrr[2023]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 20 10:23:38 dc2-spine-1 watchfrr[2023]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 20 10:23:38 dc2-spine-1 frrinit.sh[1980]: Started watchfrr.
+Aug 20 10:23:38 dc2-spine-1 systemd[1]: Started frr.service - FRRouting.
+Aug 20 10:23:38 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp6 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp4 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp5 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp3 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [J7484-2SYXF][EC 33554465] swp2 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2(dc2-k8s-leaf-2) in vrf default Up
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp4(dc2-svc-leaf-2) in vrf default Up
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1(dc2-k8s-leaf-1) in vrf default Up
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp3(dc2-svc-leaf-1) in vrf default Up
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp5(dc2-border-1) in vrf default Up
+Aug 20 10:23:39 dc2-spine-1 bgpd[2147]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp6(dc2-border-2) in vrf default Up
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp3 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp3 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp6 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp6 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp4 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp4 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp5 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp5 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp1 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2 in vrf default
+Aug 20 10:23:40 dc2-spine-1 bgpd[2147]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp2 in vrf default
+Aug 20 10:23:53 dc2-spine-1 zebra[2102]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000

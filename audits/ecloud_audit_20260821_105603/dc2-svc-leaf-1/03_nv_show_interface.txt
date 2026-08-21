@@ -1,0 +1,28 @@
+
+Interface    Admin Status  Oper Status  Speed  MTU    Type      Remote Host  Remote Port  Summary                                 
+-----------  ------------  -----------  -----  -----  --------  -----------  -----------  ----------------------------------------
+bond1        up            up           1G     9216   bond                                                                        
+br_default   up            up                  9216   bridge                              IP Address:  fe80::e00:72ff:fe20:c3b3/64
+br_l3vni     up            up                  9216   bridge                              IP Address:  fe80::e00:72ff:fe20:c3b3/64
+eth0         up            up           1G     1500   eth                                 IP Address:                 10.0.0.15/24
+                                                                                          IP Address:   fe80::e00:c5ff:fe7a:700/64
+                                                                                          IP Address:   fec0::e00:c5ff:fe7a:700/64
+lo           up            unknown             65536  loopback                            IP Address:                 10.2.0.13/32
+                                                                                          IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                      ::1/128
+mgmt         up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+swp1         up            up           1G     9216   swp       dc2-spine-1  swp3         IP Address: fe80::a8c1:abff:feeb:339c/64
+swp2         up            up           1G     9216   swp       dc2-spine-2  swp3         IP Address: fe80::a8c1:abff:fe65:bda3/64
+swp3         up            up           1G     9216   swp                                                                         
+tenant-svc   up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+vlan230      up            up                  9216   svi                                 IP Address:               10.168.30.2/24
+                                                                                          IP Address:  fe80::e00:72ff:fe20:c3b3/64
+vlan230-v0   up            up                  9216   svi                                 IP Address:               10.168.30.1/24
+                                                                                          IP Address:   fe80::200:5eff:fe00:230/64
+vlan3102_l3  up            up                  9216   svi                                 IP Address:  fe80::e00:72ff:fe20:c3b3/64
+vxlan48      up            unknown             9216   vxlan                               IP Address: fe80::8c29:29ff:fe78:85d2/64
+vxlan99      up            unknown             9216   vxlan                               IP Address: fe80::c036:23ff:fe3b:9537/64

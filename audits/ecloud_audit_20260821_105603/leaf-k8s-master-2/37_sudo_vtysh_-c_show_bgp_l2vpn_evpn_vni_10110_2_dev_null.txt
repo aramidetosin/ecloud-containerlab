@@ -1,0 +1,15 @@
+
+VNI: 10110 (known to the kernel)
+  Type: L2
+  Tenant-Vrf: tenant-k8s
+  RD: 10.0.0.12:2
+  Originator IP: 10.0.0.12
+  Mcast group: 0.0.0.0
+  MAC-VRF Site-of-Origin: 
+  Advertise-gw-macip : Disabled
+  Advertise-svi-macip : Disabled
+  SVI interface : vlan110
+  Import Route Target:
+    65000:10110
+  Export Route Target:
+    65000:10110

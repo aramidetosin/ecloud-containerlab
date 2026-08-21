@@ -1,0 +1,14 @@
+
+Name        Table  Summary                 
+----------  -----  ------------------------
+default     254    IP Address: 10.0.0.12/32
+                   IP Address:  127.0.0.1/8
+                   IP Address:      ::1/128
+mgmt        1001   IP Address:  127.0.0.1/8
+                   IP Address:  127.0.1.1/8
+                   IP Address:      ::1/128
+tenant-k8s  1002   evpn.vlan:          3001
+                   evpn.vni:          50001
+                   IP Address:  127.0.0.1/8
+                   IP Address:  127.0.1.1/8
+                   IP Address:      ::1/128

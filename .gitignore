@@ -26,3 +26,6 @@ bootstrap/hosts/authorized_keys
 
 # optional per-host mgmt /24 pin read by build_clab.py
 .mgmt-prefix
+
+__pycache__/
+*.bak-pre-ecmp

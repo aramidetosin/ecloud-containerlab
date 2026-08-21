@@ -1,0 +1,19 @@
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+lo              up      default         10.0.0.2/32
+swp1            up      default         
+swp2            up      default         
+swp3            up      default         
+swp4            up      default         
+swp5            up      default         
+swp6            up      default         
+swp7            up      default         
+swp8            up      default         
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+eth0            up      mgmt            10.0.0.15/24
+                                        + fec0::e00:5aff:fe98:2b00/64
+mgmt            up      mgmt            
+

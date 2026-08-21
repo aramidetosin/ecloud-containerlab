@@ -1,0 +1,26 @@
+
+default nhid 236 proto bgp metric 20 
+unreachable default metric 4278198272 
+10.167.10.0/24 nhid 236 proto bgp metric 20 
+10.167.10.11 nhid 236 proto bgp metric 20 
+10.167.10.12 nhid 236 proto bgp metric 20 
+10.167.10.13 nhid 236 proto bgp metric 20 
+10.167.20.0/24 nhid 236 proto bgp metric 20 
+10.167.20.11 nhid 236 proto bgp metric 20 
+10.167.20.12 nhid 236 proto bgp metric 20 
+10.167.20.13 nhid 236 proto bgp metric 20 
+10.168.10.0/24 nhid 237 proto bgp metric 20 
+10.168.10.11 nhid 237 proto bgp metric 20 
+10.168.10.21 nhid 237 proto bgp metric 20 
+10.168.10.22 nhid 237 proto bgp metric 20 
+10.168.10.23 nhid 237 proto bgp metric 20 
+10.201.20.0/30 nhid 62 proto bgp metric 20 
+10.201.20.4/30 nhid 60 proto bgp metric 20 
+10.201.20.8/30 nhid 62 proto bgp metric 20 
+10.201.20.12/30 nhid 60 proto bgp metric 20 
+127.0.0.0/8 dev tenant-k8s proto kernel scope link src 127.0.0.1 
+192.168.202.0 nhid 237 proto bgp metric 20 
+192.168.202.1 nhid 236 proto bgp metric 20 
+192.168.202.2 nhid 237 proto bgp metric 20 
+192.168.202.3 nhid 237 proto bgp metric 20 
+192.168.202.4 nhid 237 proto bgp metric 20 

@@ -1,0 +1,51 @@
+
+Aug 20 10:23:53 dc2-border-2 zebra[2170]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+Aug 20 10:23:53 dc2-border-2 zebra[2170]: [WPPMZ-G9797] if_zebra_speed_update: swp3.100 old speed: 0 new speed: 1000
+Aug 20 10:23:53 dc2-border-2 zebra[2170]: [WPPMZ-G9797] if_zebra_speed_update: swp3.200 old speed: 0 new speed: 1000
+Aug 21 05:56:35 dc2-border-2 systemd[1]: Reloading frr.service - FRRouting...
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28538]: Stopping watchfrr, pid 2085, cnt 1200 ....
+Aug 21 05:56:35 dc2-border-2 watchfrr[2085]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 21 05:56:35 dc2-border-2 watchfrr[2085]: [NG1AJ-FP2TQ] Terminating on signal
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28538]: Stopped watchfrr.
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28538]: Starting watchfrr with command: '   /usr/lib/frr/watchfrr  -d  -F datacenter   zebra bgpd staticd'.
+Aug 21 05:56:35 dc2-border-2 watchfrr[28555]: [T83RR-8SM5G] watchfrr 8.4.3 starting: vty@0
+Aug 21 05:56:35 dc2-border-2 watchfrr[28555]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 21 05:56:35 dc2-border-2 watchfrr[28555]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 21 05:56:35 dc2-border-2 watchfrr[28555]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 21 05:56:35 dc2-border-2 watchfrr[28555]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28538]: Started watchfrr.
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28588]: Waiting for children to finish applying config...
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28595]: [28595|bgpd] sending configuration
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28603]: [28603|watchfrr] sending configuration
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28605]: [28605|staticd] sending configuration
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28589]: [28589|zebra] sending configuration
+Aug 21 05:56:35 dc2-border-2 bgpd[2219]: [YCCZ5-BCH28][EC 33554466] 0: Failed to create L2VNI 50101, it is configured as L3VNI
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28595]: % Failed to create VNI
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28595]: line 125: % Unknown command[3]: router bgp 65213
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28595]: line 126: % Unknown command[3]:  address-family l2vpn evpn
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28595]: line 127: % Unknown command[3]:   vni 50101
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28595]: line 128: % Unknown command[3]:    route-target import 65000:50101
+Aug 21 05:56:35 dc2-border-2 staticd[2264]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28605]: [28605|staticd] done
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28603]: [28603|watchfrr] done
+Aug 21 05:56:35 dc2-border-2 zebra[2170]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28589]: [28589|zebra] done
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28612]: Waiting for children to finish applying config...
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28619]: [28619|bgpd] sending configuration
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28627]: [28627|watchfrr] sending configuration
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28629]: [28629|staticd] sending configuration
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28613]: [28613|zebra] sending configuration
+Aug 21 05:56:35 dc2-border-2 bgpd[2219]: [YCCZ5-BCH28][EC 33554466] 0: Failed to create L2VNI 50101, it is configured as L3VNI
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28619]: % Failed to create VNI
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28619]: line 113: % Unknown command[3]: router bgp 65213
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28619]: line 114: % Unknown command[3]:  address-family l2vpn evpn
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28619]: line 115: % Unknown command[3]:   vni 50101
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28619]: line 116: % Unknown command[3]:    route-target import 65000:50101
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28627]: [28627|watchfrr] done
+Aug 21 05:56:35 dc2-border-2 staticd[2264]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28629]: [28629|staticd] done
+Aug 21 05:56:35 dc2-border-2 zebra[2170]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:35 dc2-border-2 frrinit.sh[28613]: [28613|zebra] done
+Aug 21 05:56:35 dc2-border-2 systemd[1]: Reloaded frr.service - FRRouting.
+Aug 21 05:56:36 dc2-border-2 zebra[2170]: [R48QG-9REZ0][EC 4043309067] DPlane returned an invalid result code for attempt of installation of 17[if 3] into the kernel
+Aug 21 05:56:36 dc2-border-2 zebra[2170]: [R48QG-9REZ0][EC 4043309067] DPlane returned an invalid result code for attempt of installation of 40[if 8] into the kernel

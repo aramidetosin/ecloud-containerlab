@@ -1,0 +1,199 @@
+
+
+  ==========
+  Peer:                          agg1-k8s (id 1)
+  virtual router:                default
+  Peer router id:                10.201.255.1
+  Remote AS:                     65400
+  Peer group:                    fabric (id 1)
+  Peer status:                   Established, for 73417 seconds
+  Password set:                  no
+  Passive:                       no
+  Multi-hop TTL:                 1
+  Remote Address:                10.201.0.0:37542
+  Local Address:                 10.201.0.1:179
+  (R) reflector client:          not-client
+  same confederation:            no
+  send aggr confed as-path:      yes
+  peering type:                  Unspecified
+  Connect-Retry interval:        15
+  Open Delay:                    0
+  Idle Hold:                     15
+  Prefix limit:                  5000
+  Holdtime:                      9 (config 9)
+  Keep-Alive interval:           3 (config 3)
+  Update messages:               in      152, out        2
+  Total messages:                in    24626, out    28634
+  Last update age:               0
+  Last error:                    
+  Flap counts:                   1, established 1 times
+  (R) ORF entries:               0
+  Nexthop set to self:           no
+  use 3rd party as next-hop:     yes
+  override nexthop to peer:      no
+  ----------
+  remove private AS number:      no
+  ------------
+  Capability:                    Multiprotocol Extensions(1)  value: IPv4 Unicast
+  Capability:                    Route Refresh(yes)
+  Capability:                    unknown(yes)
+  Capability:                    Graceful Restart(64)  value: 0078
+  Capability:                    4-Byte AS Number(65)  value: 65400
+  Capability:                    unknown(69)  value: 00010101
+  Capability:                    Enhanced Route Refresh(yes)
+  Capability:                    unknown(71)  value: 00010180000000
+  Capability:                    unknown(73)  value: 0B62722D6167672D73772D3100
+  Capability:                    Route Refresh (Cisco)(yes)
+  ----------
+  Prefix counter for:            bgpAfiIpv4 / unicast
+  Incoming Prefix:               Accepted 20, Rejected 0, Policy Rej 0, Total 20
+  Outgoing Prefix:               1
+  Advertised Prefix:             1
+  ==========
+  Peer:                          agg2-k8s (id 3)
+  virtual router:                default
+  Peer router id:                10.201.255.2
+  Remote AS:                     65400
+  Peer group:                    fabric (id 1)
+  Peer status:                   Established, for 73417 seconds
+  Password set:                  no
+  Passive:                       no
+  Multi-hop TTL:                 1
+  Remote Address:                10.201.0.2:179
+  Local Address:                 10.201.0.3:44119
+  (R) reflector client:          not-client
+  same confederation:            no
+  send aggr confed as-path:      yes
+  peering type:                  Unspecified
+  Connect-Retry interval:        15
+  Open Delay:                    0
+  Idle Hold:                     15
+  Prefix limit:                  5000
+  Holdtime:                      9 (config 9)
+  Keep-Alive interval:           3 (config 3)
+  Update messages:               in      152, out        2
+  Total messages:                in    24626, out    28621
+  Last update age:               0
+  Last error:                    
+  Flap counts:                   1, established 1 times
+  (R) ORF entries:               0
+  Nexthop set to self:           no
+  use 3rd party as next-hop:     yes
+  override nexthop to peer:      no
+  ----------
+  remove private AS number:      no
+  ------------
+  Capability:                    Multiprotocol Extensions(1)  value: IPv4 Unicast
+  Capability:                    Route Refresh(yes)
+  Capability:                    unknown(yes)
+  Capability:                    Graceful Restart(64)  value: 0078
+  Capability:                    4-Byte AS Number(65)  value: 65400
+  Capability:                    unknown(69)  value: 00010101
+  Capability:                    Enhanced Route Refresh(yes)
+  Capability:                    unknown(71)  value: 00010180000000
+  Capability:                    unknown(73)  value: 0B62722D6167672D73772D3200
+  Capability:                    Route Refresh (Cisco)(yes)
+  ----------
+  Prefix counter for:            bgpAfiIpv4 / unicast
+  Incoming Prefix:               Accepted 20, Rejected 0, Policy Rej 0, Total 20
+  Outgoing Prefix:               1
+  Advertised Prefix:             1
+  ==========
+  Peer:                          agg1-svc (id 2)
+  virtual router:                default
+  Peer router id:                10.201.255.1
+  Remote AS:                     65400
+  Peer group:                    fabric (id 1)
+  Peer status:                   Established, for 73417 seconds
+  Password set:                  no
+  Passive:                       no
+  Multi-hop TTL:                 1
+  Remote Address:                10.201.1.0:42792
+  Local Address:                 10.201.1.1:179
+  (R) reflector client:          not-client
+  same confederation:            no
+  send aggr confed as-path:      yes
+  peering type:                  Unspecified
+  Connect-Retry interval:        15
+  Open Delay:                    0
+  Idle Hold:                     15
+  Prefix limit:                  5000
+  Holdtime:                      9 (config 9)
+  Keep-Alive interval:           3 (config 3)
+  Update messages:               in       23, out        2
+  Total messages:                in    24497, out    28603
+  Last update age:               0
+  Last error:                    
+  Flap counts:                   1, established 1 times
+  (R) ORF entries:               0
+  Nexthop set to self:           no
+  use 3rd party as next-hop:     yes
+  override nexthop to peer:      no
+  ----------
+  remove private AS number:      no
+  ------------
+  Capability:                    Multiprotocol Extensions(1)  value: IPv4 Unicast
+  Capability:                    Route Refresh(yes)
+  Capability:                    unknown(yes)
+  Capability:                    Graceful Restart(64)  value: 0078
+  Capability:                    4-Byte AS Number(65)  value: 65400
+  Capability:                    unknown(69)  value: 00010101
+  Capability:                    Enhanced Route Refresh(yes)
+  Capability:                    unknown(71)  value: 00010180000000
+  Capability:                    unknown(73)  value: 0B62722D6167672D73772D3100
+  Capability:                    Route Refresh (Cisco)(yes)
+  ----------
+  Prefix counter for:            bgpAfiIpv4 / unicast
+  Incoming Prefix:               Accepted 4, Rejected 0, Policy Rej 0, Total 4
+  Outgoing Prefix:               1
+  Advertised Prefix:             1
+  ==========
+  Peer:                          agg2-svc (id 4)
+  virtual router:                default
+  Peer router id:                10.201.255.2
+  Remote AS:                     65400
+  Peer group:                    fabric (id 1)
+  Peer status:                   Established, for 73417 seconds
+  Password set:                  no
+  Passive:                       no
+  Multi-hop TTL:                 1
+  Remote Address:                10.201.1.2:179
+  Local Address:                 10.201.1.3:39673
+  (R) reflector client:          not-client
+  same confederation:            no
+  send aggr confed as-path:      yes
+  peering type:                  Unspecified
+  Connect-Retry interval:        15
+  Open Delay:                    0
+  Idle Hold:                     15
+  Prefix limit:                  5000
+  Holdtime:                      9 (config 9)
+  Keep-Alive interval:           3 (config 3)
+  Update messages:               in       23, out        2
+  Total messages:                in    24497, out    28623
+  Last update age:               0
+  Last error:                    
+  Flap counts:                   1, established 1 times
+  (R) ORF entries:               0
+  Nexthop set to self:           no
+  use 3rd party as next-hop:     yes
+  override nexthop to peer:      no
+  ----------
+  remove private AS number:      no
+  ------------
+  Capability:                    Multiprotocol Extensions(1)  value: IPv4 Unicast
+  Capability:                    Route Refresh(yes)
+  Capability:                    unknown(yes)
+  Capability:                    Graceful Restart(64)  value: 0078
+  Capability:                    4-Byte AS Number(65)  value: 65400
+  Capability:                    unknown(69)  value: 00010101
+  Capability:                    Enhanced Route Refresh(yes)
+  Capability:                    unknown(71)  value: 00010180000000
+  Capability:                    unknown(73)  value: 0B62722D6167672D73772D3200
+  Capability:                    Route Refresh (Cisco)(yes)
+  ----------
+  Prefix counter for:            bgpAfiIpv4 / unicast
+  Incoming Prefix:               Accepted 4, Rejected 0, Policy Rej 0, Total 4
+  Outgoing Prefix:               1
+  Advertised Prefix:             1
+

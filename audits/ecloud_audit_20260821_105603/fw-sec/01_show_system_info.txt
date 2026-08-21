@@ -1,0 +1,60 @@
+
+
+hostname: fw-sec
+ip-address: 10.0.0.15
+public-ip-address: unknown
+netmask: 255.255.255.0
+default-gateway: 10.0.0.2
+ip-assignment: static
+ip6-assignment: static
+ipv6-address: unknown
+ipv6-link-local-address: fe80::e00:84ff:fece:e00/64
+ipv6-default-gateway: 
+mac-address: 0c:00:84:ce:0e:00
+time: Thu Aug 20 23:56:31 2026
+uptime: 0 days, 20:26:40
+family: vm
+model: PA-VM
+serial: unknown
+vm-mac-base: BA:DB:EE:FB:AD:00
+vm-mac-count: 255
+vm-uuid: AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+vm-cpuid: KVM:210FB000FFFB8B17
+vm-license: none
+vm-cap-tier: unknown
+vm-cpu-count: 8
+vm-memory: 16354240
+vm-mode: KVM
+cloud-mode: non-cloud
+sw-version: 12.1.2
+global-protect-client-package-version: 0.0.0
+device-dictionary-version: 82-406
+device-dictionary-release-date: 
+app-version: 9010-9583
+app-release-date: 
+av-version: 0
+av-release-date: 
+threat-version: 0
+threat-release-date: 
+wf-private-version: 0
+wf-private-release-date: unknown
+url-db: paloaltonetworks
+wildfire-version: 0
+wildfire-release-date: 
+wildfire-rt: Disabled
+url-filtering-version: 0000.00.00.000
+global-protect-datafile-version: 0
+global-protect-datafile-release-date: unknown
+global-protect-clientless-vpn-version: 0
+global-protect-clientless-vpn-release-date: 
+logdb-version: 12.1.4
+vm_series: vm_series-6.1.0
+dlp: dlp-6.0.1
+platform-family: vm
+vpn-disable-mode: off
+multi-vsys: off
+operational-mode: normal
+advanced-routing: off
+duplicate-ip: Disabled
+device-certificate-status: None
+

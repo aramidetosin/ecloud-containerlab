@@ -1,0 +1,106 @@
+
+Building configuration...
+
+Current configuration:
+!
+frr version 8.4.3
+frr defaults datacenter
+hostname leaf-k8s-master-1
+log syslog informational
+log timestamp precision 6
+agentx
+service integrated-vtysh-config
+!
+vrf tenant-k8s
+ vni 50001
+exit-vrf
+!
+interface bond1
+ evpn mh es-df-pref 32767
+ evpn mh es-id 1
+ evpn mh es-sys-mac 44:38:39:be:ef:11
+exit
+!
+interface bond2
+ evpn mh es-df-pref 32767
+ evpn mh es-id 2
+ evpn mh es-sys-mac 44:38:39:be:ef:11
+exit
+!
+interface bond3
+ evpn mh es-df-pref 32767
+ evpn mh es-id 3
+ evpn mh es-sys-mac 44:38:39:be:ef:11
+exit
+!
+interface swp1
+ evpn mh uplink
+exit
+!
+interface swp2
+ evpn mh uplink
+exit
+!
+router bgp 65111
+ bgp router-id 10.0.0.11
+ neighbor swp1 interface remote-as external
+ neighbor swp1 advertisement-interval 0
+ neighbor swp1 timers 3 9
+ neighbor swp1 timers connect 10
+ neighbor swp2 interface remote-as external
+ neighbor swp2 advertisement-interval 0
+ neighbor swp2 timers 3 9
+ neighbor swp2 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  neighbor swp1 allowas-in 1
+  neighbor swp2 allowas-in 1
+  maximum-paths 64
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  neighbor swp1 activate
+  neighbor swp1 allowas-in 1
+  neighbor swp2 activate
+  neighbor swp2 allowas-in 1
+  advertise-all-vni
+  vni 50001
+   route-target import 65000:50001
+   route-target export 65000:50001
+  exit-vni
+  vni 10110
+   route-target import 65000:10110
+   route-target export 65000:10110
+  exit-vni
+ exit-address-family
+exit
+!
+router bgp 65111 vrf tenant-k8s
+ bgp router-id 10.0.0.11
+ neighbor 10.167.10.11 remote-as 65010
+ neighbor 10.167.10.11 advertisement-interval 0
+ neighbor 10.167.10.11 timers 3 9
+ neighbor 10.167.10.11 timers connect 10
+ neighbor 10.167.10.12 remote-as 65010
+ neighbor 10.167.10.12 advertisement-interval 0
+ neighbor 10.167.10.12 timers 3 9
+ neighbor 10.167.10.12 timers connect 10
+ neighbor 10.167.10.13 remote-as 65010
+ neighbor 10.167.10.13 advertisement-interval 0
+ neighbor 10.167.10.13 timers 3 9
+ neighbor 10.167.10.13 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  maximum-paths 64
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  advertise ipv4 unicast
+ exit-address-family
+exit
+!
+end

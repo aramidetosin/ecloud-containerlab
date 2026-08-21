@@ -1,0 +1,30 @@
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+bond1           up      default         
+bond2           up      default         
+bond3           up      default         
+br_default      up      default         
+br_l3vni        up      default         
+lo              up      default         10.0.0.13/32
+swp1            up      default         
+swp2            up      default         
+swp3            up      default         
+swp4            up      default         
+swp5            up      default         
+vxlan48         up      default         
+vxlan99         up      default         
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+eth0            up      mgmt            10.0.0.15/24
+                                        + fec0::e00:99ff:fed3:9700/64
+mgmt            up      mgmt            
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+tenant-k8s      up      tenant-k8s      
+vlan120         up      tenant-k8s      10.167.20.2/24
+vlan120-v0      up      tenant-k8s      10.167.20.1/24
+vlan3001_l3     up      tenant-k8s      
+

@@ -1,0 +1,51 @@
+
+Aug 20 18:17:06 leaf-k8s-master-2 systemd[1]: Starting frr.service - FRRouting...
+Aug 20 18:17:06 leaf-k8s-master-2 frrinit.sh[44322]: Starting watchfrr with command: '   /usr/lib/frr/watchfrr  -d  -F datacenter   zebra bgpd staticd'.
+Aug 20 18:17:06 leaf-k8s-master-2 watchfrr[44331]: [T83RR-8SM5G] watchfrr 8.4.3 starting: vty@0
+Aug 20 18:17:06 leaf-k8s-master-2 watchfrr[44331]: [ZCJ3S-SPH5S] zebra state -> down : initial connection attempt failed
+Aug 20 18:17:06 leaf-k8s-master-2 watchfrr[44331]: [ZCJ3S-SPH5S] bgpd state -> down : initial connection attempt failed
+Aug 20 18:17:06 leaf-k8s-master-2 watchfrr[44331]: [ZCJ3S-SPH5S] staticd state -> down : initial connection attempt failed
+Aug 20 18:17:06 leaf-k8s-master-2 watchfrr[44331]: [YFT0P-5Q5YX] Forked background command [pid 44332]: /usr/lib/frr/watchfrr.sh restart all
+Aug 20 18:17:06 leaf-k8s-master-2 watchfrr.sh[44346]: Cannot stop zebra: pid file not found
+Aug 20 18:17:07 leaf-k8s-master-2 bgpd[44394]: [QN9FK-3DQX7] snmp[info]: subagent_open_master_session: Attempting to open session with the AgentX master agent
+Aug 20 18:17:07 leaf-k8s-master-2 bgpd[44394]: [QN9FK-3DQX7] snmp[info]: NET-SNMP version 5.9.3 AgentX subagent connected
+Aug 20 18:17:07 leaf-k8s-master-2 zebra[44368]: [QN9FK-3DQX7] snmp[info]: subagent_open_master_session: Attempting to open session with the AgentX master agent
+Aug 20 18:17:07 leaf-k8s-master-2 zebra[44368]: [QN9FK-3DQX7] snmp[info]: NET-SNMP version 5.9.3 AgentX subagent connected
+Aug 20 18:17:07 leaf-k8s-master-2 bgpd[44394]: [J7484-2SYXF][EC 33554465] swp1 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 18:17:07 leaf-k8s-master-2 bgpd[44394]: [J7484-2SYXF][EC 33554465] swp2 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 18:17:07 leaf-k8s-master-2 zebra[44368]: [WQ6SQ-2NQYM] Setting protodown on - interface swp3 (5): reason bitfield change from 0x0 --> 0x2
+Aug 20 18:17:07 leaf-k8s-master-2 zebra[44368]: [WQ6SQ-2NQYM] Setting protodown on - interface swp4 (6): reason bitfield change from 0x0 --> 0x2
+Aug 20 18:17:07 leaf-k8s-master-2 zebra[44368]: [WQ6SQ-2NQYM] Setting protodown on - interface swp5 (7): reason bitfield change from 0x0 --> 0x2
+Aug 20 18:17:07 leaf-k8s-master-2 bgpd[44394]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:17:07 leaf-k8s-master-2 staticd[44409]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:17:07 leaf-k8s-master-2 zebra[44368]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:17:07 leaf-k8s-master-2 watchfrr[44331]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 20 18:17:07 leaf-k8s-master-2 watchfrr[44331]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 20 18:17:07 leaf-k8s-master-2 watchfrr[44331]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 20 18:17:07 leaf-k8s-master-2 watchfrr[44331]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 20 18:17:07 leaf-k8s-master-2 watchfrr[44331]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 20 18:17:07 leaf-k8s-master-2 frrinit.sh[44322]: Started watchfrr.
+Aug 20 18:17:07 leaf-k8s-master-2 systemd[1]: Started frr.service - FRRouting.
+Aug 20 18:17:11 leaf-k8s-master-2 bgpd[44394]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1(spine-1) in vrf default Up
+Aug 20 18:17:13 leaf-k8s-master-2 bgpd[44394]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1 in vrf default
+Aug 20 18:17:13 leaf-k8s-master-2 bgpd[44394]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp1 in vrf default
+Aug 20 18:17:15 leaf-k8s-master-2 bgpd[44394]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2(spine-2) in vrf default Up
+Aug 20 18:17:17 leaf-k8s-master-2 bgpd[44394]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2 in vrf default
+Aug 20 18:17:17 leaf-k8s-master-2 bgpd[44394]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp2 in vrf default
+Aug 20 18:17:22 leaf-k8s-master-2 zebra[44368]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+Aug 20 18:17:22 leaf-k8s-master-2 zebra[44368]: [WPPMZ-G9797] if_zebra_speed_update: vlan110 old speed: 0 new speed: 4294967295
+Aug 20 18:20:07 leaf-k8s-master-2 zebra[44368]: [WQ6SQ-2NQYM] Setting protodown off - interface swp3 (5): reason bitfield change from 0x2 --> 0x0
+Aug 20 18:20:07 leaf-k8s-master-2 zebra[44368]: [WQ6SQ-2NQYM] Setting protodown off - interface swp4 (6): reason bitfield change from 0x2 --> 0x0
+Aug 20 18:20:07 leaf-k8s-master-2 zebra[44368]: [WQ6SQ-2NQYM] Setting protodown off - interface swp5 (7): reason bitfield change from 0x2 --> 0x0
+Aug 20 18:20:12 leaf-k8s-master-2 zebra[44368]: [WPPMZ-G9797] if_zebra_speed_update: bond2 old speed: 4294967295 new speed: 1000
+Aug 20 18:20:12 leaf-k8s-master-2 zebra[44368]: [WPPMZ-G9797] if_zebra_speed_update: bond3 old speed: 4294967295 new speed: 1000
+Aug 20 18:20:12 leaf-k8s-master-2 zebra[44368]: [WPPMZ-G9797] if_zebra_speed_update: bond1 old speed: 4294967295 new speed: 1000
+Aug 20 18:20:12 leaf-k8s-master-2 zebra[44368]: [WPPMZ-G9797] if_zebra_speed_update: br_default old speed: 4294967295 new speed: 1000
+Aug 20 18:20:12 leaf-k8s-master-2 zebra[44368]: [WPPMZ-G9797] if_zebra_speed_update: vlan110 old speed: 4294967295 new speed: 1000
+Aug 20 18:20:12 leaf-k8s-master-2 zebra[44368]: [WPPMZ-G9797] if_zebra_speed_update: vlan110-v0 old speed: 4294967295 new speed: 1000
+Aug 20 18:20:12 leaf-k8s-master-2 bgpd[44394]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.167.10.12(k8s-master-2) in vrf tenant-k8s Up
+Aug 20 18:20:12 leaf-k8s-master-2 bgpd[44394]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.167.10.12 in vrf tenant-k8s
+Aug 20 18:20:14 leaf-k8s-master-2 bgpd[44394]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.167.10.11(k8s-master-1) in vrf tenant-k8s Up
+Aug 20 18:20:14 leaf-k8s-master-2 bgpd[44394]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.167.10.11 in vrf tenant-k8s
+Aug 20 18:20:16 leaf-k8s-master-2 bgpd[44394]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.167.10.13(k8s-master-3) in vrf tenant-k8s Up
+Aug 20 18:20:16 leaf-k8s-master-2 bgpd[44394]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.167.10.13 in vrf tenant-k8s

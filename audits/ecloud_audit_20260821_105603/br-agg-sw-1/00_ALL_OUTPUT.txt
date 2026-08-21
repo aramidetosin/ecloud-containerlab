@@ -1,0 +1,773 @@
+
+==============================================================================
+br-agg-sw-1# ip -d link show type vxlan | head -40
+==============================================================================
+
+
+==============================================================================
+br-agg-sw-1# nv show system
+==============================================================================
+
+                 operational                                  applied    
+---------------  -------------------------------------------  -----------
+build            Cumulus Linux 5.12.0                                    
+uptime           20:33:08                                                
+hostname         br-agg-sw-1                                  br-agg-sw-1
+product-name     Cumulus Linux                                           
+product-release  5.12.0                                                  
+platform         N/A                                                     
+system-memory    1.28 GB used / 1.98 GB free / 3.57 GB total             
+swap-memory      0 Bytes used / 0 Bytes free / 0 Bytes total             
+health-status    OK                                                      
+date-time        2026-08-21 06:56:24                                     
+status           N/A                                                     
+timezone         Etc/UTC                                                 
+maintenance                                                              
+  mode           disabled                                                
+  ports          enabled                                                 
+version                                                                  
+  kernel         6.1.0-cl-1-amd64                                        
+  build-date     Mon Feb 03 17:42:08 UTC 2025                            
+  image          5.12.0.0037                                             
+  onie           N/A                                                     
+
+==============================================================================
+br-agg-sw-1# nv show interface
+==============================================================================
+
+Interface   Admin Status  Oper Status  Speed  MTU    Type      Remote Host    Remote Port  Summary                                 
+----------  ------------  -----------  -----  -----  --------  -------------  -----------  ----------------------------------------
+eth0        up            up           1G     1500   eth                                   IP Address:                 10.0.0.15/24
+                                                                                           IP Address:   fe80::e00:3fff:fe4b:e00/64
+                                                                                           IP Address:   fec0::e00:3fff:fe4b:e00/64
+lo          up            unknown             65536  loopback                              IP Address:                  127.0.0.1/8
+                                                                                           IP Address:                      ::1/128
+mgmt        up            up                  65575  vrf                                   IP Address:                  127.0.0.1/8
+                                                                                           IP Address:                  127.0.1.1/8
+                                                                                           IP Address:                      ::1/128
+swp1        up            up           1G     9216   swp       leaf-border-1  swp3         IP Address: fe80::a8c1:abff:fe85:f0b3/64
+swp1.100    up            up                  9216   sub                                   IP Address: fe80::a8c1:abff:fe85:f0b3/64
+swp1.200    up            up                  9216   sub                                   IP Address: fe80::a8c1:abff:fe85:f0b3/64
+swp2        up            up           1G     9216   swp       leaf-border-2  swp3         IP Address: fe80::a8c1:abff:fe82:c109/64
+swp2.100    up            up                  9216   sub                                   IP Address: fe80::a8c1:abff:fe82:c109/64
+swp2.200    up            up                  9216   sub                                   IP Address: fe80::a8c1:abff:fe82:c109/64
+swp3        up            up           1G     9216   swp                                   IP Address: fe80::a8c1:abff:fe1e:78a9/64
+swp3.100    up            up                  9216   sub                                   IP Address:                10.201.0.0/31
+                                                                                           IP Address: fe80::a8c1:abff:fe1e:78a9/64
+swp3.200    up            up                  9216   sub                                   IP Address:                10.201.1.0/31
+                                                                                           IP Address: fe80::a8c1:abff:fe1e:78a9/64
+swp4        up            up           1G     9216   swp                                   IP Address: fe80::a8c1:abff:fe1f:a8cd/64
+swp4.100    up            up                  9216   sub                                   IP Address:                10.201.0.4/31
+                                                                                           IP Address: fe80::a8c1:abff:fe1f:a8cd/64
+swp4.200    up            up                  9216   sub                                   IP Address:                10.201.1.4/31
+                                                                                           IP Address: fe80::a8c1:abff:fe1f:a8cd/64
+swp5        up            up           1G     9216   swp       dc2-border-1   swp3         IP Address: fe80::a8c1:abff:feec:19d8/64
+swp5.100    up            up                  9216   sub                                   IP Address: fe80::a8c1:abff:feec:19d8/64
+swp5.200    up            up                  9216   sub                                   IP Address: fe80::a8c1:abff:feec:19d8/64
+swp6        up            up           1G     9216   swp       dc2-border-2   swp3         IP Address: fe80::a8c1:abff:fed5:b258/64
+swp6.100    up            up                  9216   sub                                   IP Address: fe80::a8c1:abff:fed5:b258/64
+swp6.200    up            up                  9216   sub                                   IP Address: fe80::a8c1:abff:fed5:b258/64
+swp7        up            up           1G     9216   swp                                   IP Address:               10.201.20.1/30
+                                                                                           IP Address: fe80::a8c1:abff:fe2c:13a0/64
+swp8        up            up           1G     9216   swp                                   IP Address:               10.201.20.9/30
+                                                                                           IP Address: fe80::a8c1:abff:fe1d:bbea/64
+tenant-k8s  up            up                  65575  vrf                                   IP Address:                  127.0.0.1/8
+                                                                                           IP Address:                  127.0.1.1/8
+                                                                                           IP Address:                      ::1/128
+tenant-svc  up            up                  65575  vrf                                   IP Address:                  127.0.0.1/8
+                                                                                           IP Address:                  127.0.1.1/8
+                                                                                           IP Address:                      ::1/128
+
+==============================================================================
+br-agg-sw-1# nv show router bgp
+==============================================================================
+
+                                applied     
+------------------------------  ------------
+enable                          on          
+autonomous-system               65400       
+router-id                       10.201.255.1
+policy-update-timer             5           
+graceful-shutdown               off         
+wait-for-install                off         
+graceful-restart                            
+  mode                          helper-only 
+  restart-time                  120         
+  path-selection-deferral-time  360         
+  stale-routes-time             360         
+convergence-wait                            
+  time                          0           
+  establish-wait-time           0           
+queue-limit                                 
+  input                         10000       
+  output                        10000       
+
+==============================================================================
+br-agg-sw-1# nv show vrf
+==============================================================================
+
+Name        Table  Summary                
+----------  -----  -----------------------
+default     254    IP Address: 127.0.0.1/8
+                   IP Address:     ::1/128
+mgmt        1001   IP Address: 127.0.0.1/8
+                   IP Address: 127.0.1.1/8
+                   IP Address:     ::1/128
+tenant-k8s  1002   IP Address: 127.0.0.1/8
+                   IP Address: 127.0.1.1/8
+                   IP Address:     ::1/128
+tenant-svc  1003   IP Address: 127.0.0.1/8
+                   IP Address: 127.0.1.1/8
+                   IP Address:     ::1/128
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S lldpctl 2>/dev/null | grep -E 'Interface|SysName|PortDescr'
+==============================================================================
+
+Interface:    swp1, via: LLDP, RID: 3, Time: 0 day, 20:32:48
+    SysName:      leaf-border-1
+    PortDescr:    swp3
+Interface:    swp2, via: LLDP, RID: 2, Time: 0 day, 20:32:48
+    SysName:      leaf-border-2
+    PortDescr:    swp3
+Interface:    swp5, via: LLDP, RID: 1, Time: 0 day, 20:32:48
+    SysName:      dc2-border-1
+    PortDescr:    swp3
+Interface:    swp6, via: LLDP, RID: 4, Time: 0 day, 20:32:46
+    SysName:      dc2-border-2
+    PortDescr:    swp3
+
+==============================================================================
+br-agg-sw-1# ip -br addr show
+==============================================================================
+
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             UP             10.0.0.15/24 fec0::e00:3fff:fe4b:e00/64 fe80::e00:3fff:fe4b:e00/64 
+swp1             UP             fe80::a8c1:abff:fe85:f0b3/64 
+swp2             UP             fe80::a8c1:abff:fe82:c109/64 
+swp3             UP             fe80::a8c1:abff:fe1e:78a9/64 
+swp4             UP             fe80::a8c1:abff:fe1f:a8cd/64 
+swp5             UP             fe80::a8c1:abff:feec:19d8/64 
+swp6             UP             fe80::a8c1:abff:fed5:b258/64 
+swp7             UP             10.201.20.1/30 fe80::a8c1:abff:fe2c:13a0/64 
+swp8             UP             10.201.20.9/30 fe80::a8c1:abff:fe1d:bbea/64 
+mgmt             UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp1.100@swp1    UP             fe80::a8c1:abff:fe85:f0b3/64 
+tenant-k8s       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp2.100@swp2    UP             fe80::a8c1:abff:fe82:c109/64 
+swp3.100@swp3    UP             10.201.0.0/31 fe80::a8c1:abff:fe1e:78a9/64 
+swp4.100@swp4    UP             10.201.0.4/31 fe80::a8c1:abff:fe1f:a8cd/64 
+swp5.100@swp5    UP             fe80::a8c1:abff:feec:19d8/64 
+swp6.100@swp6    UP             fe80::a8c1:abff:fed5:b258/64 
+swp1.200@swp1    UP             fe80::a8c1:abff:fe85:f0b3/64 
+tenant-svc       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp2.200@swp2    UP             fe80::a8c1:abff:fe82:c109/64 
+swp3.200@swp3    UP             10.201.1.0/31 fe80::a8c1:abff:fe1e:78a9/64 
+swp4.200@swp4    UP             10.201.1.4/31 fe80::a8c1:abff:fe1f:a8cd/64 
+swp5.200@swp5    UP             fe80::a8c1:abff:feec:19d8/64 
+swp6.200@swp6    UP             fe80::a8c1:abff:fed5:b258/64 
+
+==============================================================================
+br-agg-sw-1# ip -br link show
+==============================================================================
+
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eth0             UP             0c:00:3f:4b:0e:00 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp1             UP             aa:c1:ab:85:f0:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp2             UP             aa:c1:ab:82:c1:09 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp3             UP             aa:c1:ab:1e:78:a9 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp4             UP             aa:c1:ab:1f:a8:cd <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp5             UP             aa:c1:ab:ec:19:d8 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp6             UP             aa:c1:ab:d5:b2:58 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp7             UP             aa:c1:ab:2c:13:a0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp8             UP             aa:c1:ab:1d:bb:ea <BROADCAST,MULTICAST,UP,LOWER_UP> 
+mgmt             UP             f2:8c:46:8f:f0:04 <NOARP,MASTER,UP,LOWER_UP> 
+swp1.100@swp1    UP             aa:c1:ab:85:f0:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+tenant-k8s       UP             42:aa:90:34:b6:4e <NOARP,MASTER,UP,LOWER_UP> 
+swp2.100@swp2    UP             aa:c1:ab:82:c1:09 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp3.100@swp3    UP             aa:c1:ab:1e:78:a9 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp4.100@swp4    UP             aa:c1:ab:1f:a8:cd <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp5.100@swp5    UP             aa:c1:ab:ec:19:d8 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp6.100@swp6    UP             aa:c1:ab:d5:b2:58 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp1.200@swp1    UP             aa:c1:ab:85:f0:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+tenant-svc       UP             46:be:34:0f:f6:8a <NOARP,MASTER,UP,LOWER_UP> 
+swp2.200@swp2    UP             aa:c1:ab:82:c1:09 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp3.200@swp3    UP             aa:c1:ab:1e:78:a9 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp4.200@swp4    UP             aa:c1:ab:1f:a8:cd <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp5.200@swp5    UP             aa:c1:ab:ec:19:d8 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+swp6.200@swp6    UP             aa:c1:ab:d5:b2:58 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+
+==============================================================================
+br-agg-sw-1# ip route show
+==============================================================================
+
+
+==============================================================================
+br-agg-sw-1# ip neigh show
+==============================================================================
+
+169.254.0.1 dev swp2.100 lladdr aa:c1:ab:be:89:9d PERMANENT proto zebra 
+10.201.0.5 dev swp4.100 lladdr aa:c1:ab:2f:15:c6 REACHABLE 
+169.254.0.1 dev swp1.200 lladdr aa:c1:ab:29:6b:35 PERMANENT proto zebra 
+10.201.20.2 dev swp7 lladdr aa:c1:ab:4c:b9:1f REACHABLE 
+10.0.0.2 dev eth0 lladdr 52:55:0a:00:00:02 REACHABLE 
+10.0.0.3 dev eth0 lladdr 52:55:0a:00:00:03 REACHABLE 
+10.201.20.10 dev swp8 lladdr aa:c1:ab:cc:7a:02 REACHABLE 
+169.254.0.1 dev swp6.200 lladdr aa:c1:ab:18:67:4d PERMANENT proto zebra 
+169.254.0.1 dev swp2.200 lladdr aa:c1:ab:be:89:9d PERMANENT proto zebra 
+10.201.0.1 dev swp3.100 lladdr aa:c1:ab:b1:ca:0c REACHABLE 
+169.254.0.1 dev swp1.100 lladdr aa:c1:ab:29:6b:35 PERMANENT proto zebra 
+169.254.0.1 dev swp6.100 lladdr aa:c1:ab:18:67:4d PERMANENT proto zebra 
+10.201.1.5 dev swp4.200 lladdr aa:c1:ab:2f:15:c6 REACHABLE 
+169.254.0.1 dev swp5.100 lladdr aa:c1:ab:6b:f1:fb PERMANENT proto zebra 
+169.254.0.1 dev swp5.200 lladdr aa:c1:ab:6b:f1:fb PERMANENT proto zebra 
+10.201.1.1 dev swp3.200 lladdr aa:c1:ab:b1:ca:0c REACHABLE 
+fe80::a8c1:abff:fe18:674d dev swp6 lladdr aa:c1:ab:18:67:4d router REACHABLE 
+fe80::2 dev eth0 lladdr 52:56:00:00:00:02 router STALE 
+fe80::a8c1:abff:fe6b:f1fb dev swp5 lladdr aa:c1:ab:6b:f1:fb router REACHABLE 
+fe80::a8c1:abff:fe6b:f1fb dev swp5.100 lladdr aa:c1:ab:6b:f1:fb router REACHABLE 
+fe80::a8c1:abff:febe:899d dev swp2 lladdr aa:c1:ab:be:89:9d REACHABLE 
+fe80::a8c1:abff:fe6b:f1fb dev swp5.200 lladdr aa:c1:ab:6b:f1:fb router REACHABLE 
+fe80::a8c1:abff:feb1:ca0c dev swp3 lladdr aa:c1:ab:b1:ca:0c STALE 
+fe80::a8c1:abff:fe29:6b35 dev swp1.200 lladdr aa:c1:ab:29:6b:35 router REACHABLE 
+fe80::a8c1:abff:fe29:6b35 dev swp1 lladdr aa:c1:ab:29:6b:35 router REACHABLE 
+fe80::a8c1:abff:febe:899d dev swp2.200 lladdr aa:c1:ab:be:89:9d router REACHABLE 
+fe80::a8c1:abff:fe18:674d dev swp6.200 lladdr aa:c1:ab:18:67:4d router REACHABLE 
+fe80::a8c1:abff:fe2f:15c6 dev swp4 lladdr aa:c1:ab:2f:15:c6 STALE 
+fe80::a8c1:abff:fe4c:b91f dev swp7 lladdr aa:c1:ab:4c:b9:1f REACHABLE 
+fe80::a8c1:abff:fe29:6b35 dev swp1.100 lladdr aa:c1:ab:29:6b:35 router REACHABLE 
+fe80::a8c1:abff:fecc:7a02 dev swp8 lladdr aa:c1:ab:cc:7a:02 REACHABLE 
+fe80::a8c1:abff:fe18:674d dev swp6.100 lladdr aa:c1:ab:18:67:4d router REACHABLE 
+fe80::a8c1:abff:febe:899d dev swp2.100 lladdr aa:c1:ab:be:89:9d router REACHABLE 
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show version' 2>/dev/null
+==============================================================================
+
+FRRouting 8.4.3 (br-agg-sw-1) on Linux(6.1.0-cl-1-amd64).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+configured with:
+    '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--libexecdir=${prefix}/lib/x86_64-linux-gnu' '--disable-maintainer-mode' '--enable-exampledir=/usr/share/doc/frr/examples/' '--localstatedir=/var/run/frr' '--sbindir=/usr/lib/frr' '--sysconfdir=/etc/frr' '--with-vtysh-pager=/usr/bin/pager' '--libdir=/usr/lib/x86_64-linux-gnu/frr' '--with-moduledir=/usr/lib/x86_64-linux-gnu/frr/modules' '--disable-dependency-tracking' '--disable-dev-build' '--enable-systemd=yes' '--enable-rpki' '--disable-pim6d' '--with-libpam' '--enable-doc' '--enable-doc-html' '--enable-snmp' '--enable-fpm' '--disable-zeromq' '--enable-ospfapi' '--disable-bgp-vnc' '--enable-multipath=128' '--enable-user=frr' '--enable-group=frr' '--enable-vty-group=frrvty' '--enable-configfile-mask=0640' '--enable-logfile-mask=0640' '--disable-address-sanitizer' '--enable-protobuf' '--enable-cumulus=yes' '--enable-csmgr=yes' '--enable-datacenter=yes' '--enable-bfdd=no' '--enable-sharpd=yes' '--enable-grpc=yes' '--enable-bgp-lttng=yes' '--enable-zebra-lttng=yes' '--with-log-timestamp-precision=6' 'build_alias=x86_64-linux-gnu' 'PYTHON=python3'
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp ipv4 unicast summary' 2>/dev/null
+==============================================================================
+
+% BGP instance not found
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show ip route bgp' 2>/dev/null
+==============================================================================
+
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show interface brief' 2>/dev/null
+==============================================================================
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+lo              up      default         
+swp1            up      default         
+swp2            up      default         
+swp3            up      default         
+swp4            up      default         
+swp5            up      default         
+swp6            up      default         
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+eth0            up      mgmt            10.0.0.15/24
+                                        + fec0::e00:3fff:fe4b:e00/64
+mgmt            up      mgmt            
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+swp1.100        up      tenant-k8s      
+swp2.100        up      tenant-k8s      
+swp3.100        up      tenant-k8s      10.201.0.0/31
+swp4.100        up      tenant-k8s      10.201.0.4/31
+swp5.100        up      tenant-k8s      
+swp6.100        up      tenant-k8s      
+swp7            up      tenant-k8s      10.201.20.1/30
+swp8            up      tenant-k8s      10.201.20.9/30
+tenant-k8s      up      tenant-k8s      
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+swp1.200        up      tenant-svc      
+swp2.200        up      tenant-svc      
+swp3.200        up      tenant-svc      10.201.1.0/31
+swp4.200        up      tenant-svc      10.201.1.4/31
+swp5.200        up      tenant-svc      
+swp6.200        up      tenant-svc      
+tenant-svc      up      tenant-svc      
+
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn summary' 2>/dev/null
+==============================================================================
+
+% BGP instance not found
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn' 2>/dev/null
+==============================================================================
+
+No BGP process is configured
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type macip' 2>/dev/null
+==============================================================================
+
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type multicast' 2>/dev/null
+==============================================================================
+
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp l2vpn evpn route type prefix' 2>/dev/null
+==============================================================================
+
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show running-config' 2>/dev/null
+==============================================================================
+
+Building configuration...
+
+Current configuration:
+!
+frr version 8.4.3
+frr defaults datacenter
+hostname br-agg-sw-1
+log syslog informational
+log timestamp precision 6
+service integrated-vtysh-config
+!
+router bgp 65400 vrf tenant-k8s
+ bgp router-id 10.201.255.1
+ neighbor swp1.100 interface remote-as external
+ neighbor swp1.100 advertisement-interval 0
+ neighbor swp1.100 timers 1 3
+ neighbor swp1.100 timers connect 10
+ neighbor swp2.100 interface remote-as external
+ neighbor swp2.100 advertisement-interval 0
+ neighbor swp2.100 timers 1 3
+ neighbor swp2.100 timers connect 10
+ neighbor swp5.100 interface remote-as external
+ neighbor swp5.100 advertisement-interval 0
+ neighbor swp5.100 timers 1 3
+ neighbor swp5.100 timers connect 10
+ neighbor swp6.100 interface remote-as external
+ neighbor swp6.100 advertisement-interval 0
+ neighbor swp6.100 timers 1 3
+ neighbor swp6.100 timers connect 10
+ neighbor 10.201.0.1 remote-as 65300
+ neighbor 10.201.0.1 advertisement-interval 0
+ neighbor 10.201.0.1 timers 3 9
+ neighbor 10.201.0.1 timers connect 10
+ neighbor 10.201.0.5 remote-as 65300
+ neighbor 10.201.0.5 advertisement-interval 0
+ neighbor 10.201.0.5 timers 3 9
+ neighbor 10.201.0.5 timers connect 10
+ neighbor 10.201.20.2 remote-as 65400
+ neighbor 10.201.20.2 advertisement-interval 0
+ neighbor 10.201.20.2 timers 3 9
+ neighbor 10.201.20.2 timers connect 10
+ neighbor 10.201.20.10 remote-as 65400
+ neighbor 10.201.20.10 advertisement-interval 0
+ neighbor 10.201.20.10 timers 3 9
+ neighbor 10.201.20.10 timers connect 10
+ !
+ address-family ipv4 unicast
+  network 10.201.20.0/30
+  network 10.201.20.8/30
+  neighbor swp1.100 route-map RM-DENY-ANYCAST-OUT out
+  neighbor swp2.100 route-map RM-DENY-ANYCAST-OUT out
+  neighbor swp5.100 route-map RM-DENY-ANYCAST-OUT out
+  neighbor swp6.100 route-map RM-DENY-ANYCAST-OUT out
+  neighbor 10.201.0.1 route-map PREFER-FWPRI in
+  maximum-paths 4
+  maximum-paths ibgp 64
+ exit-address-family
+exit
+!
+router bgp 65400 vrf tenant-svc
+ bgp router-id 10.201.255.1
+ neighbor swp1.200 interface remote-as external
+ neighbor swp1.200 advertisement-interval 0
+ neighbor swp1.200 timers 1 3
+ neighbor swp1.200 timers connect 10
+ neighbor swp2.200 interface remote-as external
+ neighbor swp2.200 advertisement-interval 0
+ neighbor swp2.200 timers 1 3
+ neighbor swp2.200 timers connect 10
+ neighbor swp5.200 interface remote-as external
+ neighbor swp5.200 advertisement-interval 0
+ neighbor swp5.200 timers 1 3
+ neighbor swp5.200 timers connect 10
+ neighbor swp6.200 interface remote-as external
+ neighbor swp6.200 advertisement-interval 0
+ neighbor swp6.200 timers 1 3
+ neighbor swp6.200 timers connect 10
+ neighbor 10.201.1.1 remote-as 65300
+ neighbor 10.201.1.1 advertisement-interval 0
+ neighbor 10.201.1.1 timers 3 9
+ neighbor 10.201.1.1 timers connect 10
+ neighbor 10.201.1.5 remote-as 65300
+ neighbor 10.201.1.5 advertisement-interval 0
+ neighbor 10.201.1.5 timers 3 9
+ neighbor 10.201.1.5 timers connect 10
+ !
+ address-family ipv4 unicast
+  neighbor 10.201.1.1 route-map PREFER-FWPRI in
+  maximum-paths 4
+  maximum-paths ibgp 64
+ exit-address-family
+exit
+!
+ip prefix-list ANYCAST-VIP seq 10 permit 192.168.202.0/32
+ip prefix-list PL-ANYCAST-VIP seq 10 permit 192.168.202.0/32
+ip prefix-list PL-ANYCAST-VIP seq 20 permit 192.168.202.3/32
+ip prefix-list PL-ANYCAST-VIP seq 30 permit 192.168.202.4/32
+!
+route-map ANYCAST-STEER permit 10
+ match ip address prefix-list ANYCAST-VIP
+ set local-preference 200
+!
+route-map ANYCAST-STEER permit 20
+!
+route-map PREFER-FWPRI permit 10
+ set local-preference 200
+!
+route-map RM-DENY-ANYCAST-OUT deny 10
+ match ip address prefix-list PL-ANYCAST-VIP
+!
+route-map RM-DENY-ANYCAST-OUT permit 20
+!
+end
+
+==============================================================================
+br-agg-sw-1# sudo -n journalctl -u frr --no-pager -n 50 2>/dev/null || echo admin | sudo -S journalctl -u frr --no-pager -n 50 2>/dev/null
+==============================================================================
+
+Aug 20 10:23:38 br-agg-sw-1 bgpd[2288]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:38 br-agg-sw-1 zebra[2215]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:38 br-agg-sw-1 staticd[2331]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:38 br-agg-sw-1 watchfrr[2137]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 20 10:23:38 br-agg-sw-1 watchfrr[2137]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 20 10:23:38 br-agg-sw-1 watchfrr[2137]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 20 10:23:38 br-agg-sw-1 watchfrr[2137]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 20 10:23:38 br-agg-sw-1 watchfrr[2137]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 20 10:23:38 br-agg-sw-1 frrinit.sh[2094]: Started watchfrr.
+Aug 20 10:23:38 br-agg-sw-1 systemd[1]: Started frr.service - FRRouting.
+Aug 20 10:23:38 br-agg-sw-1 bgpd[2288]: [J7484-2SYXF][EC 33554465] swp6.100 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:38 br-agg-sw-1 bgpd[2288]: [J7484-2SYXF][EC 33554465] swp6.200 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-1 bgpd[2288]: [J7484-2SYXF][EC 33554465] swp5.100 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-1 bgpd[2288]: [J7484-2SYXF][EC 33554465] swp5.200 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-1 bgpd[2288]: [J7484-2SYXF][EC 33554465] swp2.100 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-1 bgpd[2288]: [J7484-2SYXF][EC 33554465] swp2.200 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 br-agg-sw-1 bgpd[2288]: [J7484-2SYXF][EC 33554465] swp1.200 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2.100(leaf-border-2) in vrf tenant-k8s Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2.200(leaf-border-2) in vrf tenant-svc Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp6.200(dc2-border-2) in vrf tenant-svc Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp6.100(dc2-border-2) in vrf tenant-k8s Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1.200(leaf-border-1) in vrf tenant-svc Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp5.200(dc2-border-1) in vrf tenant-svc Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1.100(leaf-border-1) in vrf tenant-k8s Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp5.100(dc2-border-1) in vrf tenant-k8s Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [YZBG0-KRQST][EC 33554503] 10.201.20.2 unrecognized capability code: 75 - ignored
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.20.2(gobgp-1) in vrf tenant-k8s Up
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [YZBG0-KRQST][EC 33554503] 10.201.20.10 unrecognized capability code: 75 - ignored
+Aug 20 10:23:43 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.20.10(gobgp-2) in vrf tenant-k8s Up
+Aug 20 10:23:44 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2.100 in vrf tenant-k8s
+Aug 20 10:23:44 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp5.200 in vrf tenant-svc
+Aug 20 10:23:44 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp6.200 in vrf tenant-svc
+Aug 20 10:23:44 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2.200 in vrf tenant-svc
+Aug 20 10:23:44 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp5.100 in vrf tenant-k8s
+Aug 20 10:23:44 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp6.100 in vrf tenant-k8s
+Aug 20 10:23:44 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1.200 in vrf tenant-svc
+Aug 20 10:23:44 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1.100 in vrf tenant-k8s
+Aug 20 10:23:53 br-agg-sw-1 zebra[2215]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+Aug 20 10:23:53 br-agg-sw-1 zebra[2215]: [WPPMZ-G9797] if_zebra_speed_update: swp7 old speed: 0 new speed: 1000
+Aug 20 10:23:53 br-agg-sw-1 zebra[2215]: [WPPMZ-G9797] if_zebra_speed_update: swp8 old speed: 0 new speed: 1000
+Aug 20 10:23:53 br-agg-sw-1 zebra[2215]: [WPPMZ-G9797] if_zebra_speed_update: swp1.100 old speed: 0 new speed: 1000
+Aug 20 10:23:53 br-agg-sw-1 zebra[2215]: [WPPMZ-G9797] if_zebra_speed_update: swp1.200 old speed: 0 new speed: 1000
+Aug 20 10:32:54 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.0.1(Unknown) in vrf tenant-k8s Up
+Aug 20 10:32:54 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.1.1(Unknown) in vrf tenant-svc Up
+Aug 20 10:32:54 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.201.0.1 in vrf tenant-k8s
+Aug 20 10:32:54 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.201.1.1 in vrf tenant-svc
+Aug 20 10:33:54 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.1.5(Unknown) in vrf tenant-svc Up
+Aug 20 10:33:54 br-agg-sw-1 bgpd[2288]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.201.0.5(Unknown) in vrf tenant-k8s Up
+Aug 20 10:33:54 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.201.1.5 in vrf tenant-svc
+Aug 20 10:33:54 br-agg-sw-1 bgpd[2288]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.201.0.5 in vrf tenant-k8s
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show ip route vrf tenant-k8s' 2>/dev/null
+==============================================================================
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-k8s:
+B>* 0.0.0.0/0 [20/0] via 10.201.0.1, swp3.100, weight 1, 20:23:34
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:51
+B>* 10.167.10.0/24 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                       via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.167.10.11/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.167.10.12/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.167.10.13/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 12:36:17
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 12:36:17
+B>* 10.167.20.0/24 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 20:32:45
+  *                       via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 20:32:45
+B>* 10.167.20.11/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 13:53:29
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 13:53:29
+B>* 10.167.20.12/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.167.20.13/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.168.10.0/24 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:32:45
+  *                       via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:32:45
+B>* 10.168.10.11/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 00:59:54
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 00:59:54
+B>* 10.168.10.21/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:29:14
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:29:14
+B>* 10.168.10.22/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:29:03
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:29:03
+B>* 10.168.10.23/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:29:02
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:29:02
+C>* 10.201.0.0/31 is directly connected, swp3.100, 20:32:51
+C>* 10.201.0.4/31 is directly connected, swp4.100, 20:32:51
+C>* 10.201.20.0/30 is directly connected, swp7, 20:32:51
+C>* 10.201.20.8/30 is directly connected, swp8, 20:32:51
+B>  192.168.202.0/32 [200/0] via 192.168.202.1 (recursive), weight 1, 12:36:21
+  *                            via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 12:36:21
+  *                            via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 12:36:21
+B>* 192.168.202.1/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                         via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 192.168.202.2/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 00:59:54
+  *                         via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 00:59:54
+B>  192.168.202.3/32 [200/0] via 192.168.202.1 (recursive), weight 1, 01:38:15
+  *                            via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:38:15
+  *                            via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:38:15
+B>  192.168.202.4/32 [200/0] via 192.168.202.2 (recursive), weight 1, 20:29:06
+  *                            via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:29:06
+  *                            via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:29:06
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp vrf tenant-k8s ipv4 unicast summary' 2>/dev/null
+==============================================================================
+
+BGP router identifier 10.201.255.1, local AS number 65400 vrf-id 13
+BGP table version 517
+RIB entries 36, using 8064 bytes of memory
+Peers 8, using 159 KiB of memory
+
+Neighbor                V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+leaf-border-1(swp1.100) 4      65114     74146     74133        0    0    0 20:32:45           12       18 N/A
+leaf-border-2(swp2.100) 4      65114     74146     74133        0    0    0 20:32:45           12       18 N/A
+dc2-border-1(swp5.100)  4      65213     74149     74133        0    0    0 20:32:45            9       18 N/A
+dc2-border-2(swp6.100)  4      65213     74149     74133        0    0    0 20:32:45            9       18 N/A
+10.201.0.1              4      65300     28632     24624        0    0    0 20:23:34            1       21 N/A
+10.201.0.5              4      65300     28595     24604        0    0    0 20:22:34            1       21 N/A
+gobgp-1(10.201.20.2)    4      65400     25235     24825        0    0    0 20:32:45            3       18 N/A
+gobgp-2(10.201.20.10)   4      65400     25187     24825        0    0    0 20:32:45            3       18 N/A
+
+Total number of neighbors 8
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp vrf tenant-k8s ipv4 unicast' 2>/dev/null
+==============================================================================
+
+BGP table version is 517, local router ID is 10.201.255.1, vrf id 13
+Default local pref 100, local AS 65400
+Status codes:  s suppressed, d damped, h history, u unsorted, * valid, > best, = multipath, + multipath nhg,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 0.0.0.0/0        10.201.0.1                    200      0 65300 ?
+*                   10.201.0.5                             0 65300 ?
+*> 10.167.10.0/24   swp1.100                               0 65114 65100 65111 ?
+*=                  swp2.100                               0 65114 65100 65111 ?
+*> 10.167.10.11/32  swp1.100                               0 65114 65100 65111 i
+*=                  swp2.100                               0 65114 65100 65111 i
+*> 10.167.10.12/32  swp1.100                               0 65114 65100 65111 i
+*=                  swp2.100                               0 65114 65100 65111 i
+*> 10.167.10.13/32  swp1.100                               0 65114 65100 65111 i
+*=                  swp2.100                               0 65114 65100 65111 i
+*> 10.167.20.0/24   swp1.100                               0 65114 65100 65112 ?
+*=                  swp2.100                               0 65114 65100 65112 ?
+*> 10.167.20.11/32  swp1.100                               0 65114 65100 65112 i
+*=                  swp2.100                               0 65114 65100 65112 i
+*> 10.167.20.12/32  swp1.100                               0 65114 65100 65112 i
+*=                  swp2.100                               0 65114 65100 65112 i
+*> 10.167.20.13/32  swp1.100                               0 65114 65100 65112 i
+*=                  swp2.100                               0 65114 65100 65112 i
+*> 10.168.10.0/24   swp5.100                               0 65213 65200 65211 ?
+*=                  swp6.100                               0 65213 65200 65211 ?
+*> 10.168.10.11/32  swp5.100                               0 65213 65200 65211 i
+*=                  swp6.100                               0 65213 65200 65211 i
+*> 10.168.10.21/32  swp5.100                               0 65213 65200 65211 i
+*=                  swp6.100                               0 65213 65200 65211 i
+*> 10.168.10.22/32  swp5.100                               0 65213 65200 65211 i
+*=                  swp6.100                               0 65213 65200 65211 i
+*> 10.168.10.23/32  swp5.100                               0 65213 65200 65211 i
+*=                  swp6.100                               0 65213 65200 65211 i
+*> 10.201.20.0/30   0.0.0.0(br-agg-sw-1)
+                                             0         32768 i
+*> 10.201.20.8/30   0.0.0.0(br-agg-sw-1)
+                                             0         32768 i
+*>i192.168.202.0/32 192.168.202.1(gobgp-1)
+                                                  500      0 i
+* i                 192.168.202.1(gobgp-2)
+                                                  450      0 i
+*                   swp1.100                               0 65114 65100 65111 65010 i
+*                   swp2.100                               0 65114 65100 65111 65010 i
+*                   swp5.100                               0 65213 65200 65211 65020 i
+*                   swp6.100                               0 65213 65200 65211 65020 i
+*> 192.168.202.1/32 swp1.100                               0 65114 65100 65111 65010 i
+*=                  swp2.100                               0 65114 65100 65111 65010 i
+*> 192.168.202.2/32 swp5.100                               0 65213 65200 65211 65020 i
+*=                  swp6.100                               0 65213 65200 65211 65020 i
+*>i192.168.202.3/32 192.168.202.1(gobgp-1)
+                                                  500      0 i
+* i                 192.168.202.1(gobgp-2)
+                                                  450      0 i
+*                   swp1.100                               0 65114 65100 65111 65010 i
+*                   swp2.100                               0 65114 65100 65111 65010 i
+*                   swp5.100                               0 65213 65200 65211 65020 i
+*                   swp6.100                               0 65213 65200 65211 65020 i
+*>i192.168.202.4/32 192.168.202.2(gobgp-1)
+                                                  500      0 i
+* i                 192.168.202.2(gobgp-2)
+                                                  450      0 i
+*                   swp1.100                               0 65114 65100 65111 65010 i
+*                   swp2.100                               0 65114 65100 65111 65010 i
+*                   swp5.100                               0 65213 65200 65211 65020 i
+*                   swp6.100                               0 65213 65200 65211 65020 i
+
+Displayed  21 routes and 52 total paths
+
+==============================================================================
+br-agg-sw-1# ip route show vrf tenant-k8s
+==============================================================================
+
+default nhid 164 proto bgp metric 20 
+unreachable default metric 4278198272 
+10.167.10.0/24 nhid 81 proto bgp metric 20 
+10.167.10.11 nhid 81 proto bgp metric 20 
+10.167.10.12 nhid 81 proto bgp metric 20 
+10.167.10.13 nhid 81 proto bgp metric 20 
+10.167.20.0/24 nhid 81 proto bgp metric 20 
+10.167.20.11 nhid 81 proto bgp metric 20 
+10.167.20.12 nhid 81 proto bgp metric 20 
+10.167.20.13 nhid 81 proto bgp metric 20 
+10.168.10.0/24 nhid 84 proto bgp metric 20 
+10.168.10.11 nhid 84 proto bgp metric 20 
+10.168.10.21 nhid 84 proto bgp metric 20 
+10.168.10.22 nhid 84 proto bgp metric 20 
+10.168.10.23 nhid 84 proto bgp metric 20 
+10.201.0.0/31 dev swp3.100 proto kernel scope link src 10.201.0.0 
+10.201.0.4/31 dev swp4.100 proto kernel scope link src 10.201.0.4 
+10.201.20.0/30 dev swp7 proto kernel scope link src 10.201.20.1 
+10.201.20.8/30 dev swp8 proto kernel scope link src 10.201.20.9 
+127.0.0.0/8 dev tenant-k8s proto kernel scope link src 127.0.0.1 
+192.168.202.0 nhid 81 proto bgp metric 20 
+192.168.202.1 nhid 81 proto bgp metric 20 
+192.168.202.2 nhid 84 proto bgp metric 20 
+192.168.202.3 nhid 81 proto bgp metric 20 
+192.168.202.4 nhid 84 proto bgp metric 20 
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show ip route vrf tenant-svc' 2>/dev/null
+==============================================================================
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-svc:
+B>* 0.0.0.0/0 [20/0] via 10.201.1.1, swp3.200, weight 1, 20:23:34
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:51
+B>* 10.167.30.0/24 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.200, weight 1, 01:00:07
+  *                       via fe80::a8c1:abff:febe:899d, swp2.200, weight 1, 01:00:07
+B>* 10.167.30.10/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.200, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.200, weight 1, 01:00:07
+B>* 10.168.30.0/24 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.200, weight 1, 00:59:54
+  *                       via fe80::a8c1:abff:fe6b:f1fb, swp5.200, weight 1, 00:59:54
+B>* 10.168.30.10/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.200, weight 1, 00:59:54
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.200, weight 1, 00:59:54
+C>* 10.201.1.0/31 is directly connected, swp3.200, 20:32:51
+C>* 10.201.1.4/31 is directly connected, swp4.200, 20:32:51
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp vrf tenant-svc ipv4 unicast summary' 2>/dev/null
+==============================================================================
+
+BGP router identifier 10.201.255.1, local AS number 65400 vrf-id 20
+BGP table version 23
+RIB entries 6, using 1344 bytes of memory
+Peers 6, using 119 KiB of memory
+
+Neighbor                V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+leaf-border-1(swp1.200) 4      65114     73987     73988        0    0    0 20:32:45            2        5 N/A
+leaf-border-2(swp2.200) 4      65114     73986     73988        0    0    0 20:32:45            2        5 N/A
+dc2-border-1(swp5.200)  4      65213     73990     73988        0    0    0 20:32:45            2        5 N/A
+dc2-border-2(swp6.200)  4      65213     73990     73988        0    0    0 20:32:45            2        5 N/A
+10.201.1.1              4      65300     28601     24495        0    0    0 20:23:34            1        5 N/A
+10.201.1.5              4      65300     28589     24474        0    0    0 20:22:34            1        5 N/A
+
+Total number of neighbors 6
+
+==============================================================================
+br-agg-sw-1# echo admin | sudo -S vtysh -c 'show bgp vrf tenant-svc ipv4 unicast' 2>/dev/null
+==============================================================================
+
+BGP table version is 23, local router ID is 10.201.255.1, vrf id 20
+Default local pref 100, local AS 65400
+Status codes:  s suppressed, d damped, h history, u unsorted, * valid, > best, = multipath, + multipath nhg,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 0.0.0.0/0        10.201.1.1                    200      0 65300 ?
+*                   10.201.1.5                             0 65300 ?
+*> 10.167.30.0/24   swp1.200                               0 65114 65100 65113 ?
+*=                  swp2.200                               0 65114 65100 65113 ?
+*> 10.167.30.10/32  swp1.200                               0 65114 65100 65113 i
+*=                  swp2.200                               0 65114 65100 65113 i
+*> 10.168.30.0/24   swp5.200                               0 65213 65200 65212 ?
+*=                  swp6.200                               0 65213 65200 65212 ?
+*> 10.168.30.10/32  swp5.200                               0 65213 65200 65212 i
+*=                  swp6.200                               0 65213 65200 65212 i
+
+Displayed  5 routes and 10 total paths
+
+==============================================================================
+br-agg-sw-1# ip route show vrf tenant-svc
+==============================================================================
+
+default nhid 165 proto bgp metric 20 
+unreachable default metric 4278198272 
+10.167.30.0/24 nhid 510 proto bgp metric 20 
+10.167.30.10 nhid 510 proto bgp metric 20 
+10.168.30.0/24 nhid 87 proto bgp metric 20 
+10.168.30.10 nhid 87 proto bgp metric 20 
+10.201.1.0/31 dev swp3.200 proto kernel scope link src 10.201.1.0 
+10.201.1.4/31 dev swp4.200 proto kernel scope link src 10.201.1.4 
+127.0.0.0/8 dev tenant-svc proto kernel scope link src 127.0.0.1 

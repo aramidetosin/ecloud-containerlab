@@ -1,0 +1,12 @@
+
+
+Group 1: 
+  Mode: Active-Active
+  Link Monitoring Information:
+    Enabled: yes
+    Failure condition: any
+    Group ae1-members:
+      Enabled: yes
+      Failure condition: all
+      Interface ethernet1/1: up
+      Interface ethernet1/2: up

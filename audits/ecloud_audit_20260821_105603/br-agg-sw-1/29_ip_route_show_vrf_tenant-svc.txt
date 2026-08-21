@@ -1,0 +1,10 @@
+
+default nhid 165 proto bgp metric 20 
+unreachable default metric 4278198272 
+10.167.30.0/24 nhid 510 proto bgp metric 20 
+10.167.30.10 nhid 510 proto bgp metric 20 
+10.168.30.0/24 nhid 87 proto bgp metric 20 
+10.168.30.10 nhid 87 proto bgp metric 20 
+10.201.1.0/31 dev swp3.200 proto kernel scope link src 10.201.1.0 
+10.201.1.4/31 dev swp4.200 proto kernel scope link src 10.201.1.4 
+127.0.0.0/8 dev tenant-svc proto kernel scope link src 127.0.0.1 

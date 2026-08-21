@@ -1,0 +1,56 @@
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-k8s:
+B>* 0.0.0.0/0 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 20:23:26
+  *                  via 10.2.0.16, vlan3101_l3 onlink, weight 1, 20:23:26
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:44
+B>* 10.167.10.0/24 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 12:39:12
+  *                       via 10.2.0.16, vlan3101_l3 onlink, weight 1, 12:39:12
+B>* 10.167.10.11/32 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 12:36:12
+  *                        via 10.2.0.16, vlan3101_l3 onlink, weight 1, 12:36:12
+B>* 10.167.10.12/32 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 12:36:12
+  *                        via 10.2.0.16, vlan3101_l3 onlink, weight 1, 12:36:12
+B>* 10.167.10.13/32 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 12:36:09
+  *                        via 10.2.0.16, vlan3101_l3 onlink, weight 1, 12:36:09
+B>* 10.167.20.0/24 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 20:32:37
+  *                       via 10.2.0.16, vlan3101_l3 onlink, weight 1, 20:32:37
+B>* 10.167.20.11/32 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 13:53:23
+  *                        via 10.2.0.16, vlan3101_l3 onlink, weight 1, 13:53:23
+B>* 10.167.20.12/32 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 13:53:37
+  *                        via 10.2.0.16, vlan3101_l3 onlink, weight 1, 13:53:37
+B>* 10.167.20.13/32 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 13:53:29
+  *                        via 10.2.0.16, vlan3101_l3 onlink, weight 1, 13:53:29
+C * 10.168.10.0/24 [0/1024] is directly connected, vlan210-v0, 20:32:44
+C>* 10.168.10.0/24 is directly connected, vlan210, 20:32:44
+B>* 10.201.20.0/30 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 20:32:36
+  *                       via 10.2.0.16, vlan3101_l3 onlink, weight 1, 20:32:36
+B>* 10.201.20.4/30 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 20:32:37
+  *                       via 10.2.0.16, vlan3101_l3 onlink, weight 1, 20:32:37
+B>* 10.201.20.8/30 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 20:32:36
+  *                       via 10.2.0.16, vlan3101_l3 onlink, weight 1, 20:32:36
+B>* 10.201.20.12/30 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 20:32:37
+  *                        via 10.2.0.16, vlan3101_l3 onlink, weight 1, 20:32:37
+B>* 192.168.202.0/32 [20/0] via 10.168.10.11, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.21, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.22, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.23, vlan210, weight 1, 20:28:55
+B>* 192.168.202.1/32 [20/0] via 10.2.0.15, vlan3101_l3 onlink, weight 1, 01:00:05
+  *                         via 10.2.0.16, vlan3101_l3 onlink, weight 1, 01:00:05
+B>* 192.168.202.2/32 [20/0] via 10.168.10.11, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.21, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.22, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.23, vlan210, weight 1, 20:28:55
+B>* 192.168.202.3/32 [20/0] via 10.168.10.11, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.21, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.22, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.23, vlan210, weight 1, 20:28:55
+B>* 192.168.202.4/32 [20/0] via 10.168.10.11, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.21, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.22, vlan210, weight 1, 20:28:55
+  *                         via 10.168.10.23, vlan210, weight 1, 20:28:55

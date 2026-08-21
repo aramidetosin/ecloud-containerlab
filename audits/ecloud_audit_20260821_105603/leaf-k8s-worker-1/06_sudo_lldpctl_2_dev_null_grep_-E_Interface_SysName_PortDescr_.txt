@@ -1,0 +1,7 @@
+
+Interface:    swp1, via: LLDP, RID: 2, Time: 0 day, 20:32:28
+    SysName:      spine-1
+    PortDescr:    swp3
+Interface:    swp2, via: LLDP, RID: 1, Time: 0 day, 20:32:28
+    SysName:      spine-2
+    PortDescr:    swp3

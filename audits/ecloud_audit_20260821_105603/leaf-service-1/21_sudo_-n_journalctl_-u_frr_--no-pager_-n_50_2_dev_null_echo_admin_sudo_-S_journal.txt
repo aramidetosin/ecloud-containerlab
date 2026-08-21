@@ -1,0 +1,51 @@
+
+Aug 20 17:58:37 leaf-service-1 zebra[45720]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+Aug 20 17:58:37 leaf-service-1 zebra[45720]: [WPPMZ-G9797] if_zebra_speed_update: vlan130 old speed: 0 new speed: 4294967295
+Aug 20 18:00:58 leaf-service-1 zebra[45720]: [VB5HM-D56CP] remote es 03:44:38:39:be:ef:11:00:00:01 vtep 10.0.0.11 add  with unsupported df_alg 0
+Aug 20 18:00:58 leaf-service-1 zebra[45720]: [VB5HM-D56CP] remote es 03:44:38:39:be:ef:11:00:00:02 vtep 10.0.0.11 add  with unsupported df_alg 0
+Aug 20 18:00:58 leaf-service-1 zebra[45720]: [VB5HM-D56CP] remote es 03:44:38:39:be:ef:11:00:00:03 vtep 10.0.0.11 add  with unsupported df_alg 0
+Aug 20 18:00:59 leaf-service-1 zebra[45720]: [VB5HM-D56CP] remote es 03:44:38:39:be:ef:11:00:00:01 vtep 10.0.0.12 add  with unsupported df_alg 0
+Aug 20 18:00:59 leaf-service-1 zebra[45720]: [VB5HM-D56CP] remote es 03:44:38:39:be:ef:11:00:00:02 vtep 10.0.0.12 add  with unsupported df_alg 0
+Aug 20 18:00:59 leaf-service-1 zebra[45720]: [VB5HM-D56CP] remote es 03:44:38:39:be:ef:11:00:00:03 vtep 10.0.0.12 add  with unsupported df_alg 0
+Aug 20 18:01:22 leaf-service-1 zebra[45720]: [WQ6SQ-2NQYM] Setting protodown off - interface swp3 (5): reason bitfield change from 0x2 --> 0x0
+Aug 20 18:01:27 leaf-service-1 zebra[45720]: [WPPMZ-G9797] if_zebra_speed_update: bond1 old speed: 4294967295 new speed: 1000
+Aug 20 18:01:27 leaf-service-1 zebra[45720]: [WPPMZ-G9797] if_zebra_speed_update: br_default old speed: 4294967295 new speed: 1000
+Aug 20 18:01:27 leaf-service-1 zebra[45720]: [WPPMZ-G9797] if_zebra_speed_update: vlan130 old speed: 4294967295 new speed: 1000
+Aug 20 18:01:27 leaf-service-1 zebra[45720]: [WPPMZ-G9797] if_zebra_speed_update: vlan130-v0 old speed: 4294967295 new speed: 1000
+Aug 20 18:09:25 leaf-service-1 systemd[1]: Reloading frr.service - FRRouting...
+Aug 20 18:09:25 leaf-service-1 frrinit.sh[47439]: Stopping watchfrr, pid 45683, cnt 1200 ....
+Aug 20 18:09:25 leaf-service-1 watchfrr[45683]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 20 18:09:25 leaf-service-1 watchfrr[45683]: [NG1AJ-FP2TQ] Terminating on signal
+Aug 20 18:09:25 leaf-service-1 frrinit.sh[47439]: Stopped watchfrr.
+Aug 20 18:09:25 leaf-service-1 frrinit.sh[47439]: Starting watchfrr with command: '   /usr/lib/frr/watchfrr  -d  -F datacenter   zebra bgpd staticd'.
+Aug 20 18:09:25 leaf-service-1 watchfrr[47456]: [T83RR-8SM5G] watchfrr 8.4.3 starting: vty@0
+Aug 20 18:09:25 leaf-service-1 watchfrr[47456]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 20 18:09:25 leaf-service-1 watchfrr[47456]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 20 18:09:25 leaf-service-1 watchfrr[47456]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 20 18:09:25 leaf-service-1 watchfrr[47456]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 20 18:09:25 leaf-service-1 frrinit.sh[47439]: Started watchfrr.
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47484]: Waiting for children to finish applying config...
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47491]: [47491|bgpd] sending configuration
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47499]: [47499|watchfrr] sending configuration
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47501]: [47501|staticd] sending configuration
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47485]: [47485|zebra] sending configuration
+Aug 20 18:09:26 leaf-service-1 bgpd[45746]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47491]: [47491|bgpd] done
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47499]: [47499|watchfrr] done
+Aug 20 18:09:26 leaf-service-1 staticd[45761]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47501]: [47501|staticd] done
+Aug 20 18:09:26 leaf-service-1 zebra[45720]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47485]: [47485|zebra] done
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47508]: Waiting for children to finish applying config...
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47515]: [47515|bgpd] sending configuration
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47523]: [47523|watchfrr] sending configuration
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47525]: [47525|staticd] sending configuration
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47509]: [47509|zebra] sending configuration
+Aug 20 18:09:26 leaf-service-1 bgpd[45746]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47515]: [47515|bgpd] done
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47523]: [47523|watchfrr] done
+Aug 20 18:09:26 leaf-service-1 staticd[45761]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47525]: [47525|staticd] done
+Aug 20 18:09:26 leaf-service-1 zebra[45720]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 18:09:26 leaf-service-1 frrinit.sh[47509]: [47509|zebra] done
+Aug 20 18:09:26 leaf-service-1 systemd[1]: Reloaded frr.service - FRRouting.

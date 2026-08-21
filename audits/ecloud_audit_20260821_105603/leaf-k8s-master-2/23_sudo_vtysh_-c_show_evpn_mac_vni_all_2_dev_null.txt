@@ -1,0 +1,10 @@
+
+VNI 10110 #MACs (local and remote) 5
+
+Flags: N=sync-neighs, I=local-inactive, P=peer-active, X=peer-proxy
+MAC               Type   Flags Intf/Remote ES/VTEP            VLAN  Seq #'s
+50:00:00:0d:00:01 local  NP    bond3                          110   0/0
+50:00:00:0c:00:01 local  NP    bond2                          110   0/0
+0c:00:0e:6b:6b:06 local        vlan110                              0/0
+0c:00:7c:44:c3:97 remote       10.0.0.11                            0/0
+50:00:00:0b:00:01 local  NP    bond1                          110   0/0

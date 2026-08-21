@@ -1,0 +1,11 @@
+
+port              vlan-id  
+bond1             110 PVID Egress Untagged
+bond3             110 PVID Egress Untagged
+bond2             110 PVID Egress Untagged
+vxlan48           110
+br_default        1 PVID Egress Untagged
+                  110
+vxlan99           3001
+br_l3vni          1 PVID Egress Untagged
+                  3001

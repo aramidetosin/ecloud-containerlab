@@ -1,0 +1,11 @@
+
+BGP router identifier 10.0.0.18, local AS number 65114 vrf-id 15
+BGP table version 27
+RIB entries 6, using 1344 bytes of memory
+Peers 2, using 40 KiB of memory
+
+Neighbor              V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+br-agg-sw-1(swp3.200) 4      65400     73977     73975        0    0    0 20:32:34            3        5 N/A
+br-agg-sw-2(swp4.200) 4      65400     73977     73976        0    0    0 20:32:34            3        5 N/A
+
+Total number of neighbors 2

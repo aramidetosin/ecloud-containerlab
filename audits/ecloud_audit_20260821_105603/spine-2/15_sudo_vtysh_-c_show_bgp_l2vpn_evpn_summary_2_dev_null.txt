@@ -1,0 +1,17 @@
+
+BGP router identifier 10.0.0.2, local AS number 65100 vrf-id 0
+BGP table version 0
+RIB entries 73, using 16 KiB of memory
+Peers 8, using 159 KiB of memory
+
+Neighbor                V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+leaf-k8s-master-1(swp1) 4      65111     25489     25472        0    0    0 12:38:51           25      146 N/A
+leaf-k8s-master-2(swp2) 4      65111     25504     25479        0    0    0 12:38:51           25      146 N/A
+leaf-k8s-worker-1(swp3) 4      65112     25294     25296        0    0    0 20:32:27           25      146 N/A
+leaf-k8s-worker-2(swp4) 4      65112     25294     25296        0    0    0 20:32:27           25      146 N/A
+leaf-service-1(swp5)    4      65113     25357     25355        0    0    0 12:57:42            9      146 N/A
+leaf-service-2(swp6)    4      65113     25356     25355        0    0    0 12:57:42            9      146 N/A
+leaf-border-1(swp7)     4      65114     25293     25296        0    0    0 20:32:27           14      146 N/A
+leaf-border-2(swp8)     4      65114     25293     25296        0    0    0 20:32:27           14      146 N/A
+
+Total number of neighbors 8

@@ -1,0 +1,12 @@
+
+0c:00:c3:a2:c3:a2 dev vxlan48 vlan 130 extern_learn master br_default 
+8e:33:2c:bf:7b:d4 dev vxlan48 master br_default permanent
+0c:00:c3:a2:c3:a2 dev vxlan48 dst 10.0.0.15 src_vni 10130 self extern_learn 
+00:00:00:00:00:00 dev vxlan48 dst 10.0.0.15 src_vni 10130 self permanent
+0c:00:c3:af:c3:a0 dev vxlan99 vlan 3002 extern_learn master br_l3vni 
+0c:00:c2:92:31:c8 dev vxlan99 vlan 3002 extern_learn master br_l3vni 
+0c:00:c3:a2:c3:a2 dev vxlan99 vlan 3002 extern_learn master br_l3vni 
+4e:bd:79:b2:bb:13 dev vxlan99 master br_l3vni permanent
+0c:00:c3:af:c3:a0 dev vxlan99 dst 10.0.0.18 src_vni 50002 self extern_learn 
+0c:00:c2:92:31:c8 dev vxlan99 dst 10.0.0.17 src_vni 50002 self extern_learn 
+0c:00:c3:a2:c3:a2 dev vxlan99 dst 10.0.0.15 src_vni 50002 self extern_learn 

@@ -1,0 +1,51 @@
+
+Aug 20 17:01:31 leaf-k8s-worker-2 zebra[2227]: [X5XE1-RS0SW][EC 4043309074] Failed to install Nexthop (50[10.0.0.12 if 19]) into the kernel
+Aug 20 17:01:31 leaf-k8s-worker-2 zebra[2227]: [X5XE1-RS0SW][EC 4043309074] Failed to install Nexthop (57[10.0.0.17 if 19]) into the kernel
+Aug 20 17:01:31 leaf-k8s-worker-2 zebra[2227]: [X5XE1-RS0SW][EC 4043309074] Failed to install Nexthop (58[10.0.0.18 if 19]) into the kernel
+Aug 20 17:01:31 leaf-k8s-worker-2 zebra[2227]: [X5XE1-RS0SW][EC 4043309074] Failed to install Nexthop (108[::ffff:a00:d if 19]) into the kernel
+Aug 20 17:01:31 leaf-k8s-worker-2 zebra[2227]: [X5XE1-RS0SW][EC 4043309074] Failed to install Nexthop (109[10.0.0.13 if 19]) into the kernel
+Aug 20 17:01:46 leaf-k8s-worker-2 bgpd[2285]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.167.20.12(k8s-woker-2) in vrf tenant-k8s Up
+Aug 20 17:01:46 leaf-k8s-worker-2 bgpd[2285]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.167.20.12 in vrf tenant-k8s
+Aug 20 17:01:46 leaf-k8s-worker-2 bgpd[2285]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.167.20.13(k8s-woker-3) in vrf tenant-k8s Up
+Aug 20 17:01:46 leaf-k8s-worker-2 bgpd[2285]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.167.20.13 in vrf tenant-k8s
+Aug 20 17:01:47 leaf-k8s-worker-2 bgpd[2285]: [N9HHH-F8H1M] %ADJCHANGE: neighbor 10.167.20.11(k8s-woker-1) in vrf tenant-k8s Up
+Aug 20 17:01:47 leaf-k8s-worker-2 bgpd[2285]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from 10.167.20.11 in vrf tenant-k8s
+Aug 20 17:05:29 leaf-k8s-worker-2 zebra[2227]: [VB5HM-D56CP] remote es 03:44:38:39:be:ef:13:00:00:01 vtep 10.0.0.15 add  with unsupported df_alg 0
+Aug 20 17:05:39 leaf-k8s-worker-2 zebra[2227]: [VB5HM-D56CP] remote es 03:44:38:39:be:ef:13:00:00:01 vtep 10.0.0.16 add  with unsupported df_alg 0
+Aug 20 17:10:51 leaf-k8s-worker-2 systemd[1]: Reloading frr.service - FRRouting...
+Aug 20 17:10:51 leaf-k8s-worker-2 frrinit.sh[38065]: Stopping watchfrr, pid 36399, cnt 1200 ....
+Aug 20 17:10:51 leaf-k8s-worker-2 watchfrr[36399]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 20 17:10:51 leaf-k8s-worker-2 watchfrr[36399]: [NG1AJ-FP2TQ] Terminating on signal
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38065]: Stopped watchfrr.
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38065]: Starting watchfrr with command: '   /usr/lib/frr/watchfrr  -d  -F datacenter   zebra bgpd staticd'.
+Aug 20 17:10:52 leaf-k8s-worker-2 watchfrr[38082]: [T83RR-8SM5G] watchfrr 8.4.3 starting: vty@0
+Aug 20 17:10:52 leaf-k8s-worker-2 watchfrr[38082]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 20 17:10:52 leaf-k8s-worker-2 watchfrr[38082]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 20 17:10:52 leaf-k8s-worker-2 watchfrr[38082]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 20 17:10:52 leaf-k8s-worker-2 watchfrr[38082]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38065]: Started watchfrr.
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38109]: Waiting for children to finish applying config...
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38116]: [38116|bgpd] sending configuration
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38124]: [38124|watchfrr] sending configuration
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38126]: [38126|staticd] sending configuration
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38110]: [38110|zebra] sending configuration
+Aug 20 17:10:52 leaf-k8s-worker-2 bgpd[2285]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38116]: [38116|bgpd] done
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38124]: [38124|watchfrr] done
+Aug 20 17:10:52 leaf-k8s-worker-2 staticd[2328]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38126]: [38126|staticd] done
+Aug 20 17:10:52 leaf-k8s-worker-2 zebra[2227]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38110]: [38110|zebra] done
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38133]: Waiting for children to finish applying config...
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38140]: [38140|bgpd] sending configuration
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38148]: [38148|watchfrr] sending configuration
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38150]: [38150|staticd] sending configuration
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38134]: [38134|zebra] sending configuration
+Aug 20 17:10:52 leaf-k8s-worker-2 bgpd[2285]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38140]: [38140|bgpd] done
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38148]: [38148|watchfrr] done
+Aug 20 17:10:52 leaf-k8s-worker-2 staticd[2328]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38150]: [38150|staticd] done
+Aug 20 17:10:52 leaf-k8s-worker-2 zebra[2227]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 17:10:52 leaf-k8s-worker-2 frrinit.sh[38134]: [38134|zebra] done
+Aug 20 17:10:52 leaf-k8s-worker-2 systemd[1]: Reloaded frr.service - FRRouting.

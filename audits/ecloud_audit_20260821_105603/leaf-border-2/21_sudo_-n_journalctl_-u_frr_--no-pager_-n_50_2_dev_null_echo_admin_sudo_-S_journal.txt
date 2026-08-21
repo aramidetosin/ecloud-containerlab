@@ -1,0 +1,51 @@
+
+Aug 20 10:23:45 leaf-border-2 bgpd[2234]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp3.100 in vrf tenant-k8s
+Aug 20 10:23:50 leaf-border-2 zebra[2183]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+Aug 20 10:23:50 leaf-border-2 zebra[2183]: [WPPMZ-G9797] if_zebra_speed_update: swp3.100 old speed: 0 new speed: 1000
+Aug 20 10:23:50 leaf-border-2 zebra[2183]: [WPPMZ-G9797] if_zebra_speed_update: swp3.200 old speed: 0 new speed: 1000
+Aug 21 05:56:22 leaf-border-2 systemd[1]: Reloading frr.service - FRRouting...
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28532]: Stopping watchfrr, pid 2099, cnt 1200 ....
+Aug 21 05:56:22 leaf-border-2 watchfrr[2099]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 21 05:56:22 leaf-border-2 watchfrr[2099]: [NG1AJ-FP2TQ] Terminating on signal
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28532]: Stopped watchfrr.
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28532]: Starting watchfrr with command: '   /usr/lib/frr/watchfrr  -d  -F datacenter   zebra bgpd staticd'.
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [T83RR-8SM5G] watchfrr 8.4.3 starting: vty@0
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 21 05:56:22 leaf-border-2 watchfrr[28549]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28532]: Started watchfrr.
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28582]: Waiting for children to finish applying config...
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: [28589|bgpd] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28597]: [28597|watchfrr] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28599]: [28599|staticd] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28583]: [28583|zebra] sending configuration
+Aug 21 05:56:22 leaf-border-2 bgpd[2234]: [YCCZ5-BCH28][EC 33554466] 0: Failed to create L2VNI 50001, it is configured as L3VNI
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: % Failed to create VNI
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: line 125: % Unknown command[3]: router bgp 65114
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: line 126: % Unknown command[3]:  address-family l2vpn evpn
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: line 127: % Unknown command[3]:   vni 50001
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28589]: line 128: % Unknown command[3]:    route-target import 65000:50001
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28597]: [28597|watchfrr] done
+Aug 21 05:56:22 leaf-border-2 staticd[2295]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28599]: [28599|staticd] done
+Aug 21 05:56:22 leaf-border-2 zebra[2183]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28583]: [28583|zebra] done
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28606]: Waiting for children to finish applying config...
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: [28613|bgpd] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28621]: [28621|watchfrr] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28623]: [28623|staticd] sending configuration
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28607]: [28607|zebra] sending configuration
+Aug 21 05:56:22 leaf-border-2 bgpd[2234]: [YCCZ5-BCH28][EC 33554466] 0: Failed to create L2VNI 50001, it is configured as L3VNI
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: % Failed to create VNI
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: line 113: % Unknown command[3]: router bgp 65114
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: line 114: % Unknown command[3]:  address-family l2vpn evpn
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: line 115: % Unknown command[3]:   vni 50001
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28613]: line 116: % Unknown command[3]:    route-target import 65000:50001
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28621]: [28621|watchfrr] done
+Aug 21 05:56:22 leaf-border-2 staticd[2295]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28623]: [28623|staticd] done
+Aug 21 05:56:22 leaf-border-2 zebra[2183]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 21 05:56:22 leaf-border-2 frrinit.sh[28607]: [28607|zebra] done
+Aug 21 05:56:22 leaf-border-2 systemd[1]: Reloaded frr.service - FRRouting.
+Aug 21 05:56:23 leaf-border-2 zebra[2183]: [R48QG-9REZ0][EC 4043309067] DPlane returned an invalid result code for attempt of installation of 41[if 16] into the kernel

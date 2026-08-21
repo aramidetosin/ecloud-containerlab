@@ -1,0 +1,8 @@
+
+default nhid 52 proto bgp metric 20 
+unreachable default metric 4278198272 
+10.167.30.0/24 nhid 52 proto bgp metric 20 
+10.167.30.10 nhid 52 proto bgp metric 20 
+10.168.30.0/24 dev vlan230 proto kernel scope link src 10.168.30.3 
+10.168.30.0/24 dev vlan230-v0 proto kernel scope link src 10.168.30.1 metric 1024 
+127.0.0.0/8 dev tenant-svc proto kernel scope link src 127.0.0.1 

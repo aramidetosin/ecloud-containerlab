@@ -1,0 +1,7 @@
+
+Interface:    swp1, via: LLDP, RID: 2, Time: 0 day, 20:32:37
+    SysName:      dc2-spine-1
+    PortDescr:    swp1
+Interface:    swp2, via: LLDP, RID: 1, Time: 0 day, 20:32:41
+    SysName:      dc2-spine-2
+    PortDescr:    swp1

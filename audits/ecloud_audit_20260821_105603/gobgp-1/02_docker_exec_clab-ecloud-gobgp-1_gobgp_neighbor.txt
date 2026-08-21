@@ -1,0 +1,4 @@
+Peer           AS  Up/Down State       |#Received  Accepted
+10.201.20.1 65400 20:32:45 Establ      |       18        18
+10.201.20.5 65400 20:32:46 Establ      |       18        18
+

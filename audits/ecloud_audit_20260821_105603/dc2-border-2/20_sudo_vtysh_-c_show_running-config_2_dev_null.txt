@@ -1,0 +1,92 @@
+
+Building configuration...
+
+Current configuration:
+!
+frr version 8.4.3
+frr defaults datacenter
+hostname dc2-border-2
+log syslog informational
+service integrated-vtysh-config
+!
+vrf tenant-k8s
+ vni 50101
+exit-vrf
+!
+vrf tenant-svc
+ vni 50102
+exit-vrf
+!
+router bgp 65213
+ bgp router-id 10.2.0.16
+ neighbor swp1 interface remote-as external
+ neighbor swp1 advertisement-interval 0
+ neighbor swp1 timers 3 9
+ neighbor swp1 timers connect 10
+ neighbor swp2 interface remote-as external
+ neighbor swp2 advertisement-interval 0
+ neighbor swp2 timers 3 9
+ neighbor swp2 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  neighbor swp1 allowas-in 1
+  neighbor swp2 allowas-in 1
+  maximum-paths 64
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  neighbor swp1 activate
+  neighbor swp1 allowas-in 1
+  neighbor swp2 activate
+  neighbor swp2 allowas-in 1
+  advertise-all-vni
+ exit-address-family
+exit
+!
+router bgp 65213 vrf tenant-svc
+ bgp router-id 10.2.0.16
+ neighbor swp3.200 interface remote-as external
+ neighbor swp3.200 advertisement-interval 0
+ neighbor swp3.200 timers 1 3
+ neighbor swp3.200 timers connect 10
+ neighbor swp4.200 interface remote-as external
+ neighbor swp4.200 advertisement-interval 0
+ neighbor swp4.200 timers 1 3
+ neighbor swp4.200 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  maximum-paths 4
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  advertise ipv4 unicast
+ exit-address-family
+exit
+!
+router bgp 65213 vrf tenant-k8s
+ bgp router-id 10.2.0.16
+ neighbor swp3.100 interface remote-as external
+ neighbor swp3.100 advertisement-interval 0
+ neighbor swp3.100 timers 1 3
+ neighbor swp3.100 timers connect 10
+ neighbor swp4.100 interface remote-as external
+ neighbor swp4.100 advertisement-interval 0
+ neighbor swp4.100 timers 1 3
+ neighbor swp4.100 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  maximum-paths 4
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  advertise ipv4 unicast
+ exit-address-family
+exit
+!
+end

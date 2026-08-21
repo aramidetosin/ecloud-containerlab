@@ -1,0 +1,29 @@
+
+10.2.0.16 dev vlan3101_l3 lladdr 0c:00:07:c2:a9:c8 extern_learn NOARP proto zebra 
+10.0.0.2 dev eth0 lladdr 52:55:0a:00:00:02 REACHABLE 
+169.254.0.1 dev swp2 lladdr aa:c1:ab:5a:9b:af PERMANENT proto zebra 
+10.168.10.22 dev vlan210 lladdr 50:00:00:21:00:01 REACHABLE proto zebra 
+10.168.10.11 dev vlan210 lladdr 50:00:00:1f:00:01 REACHABLE proto zebra 
+10.168.10.22 dev vlan210-v0 lladdr 50:00:00:21:00:01 STALE 
+10.168.10.23 dev vlan210 lladdr 50:00:00:22:00:01 REACHABLE proto zebra 
+10.168.10.11 dev vlan210-v0 lladdr 50:00:00:1f:00:01 STALE 
+169.254.0.1 dev swp1 lladdr aa:c1:ab:4c:8b:5b PERMANENT proto zebra 
+10.2.0.11 dev vxlan99 lladdr 0c:00:73:13:c2:bf extern_learn NOARP proto zebra 
+10.2.0.15 dev vxlan99 lladdr 0c:00:25:72:c3:92 extern_learn NOARP proto zebra 
+10.2.0.11 dev vlan3101_l3 lladdr 0c:00:73:13:c2:bf extern_learn NOARP proto zebra 
+10.2.0.15 dev vlan3101_l3 lladdr 0c:00:25:72:c3:92 extern_learn NOARP proto zebra 
+10.168.10.21 dev vlan210 lladdr 50:00:00:20:00:01 REACHABLE proto zebra 
+10.0.0.3 dev eth0 lladdr 52:55:0a:00:00:03 REACHABLE 
+10.2.0.16 dev vxlan99 lladdr 0c:00:07:c2:a9:c8 extern_learn NOARP proto zebra 
+10.168.10.21 dev vlan210-v0 lladdr 50:00:00:20:00:01 STALE 
+fe80::5200:ff:fe22:1 dev vlan210 lladdr 50:00:00:22:00:01 REACHABLE proto zebra 
+fe80::5200:ff:fe1f:1 dev vlan210 lladdr 50:00:00:1f:00:01 REACHABLE proto zebra 
+fe80::5200:ff:fe21:1 dev vlan210-v0 lladdr 50:00:00:21:00:01 STALE 
+fe80::a8c1:abff:fe4c:8b5b dev swp1 lladdr aa:c1:ab:4c:8b:5b router REACHABLE 
+fe80::5200:ff:fe20:1 dev vlan210 lladdr 50:00:00:20:00:01 REACHABLE proto zebra 
+fe80::5200:ff:fe22:1 dev vlan210-v0 lladdr 50:00:00:22:00:01 STALE 
+fe80::5200:ff:fe1f:1 dev vlan210-v0 lladdr 50:00:00:1f:00:01 STALE 
+fe80::5200:ff:fe21:1 dev vlan210 lladdr 50:00:00:21:00:01 REACHABLE proto zebra 
+fe80::a8c1:abff:fe5a:9baf dev swp2 lladdr aa:c1:ab:5a:9b:af router REACHABLE 
+fe80::2 dev eth0 lladdr 52:56:00:00:00:02 router STALE 
+fe80::5200:ff:fe20:1 dev vlan210-v0 lladdr 50:00:00:20:00:01 STALE 

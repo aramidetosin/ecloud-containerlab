@@ -1,0 +1,8 @@
+
+port              vlan-id  
+vxlan99           3001
+                  3002
+br_l3vni          1 PVID Egress Untagged
+                  3001
+                  3002
+br_default        1 PVID Egress Untagged

@@ -1,0 +1,25 @@
+
+Interface:    swp1, via: LLDP, RID: 1, Time: 0 day, 20:32:26
+    SysName:      leaf-k8s-master-1
+    PortDescr:    swp1
+Interface:    swp2, via: LLDP, RID: 2, Time: 0 day, 20:32:28
+    SysName:      leaf-k8s-master-2
+    PortDescr:    swp1
+Interface:    swp3, via: LLDP, RID: 3, Time: 0 day, 20:32:28
+    SysName:      leaf-k8s-worker-1
+    PortDescr:    swp1
+Interface:    swp4, via: LLDP, RID: 5, Time: 0 day, 20:32:28
+    SysName:      leaf-k8s-worker-2
+    PortDescr:    swp1
+Interface:    swp5, via: LLDP, RID: 4, Time: 0 day, 20:32:28
+    SysName:      leaf-service-1
+    PortDescr:    swp1
+Interface:    swp6, via: LLDP, RID: 7, Time: 0 day, 20:32:28
+    SysName:      leaf-service-2
+    PortDescr:    swp1
+Interface:    swp7, via: LLDP, RID: 6, Time: 0 day, 20:32:27
+    SysName:      leaf-border-1
+    PortDescr:    swp1
+Interface:    swp8, via: LLDP, RID: 8, Time: 0 day, 20:32:28
+    SysName:      leaf-border-2
+    PortDescr:    swp1

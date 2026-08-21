@@ -1,0 +1,114 @@
+
+Building configuration...
+
+Current configuration:
+!
+frr version 8.4.3
+frr defaults datacenter
+hostname br-agg-sw-2
+log syslog informational
+log timestamp precision 6
+service integrated-vtysh-config
+!
+router bgp 65400 vrf tenant-k8s
+ bgp router-id 10.201.255.2
+ neighbor swp1.100 interface remote-as external
+ neighbor swp1.100 advertisement-interval 0
+ neighbor swp1.100 timers 1 3
+ neighbor swp1.100 timers connect 10
+ neighbor swp2.100 interface remote-as external
+ neighbor swp2.100 advertisement-interval 0
+ neighbor swp2.100 timers 1 3
+ neighbor swp2.100 timers connect 10
+ neighbor swp5.100 interface remote-as external
+ neighbor swp5.100 advertisement-interval 0
+ neighbor swp5.100 timers 1 3
+ neighbor swp5.100 timers connect 10
+ neighbor swp6.100 interface remote-as external
+ neighbor swp6.100 advertisement-interval 0
+ neighbor swp6.100 timers 1 3
+ neighbor swp6.100 timers connect 10
+ neighbor 10.201.0.3 remote-as 65300
+ neighbor 10.201.0.3 advertisement-interval 0
+ neighbor 10.201.0.3 timers 3 9
+ neighbor 10.201.0.3 timers connect 10
+ neighbor 10.201.0.7 remote-as 65300
+ neighbor 10.201.0.7 advertisement-interval 0
+ neighbor 10.201.0.7 timers 3 9
+ neighbor 10.201.0.7 timers connect 10
+ neighbor 10.201.20.6 remote-as 65400
+ neighbor 10.201.20.6 advertisement-interval 0
+ neighbor 10.201.20.6 timers 3 9
+ neighbor 10.201.20.6 timers connect 10
+ neighbor 10.201.20.14 remote-as 65400
+ neighbor 10.201.20.14 advertisement-interval 0
+ neighbor 10.201.20.14 timers 3 9
+ neighbor 10.201.20.14 timers connect 10
+ !
+ address-family ipv4 unicast
+  network 10.201.20.4/30
+  network 10.201.20.12/30
+  neighbor swp1.100 route-map RM-DENY-ANYCAST-OUT out
+  neighbor swp2.100 route-map RM-DENY-ANYCAST-OUT out
+  neighbor swp5.100 route-map RM-DENY-ANYCAST-OUT out
+  neighbor swp6.100 route-map RM-DENY-ANYCAST-OUT out
+  neighbor 10.201.0.3 route-map PREFER-FWPRI in
+  maximum-paths 4
+  maximum-paths ibgp 64
+ exit-address-family
+exit
+!
+router bgp 65400 vrf tenant-svc
+ bgp router-id 10.201.255.2
+ neighbor swp1.200 interface remote-as external
+ neighbor swp1.200 advertisement-interval 0
+ neighbor swp1.200 timers 1 3
+ neighbor swp1.200 timers connect 10
+ neighbor swp2.200 interface remote-as external
+ neighbor swp2.200 advertisement-interval 0
+ neighbor swp2.200 timers 1 3
+ neighbor swp2.200 timers connect 10
+ neighbor swp5.200 interface remote-as external
+ neighbor swp5.200 advertisement-interval 0
+ neighbor swp5.200 timers 1 3
+ neighbor swp5.200 timers connect 10
+ neighbor swp6.200 interface remote-as external
+ neighbor swp6.200 advertisement-interval 0
+ neighbor swp6.200 timers 1 3
+ neighbor swp6.200 timers connect 10
+ neighbor 10.201.1.3 remote-as 65300
+ neighbor 10.201.1.3 advertisement-interval 0
+ neighbor 10.201.1.3 timers 3 9
+ neighbor 10.201.1.3 timers connect 10
+ neighbor 10.201.1.7 remote-as 65300
+ neighbor 10.201.1.7 advertisement-interval 0
+ neighbor 10.201.1.7 timers 3 9
+ neighbor 10.201.1.7 timers connect 10
+ !
+ address-family ipv4 unicast
+  neighbor 10.201.1.3 route-map PREFER-FWPRI in
+  maximum-paths 4
+  maximum-paths ibgp 64
+ exit-address-family
+exit
+!
+ip prefix-list ANYCAST-VIP seq 10 permit 192.168.202.0/32
+ip prefix-list PL-ANYCAST-VIP seq 10 permit 192.168.202.0/32
+ip prefix-list PL-ANYCAST-VIP seq 20 permit 192.168.202.3/32
+ip prefix-list PL-ANYCAST-VIP seq 30 permit 192.168.202.4/32
+!
+route-map ANYCAST-STEER permit 10
+ match ip address prefix-list ANYCAST-VIP
+ set local-preference 200
+!
+route-map ANYCAST-STEER permit 20
+!
+route-map PREFER-FWPRI permit 10
+ set local-preference 200
+!
+route-map RM-DENY-ANYCAST-OUT deny 10
+ match ip address prefix-list PL-ANYCAST-VIP
+!
+route-map RM-DENY-ANYCAST-OUT permit 20
+!
+end

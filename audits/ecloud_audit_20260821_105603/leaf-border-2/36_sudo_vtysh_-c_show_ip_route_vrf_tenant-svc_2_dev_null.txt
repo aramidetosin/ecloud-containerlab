@@ -1,0 +1,20 @@
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-svc:
+B>* 0.0.0.0/0 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.200, weight 1, 00:59:56
+  *                  via fe80::a8c1:abff:fe82:c109, swp3.200, weight 1, 00:59:56
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:43
+B>* 10.167.30.0/24 [20/0] via 10.0.0.15, vlan3002_l3 onlink, weight 1, 00:59:55
+  *                       via 10.0.0.16, vlan3002_l3 onlink, weight 1, 00:59:55
+B>* 10.167.30.10/32 [20/0] via 10.0.0.15, vlan3002_l3 onlink, weight 1, 00:59:55
+  *                        via 10.0.0.16, vlan3002_l3 onlink, weight 1, 00:59:55
+B>* 10.168.30.0/24 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.200, weight 1, 00:59:49
+  *                       via fe80::a8c1:abff:fe82:c109, swp3.200, weight 1, 00:59:49
+B>* 10.168.30.10/32 [20/0] via fe80::a8c1:abff:fe12:7cca, swp4.200, weight 1, 00:59:49
+  *                        via fe80::a8c1:abff:fe82:c109, swp3.200, weight 1, 00:59:49

@@ -1,0 +1,21 @@
+
+                          operational  applied  
+------------------------  -----------  ---------
+enable                    on           on       
+mac-learning              off          off      
+port                      4789         4789     
+arp-nd-suppress           on           on       
+mtu                       9216         9216     
+flooding                                        
+  enable                  on           on       
+  [head-end-replication]  evpn         evpn     
+source                                          
+  address                 10.0.0.18    10.0.0.18
+mlag                                            
+  shared-address          none         none     
+encapsulation                                   
+  dscp                                          
+    action                derive       derive   
+decapsulation                                   
+  dscp                                          
+    action                derive       derive   

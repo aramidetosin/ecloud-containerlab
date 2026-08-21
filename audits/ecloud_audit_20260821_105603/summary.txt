@@ -1,0 +1,169 @@
+=== spine-1 (cumulus spine) ===
+  BGP underlay ipv4: 8 Established
+  BGP overlay evpn: 8 Established
+
+=== spine-2 (cumulus spine) ===
+  BGP underlay ipv4: 8 Established
+  BGP overlay evpn: 8 Established
+
+=== leaf-k8s-master-1 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 3 Established
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 5
+
+=== leaf-k8s-master-2 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 3 Established
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 5
+
+=== leaf-k8s-worker-1 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 3 Established
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 5
+
+=== leaf-k8s-worker-2 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 3 Established
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 5
+
+=== leaf-service-1 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 3
+
+=== leaf-service-2 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 3
+
+=== leaf-border-1 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 2 Established
+  BGP vrf tenant-svc: 2 Established
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 0 L2, 2 L3
+  Remote VTEP next-hops: 7
+
+=== leaf-border-2 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 2 Established
+  BGP vrf tenant-svc: 2 Established
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 0 L2, 2 L3
+  Remote VTEP next-hops: 7
+
+=== dc2-spine-1 (cumulus spine) ===
+  BGP underlay ipv4: 6 Established
+  BGP overlay evpn: 6 Established
+
+=== dc2-spine-2 (cumulus spine) ===
+  BGP underlay ipv4: 6 Established
+  BGP overlay evpn: 6 Established
+
+=== dc2-k8s-leaf-1 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 4 Established
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 3
+
+=== dc2-k8s-leaf-2 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 4 Established
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 3
+
+=== dc2-svc-leaf-1 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 3
+
+=== dc2-svc-leaf-2 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  VNIs: 1 L2, 1 L3
+  Remote VTEP next-hops: 3
+
+=== dc2-border-1 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 2 Established
+  BGP vrf tenant-svc: 2 Established
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 0 L2, 2 L3
+  Remote VTEP next-hops: 5
+
+=== dc2-border-2 (cumulus vtep) ===
+  BGP underlay ipv4: 2 Established
+  BGP overlay evpn: 2 Established
+  BGP vrf tenant-k8s: 2 Established
+  BGP vrf tenant-svc: 2 Established
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  VNIs: 0 L2, 2 L3
+  Remote VTEP next-hops: 5
+
+=== br-agg-sw-1 (cumulus spine) ===
+  BGP underlay ipv4: 0 Established
+  BGP overlay evpn: 0 Established
+  BGP vrf tenant-k8s: 8 Established
+  BGP vrf tenant-svc: 6 Established
+  (VRF-only BGP node - no default-VRF peering, as designed)
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+
+=== br-agg-sw-2 (cumulus spine) ===
+  BGP underlay ipv4: 0 Established
+  BGP overlay evpn: 0 Established
+  BGP vrf tenant-k8s: 8 Established
+  BGP vrf tenant-svc: 6 Established
+  (VRF-only BGP node - no default-VRF peering, as designed)
+  ECMP 10.167.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+  ECMP 10.168.10.0/24 (tenant-k8s): 2 next-hop(s) - OK
+
+=== fw-pri (paloalto) ===
+  HA: Active-Active / state active-primary
+  BGP peer agg1-k8s (AS 65400): Established
+  BGP peer agg2-k8s (AS 65400): Established
+  BGP peer agg1-svc (AS 65400): Established
+  BGP peer agg2-svc (AS 65400): Established
+
+=== fw-sec (paloalto) ===
+  HA: Active-Active / state active-secondary
+  BGP peer agg1-k8s (AS 65400): Established
+  BGP peer agg2-k8s (AS 65400): Established
+  BGP peer agg1-svc (AS 65400): Established
+  BGP peer agg2-svc (AS 65400): Established
+
+=== gobgp-1 (gobgp) ===
+  neighbor 10.201.20.1: OK
+  neighbor 10.201.20.5: OK
+
+=== gobgp-2 (gobgp) ===
+  neighbor 10.201.20.9: OK
+  neighbor 10.201.20.13: OK

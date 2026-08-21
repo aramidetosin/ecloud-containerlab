@@ -1,0 +1,26 @@
+
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             UP             10.0.0.15/24 fec0::e00:75ff:fe02:7d00/64 fe80::e00:75ff:fe02:7d00/64 
+swp1             UP             fe80::a8c1:abff:fedc:fb17/64 
+swp2             UP             fe80::a8c1:abff:fe12:7cca/64 
+swp3             UP             fe80::a8c1:abff:fe4c:5f4e/64 
+swp4             UP             fe80::a8c1:abff:fe65:1c9/64 
+swp5             UP             fe80::a8c1:abff:fecb:6b23/64 
+swp6             UP             fe80::a8c1:abff:fe7e:c5e4/64 
+swp7             UP             10.201.20.5/30 fe80::a8c1:abff:feb9:8c2f/64 
+swp8             UP             10.201.20.13/30 fe80::a8c1:abff:fe3c:4428/64 
+mgmt             UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp1.100@swp1    UP             fe80::a8c1:abff:fedc:fb17/64 
+tenant-k8s       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp2.100@swp2    UP             fe80::a8c1:abff:fe12:7cca/64 
+swp3.100@swp3    UP             10.201.0.2/31 fe80::a8c1:abff:fe4c:5f4e/64 
+swp4.100@swp4    UP             10.201.0.6/31 fe80::a8c1:abff:fe65:1c9/64 
+swp5.100@swp5    UP             fe80::a8c1:abff:fecb:6b23/64 
+swp6.100@swp6    UP             fe80::a8c1:abff:fe7e:c5e4/64 
+swp1.200@swp1    UP             fe80::a8c1:abff:fedc:fb17/64 
+tenant-svc       UP             127.0.0.1/8 127.0.1.1/8 ::1/128 
+swp2.200@swp2    UP             fe80::a8c1:abff:fe12:7cca/64 
+swp3.200@swp3    UP             10.201.1.2/31 fe80::a8c1:abff:fe4c:5f4e/64 
+swp4.200@swp4    UP             10.201.1.6/31 fe80::a8c1:abff:fe65:1c9/64 
+swp5.200@swp5    UP             fe80::a8c1:abff:fecb:6b23/64 
+swp6.200@swp6    UP             fe80::a8c1:abff:fe7e:c5e4/64 

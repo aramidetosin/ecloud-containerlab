@@ -1,0 +1,54 @@
+
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, A - Babel, D - SHARP, F - PBR, f - OpenFabric,
+       Z - FRR,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF tenant-k8s:
+B>* 0.0.0.0/0 [20/0] via 10.201.0.1, swp3.100, weight 1, 20:23:34
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 20:32:51
+B>* 10.167.10.0/24 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                       via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.167.10.11/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.167.10.12/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.167.10.13/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 12:36:17
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 12:36:17
+B>* 10.167.20.0/24 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 20:32:45
+  *                       via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 20:32:45
+B>* 10.167.20.11/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 13:53:29
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 13:53:29
+B>* 10.167.20.12/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.167.20.13/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                        via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 10.168.10.0/24 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:32:45
+  *                       via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:32:45
+B>* 10.168.10.11/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 00:59:54
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 00:59:54
+B>* 10.168.10.21/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:29:14
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:29:14
+B>* 10.168.10.22/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:29:03
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:29:03
+B>* 10.168.10.23/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:29:02
+  *                        via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:29:02
+C>* 10.201.0.0/31 is directly connected, swp3.100, 20:32:51
+C>* 10.201.0.4/31 is directly connected, swp4.100, 20:32:51
+C>* 10.201.20.0/30 is directly connected, swp7, 20:32:51
+C>* 10.201.20.8/30 is directly connected, swp8, 20:32:51
+B>  192.168.202.0/32 [200/0] via 192.168.202.1 (recursive), weight 1, 12:36:21
+  *                            via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 12:36:21
+  *                            via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 12:36:21
+B>* 192.168.202.1/32 [20/0] via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:00:07
+  *                         via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:00:07
+B>* 192.168.202.2/32 [20/0] via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 00:59:54
+  *                         via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 00:59:54
+B>  192.168.202.3/32 [200/0] via 192.168.202.1 (recursive), weight 1, 01:38:15
+  *                            via fe80::a8c1:abff:fe29:6b35, swp1.100, weight 1, 01:38:15
+  *                            via fe80::a8c1:abff:febe:899d, swp2.100, weight 1, 01:38:15
+B>  192.168.202.4/32 [200/0] via 192.168.202.2 (recursive), weight 1, 20:29:06
+  *                            via fe80::a8c1:abff:fe18:674d, swp6.100, weight 1, 20:29:06
+  *                            via fe80::a8c1:abff:fe6b:f1fb, swp5.100, weight 1, 20:29:06

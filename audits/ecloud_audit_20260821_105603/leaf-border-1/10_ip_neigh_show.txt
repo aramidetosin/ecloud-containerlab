@@ -1,0 +1,33 @@
+
+10.0.0.14 dev vxlan99 lladdr 0c:00:1b:c3:9e:42 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp4.100 lladdr aa:c1:ab:dc:fb:17 PERMANENT proto zebra 
+10.0.0.13 dev vxlan99 lladdr 0c:00:c2:98:18:c9 extern_learn NOARP proto zebra 
+10.0.0.3 dev eth0 lladdr 52:55:0a:00:00:03 REACHABLE 
+10.0.0.16 dev vlan3002_l3 lladdr 0c:00:6d:18:76:04 extern_learn NOARP proto zebra 
+10.0.0.18 dev vlan3001_l3 lladdr 0c:00:c3:af:c3:a0 extern_learn NOARP proto zebra 
+10.0.0.15 dev vlan3002_l3 lladdr 0c:00:c3:a2:c3:a2 extern_learn NOARP proto zebra 
+10.0.0.12 dev vlan3001_l3 lladdr 0c:00:0e:6b:6b:06 extern_learn NOARP proto zebra 
+10.0.0.18 dev vxlan99 lladdr 0c:00:c3:af:c3:a0 extern_learn NOARP proto zebra 
+10.0.0.11 dev vlan3001_l3 lladdr 0c:00:7c:44:c3:97 extern_learn NOARP proto zebra 
+10.0.0.12 dev vxlan99 lladdr 0c:00:0e:6b:6b:06 extern_learn NOARP proto zebra 
+10.0.0.11 dev vxlan99 lladdr 0c:00:7c:44:c3:97 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp3.200 lladdr aa:c1:ab:85:f0:b3 PERMANENT proto zebra 
+169.254.0.1 dev swp3.100 lladdr aa:c1:ab:85:f0:b3 PERMANENT proto zebra 
+169.254.0.1 dev swp2 lladdr aa:c1:ab:c2:bf:20 PERMANENT proto zebra 
+169.254.0.1 dev swp4.200 lladdr aa:c1:ab:dc:fb:17 PERMANENT proto zebra 
+10.0.0.16 dev vxlan99 lladdr 0c:00:6d:18:76:04 extern_learn NOARP proto zebra 
+10.0.0.15 dev vxlan99 lladdr 0c:00:c3:a2:c3:a2 extern_learn NOARP proto zebra 
+169.254.0.1 dev swp1 lladdr aa:c1:ab:9d:f9:4f PERMANENT proto zebra 
+10.0.0.2 dev eth0 lladdr 52:55:0a:00:00:02 REACHABLE 
+10.0.0.18 dev vlan3002_l3 lladdr 0c:00:c3:af:c3:a0 extern_learn NOARP proto zebra 
+10.0.0.14 dev vlan3001_l3 lladdr 0c:00:1b:c3:9e:42 extern_learn NOARP proto zebra 
+10.0.0.13 dev vlan3001_l3 lladdr 0c:00:c2:98:18:c9 extern_learn NOARP proto zebra 
+fe80::a8c1:abff:fedc:fb17 dev swp4 lladdr aa:c1:ab:dc:fb:17 router REACHABLE 
+fe80::a8c1:abff:fe85:f0b3 dev swp3.200 lladdr aa:c1:ab:85:f0:b3 router REACHABLE 
+fe80::a8c1:abff:fe85:f0b3 dev swp3.100 lladdr aa:c1:ab:85:f0:b3 router REACHABLE 
+fe80::a8c1:abff:fedc:fb17 dev swp4.100 lladdr aa:c1:ab:dc:fb:17 router REACHABLE 
+fe80::a8c1:abff:fec2:bf20 dev swp2 lladdr aa:c1:ab:c2:bf:20 router REACHABLE 
+fe80::a8c1:abff:fe85:f0b3 dev swp3 lladdr aa:c1:ab:85:f0:b3 router REACHABLE 
+fe80::2 dev eth0 lladdr 52:56:00:00:00:02 router STALE 
+fe80::a8c1:abff:fe9d:f94f dev swp1 lladdr aa:c1:ab:9d:f9:4f router REACHABLE 
+fe80::a8c1:abff:fedc:fb17 dev swp4.200 lladdr aa:c1:ab:dc:fb:17 router REACHABLE 

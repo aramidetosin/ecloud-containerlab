@@ -1,0 +1,13 @@
+
+Interface:    swp1, via: LLDP, RID: 3, Time: 0 day, 20:32:40
+    SysName:      dc2-spine-1
+    PortDescr:    swp5
+Interface:    swp2, via: LLDP, RID: 2, Time: 0 day, 20:32:44
+    SysName:      dc2-spine-2
+    PortDescr:    swp5
+Interface:    swp3, via: LLDP, RID: 4, Time: 0 day, 20:32:43
+    SysName:      br-agg-sw-1
+    PortDescr:    swp5
+Interface:    swp4, via: LLDP, RID: 1, Time: 0 day, 20:32:41
+    SysName:      br-agg-sw-2
+    PortDescr:    swp5

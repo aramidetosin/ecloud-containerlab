@@ -1,0 +1,7 @@
+Name export-anycast-only:
+    StatementName permit-anycast:
+      Conditions:
+        PrefixSet: any anycast 
+      Actions:
+         accept
+

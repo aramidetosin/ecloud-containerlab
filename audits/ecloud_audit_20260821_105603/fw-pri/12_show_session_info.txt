@@ -1,0 +1,77 @@
+
+
+target-dp:                                       *.dp0
+--------------------------------------------------------------------------------
+Number of sessions supported:                    1100000
+Number of allocated sessions:                    54
+Number of active TCP sessions:                   8
+Number of active UDP sessions:                   46
+Number of active ICMP sessions:                  0
+Number of active GTPc sessions:                  0
+Number of active HTTP2-5gc sessions:             0
+Number of active GTPu sessions:                  0
+Number of pending GTPu sessions:                 0
+Number of active BCAST sessions:                 0
+Number of active MCAST sessions:                 0
+Number of active predict sessions:               0
+Number of active SCTP sessions:                  0
+Number of active SCTP associations:              0
+Number of active PFCP sessions:                  0
+Number of active IMSI sessions:                  0
+Session table utilization:                       0%
+Number of sessions created since bootup:         105083
+Packet rate:                                     20/s
+Throughput:                                      12 kbps
+New connection establish rate:                   2 cps
+--------------------------------------------------------------------------------
+Session timeout
+  TCP default timeout:                           3600 secs
+  TCP session timeout before SYN-ACK received:      5 secs
+  TCP session timeout before 3-way handshaking:    10 secs
+  TCP half-closed session timeout:                 30 secs
+  TCP session timeout in TIME_WAIT:                15 secs
+  TCP session delayed ack timeout:                 25 millisecs
+  TCP session timeout for unverified RST:          30 secs
+  UDP default timeout:                             30 secs
+  ICMP default timeout:                             6 secs
+  SCTP default timeout:                          3600 secs
+  SCTP timeout before INIT-ACK received:            5 secs
+  SCTP timeout before COOKIE received:             60 secs
+  SCTP timeout before SHUTDOWN received:           30 secs
+  5GC delete timeout:                              15 secs
+  other IP default timeout:                        30 secs
+  Captive Portal session timeout:                  30 secs
+  Session timeout in discard state:
+    TCP: 90 secs, UDP: 60 secs, SCTP: 60 secs, other IP protocols: 60 secs
+--------------------------------------------------------------------------------
+Session accelerated aging:                       True
+  Accelerated aging threshold:                   80% of utilization
+  Scaling factor:                                2 X
+--------------------------------------------------------------------------------
+Session setup
+  TCP - reject non-SYN first packet:             True
+  Hardware session offloading:                   False
+  Software Cut Through:                          False
+  Run-to-completion mode:                        True
+  Tunnel acceleration:                           True
+  IPv6 firewalling:                              True
+  Strict TCP/IP checksum:                        True
+  Strict TCP RST sequence:                       True
+  Reject TCP small initial window:               False
+  Reject TCP SYN with different seq/options:     True
+  Teardown session if forward zone changes:      False
+  Do not refresh discard sessions:               False
+  ICMP Unreachable Packet Rate:                  0 pps
+--------------------------------------------------------------------------------
+Application trickling scan parameters:
+  Timeout to determine application trickling:    10 secs
+  Resource utilization threshold to start scan:  80%
+  Scan scaling factor over regular aging:        8
+--------------------------------------------------------------------------------
+Session behavior when resource limit is reached: drop
+--------------------------------------------------------------------------------
+Pcap token bucket rate                         : 10485760
+--------------------------------------------------------------------------------
+Max pending queued mcast packets per session   : 0
+--------------------------------------------------------------------------------
+

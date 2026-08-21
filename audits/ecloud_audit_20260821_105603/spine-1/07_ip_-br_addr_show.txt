@@ -1,0 +1,12 @@
+
+lo               UNKNOWN        127.0.0.1/8 10.0.0.1/32 ::1/128 
+eth0             UP             10.0.0.15/24 fec0::e00:3aff:fe21:a300/64 fe80::e00:3aff:fe21:a300/64 
+swp1             UP             fe80::a8c1:abff:fea9:a4b9/64 
+swp2             UP             fe80::a8c1:abff:feae:b544/64 
+swp3             UP             fe80::a8c1:abff:fea1:8916/64 
+swp4             UP             fe80::a8c1:abff:fe3d:d788/64 
+swp5             UP             fe80::a8c1:abff:fe13:4d5b/64 
+swp6             UP             fe80::a8c1:abff:fe88:d6c4/64 
+swp7             UP             fe80::a8c1:abff:fe9d:f94f/64 
+swp8             UP             fe80::a8c1:abff:fe3d:20d/64 
+mgmt             UP             127.0.0.1/8 127.0.1.1/8 ::1/128 

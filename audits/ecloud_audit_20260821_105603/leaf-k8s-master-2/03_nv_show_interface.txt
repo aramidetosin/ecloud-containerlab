@@ -1,0 +1,32 @@
+
+Interface    Admin Status  Oper Status  Speed  MTU    Type      Remote Host  Remote Port  Summary                                 
+-----------  ------------  -----------  -----  -----  --------  -----------  -----------  ----------------------------------------
+bond1        up            up           1G     9216   bond                                                                        
+bond2        up            up           1G     9216   bond                                                                        
+bond3        up            up           1G     9216   bond                                                                        
+br_default   up            up                  9216   bridge                              IP Address:   fe80::e00:eff:fe6b:6b06/64
+br_l3vni     up            up                  9216   bridge                              IP Address:   fe80::e00:eff:fe6b:6b06/64
+eth0         up            up           1G     1500   eth                                 IP Address:                 10.0.0.15/24
+                                                                                          IP Address:  fe80::e00:5bff:fedd:3700/64
+                                                                                          IP Address:  fec0::e00:5bff:fedd:3700/64
+lo           up            unknown             65536  loopback                            IP Address:                 10.0.0.12/32
+                                                                                          IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                      ::1/128
+mgmt         up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+swp1         up            up           1G     9216   swp       spine-1      swp2         IP Address: fe80::a8c1:abff:fe68:7652/64
+swp2         up            up           1G     9216   swp       spine-2      swp2         IP Address: fe80::a8c1:abff:fe5a:c358/64
+swp3         up            up           1G     9216   swp                                                                         
+swp4         up            up           1G     9216   swp                                                                         
+swp5         up            up           1G     9216   swp                                                                         
+tenant-k8s   up            up                  65575  vrf                                 IP Address:                  127.0.0.1/8
+                                                                                          IP Address:                  127.0.1.1/8
+                                                                                          IP Address:                      ::1/128
+vlan110      up            up                  9216   svi                                 IP Address:               10.167.10.3/24
+                                                                                          IP Address:   fe80::e00:eff:fe6b:6b06/64
+vlan110-v0   up            up                  9216   svi                                 IP Address:               10.167.10.1/24
+                                                                                          IP Address:   fe80::200:5eff:fe00:110/64
+vlan3001_l3  up            up                  9216   svi                                 IP Address:   fe80::e00:eff:fe6b:6b06/64
+vxlan48      up            unknown             9216   vxlan                               IP Address: fe80::38c3:6eff:fe62:a752/64
+vxlan99      up            unknown             9216   vxlan                               IP Address:  fe80::d0b2:57ff:fe53:5ed/64

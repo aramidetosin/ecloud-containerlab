@@ -1,0 +1,31 @@
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+br_l3vni        up      default         
+lo              up      default         10.2.0.15/32
+swp1            up      default         
+swp2            up      default         
+swp3            up      default         
+swp4            up      default         
+vxlan99         up      default         
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+eth0            up      mgmt            10.0.0.15/24
+                                        + fec0::e00:1ff:fe88:5700/64
+mgmt            up      mgmt            
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+swp3.100        up      tenant-k8s      
+swp4.100        up      tenant-k8s      
+tenant-k8s      up      tenant-k8s      
+vlan3101_l3     up      tenant-k8s      
+
+Interface       Status  VRF             Addresses
+---------       ------  ---             ---------
+swp3.200        up      tenant-svc      
+swp4.200        up      tenant-svc      
+tenant-svc      up      tenant-svc      
+vlan3102_l3     up      tenant-svc      
+

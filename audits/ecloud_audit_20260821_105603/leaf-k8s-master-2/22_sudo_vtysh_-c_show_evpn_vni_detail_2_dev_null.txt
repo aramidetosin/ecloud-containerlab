@@ -1,0 +1,33 @@
+
+VNI: 10110
+ Type: L2
+ Vlan: 110
+ Bridge: br_default
+ Tenant VRF: tenant-k8s
+ VxLAN interface: vxlan48
+ VxLAN ifIndex: 9
+ SVI interface: vlan110
+ SVI ifIndex: 14
+ Local VTEP IP: 10.0.0.12
+ Mcast group: 0.0.0.0
+ Remote VTEPs for this VNI:
+  10.0.0.11 flood: HER
+ Number of MACs (local and remote) known for this VNI: 5
+ Number of ARPs (IPv4 and IPv6, local and remote) known for this VNI: 14
+ Advertise-gw-macip: No
+ Advertise-svi-macip: No
+
+VNI: 50001
+  Type: L3
+  Tenant VRF: tenant-k8s
+  Vlan: 3001
+  Bridge: br_l3vni
+  Local Vtep Ip: 10.0.0.12
+  Vxlan-Intf: vxlan99
+  SVI-If: vlan3001_l3
+  State: Up
+  VNI Filter: none
+  System MAC: 0c:00:0e:6b:6b:06
+  Router MAC: 0c:00:0e:6b:6b:06
+  L2 VNIs: 10110 
+

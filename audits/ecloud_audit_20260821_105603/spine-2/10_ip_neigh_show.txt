@@ -1,0 +1,20 @@
+
+169.254.0.1 dev swp2 lladdr aa:c1:ab:5a:c3:58 PERMANENT proto zebra 
+10.0.0.3 dev eth0 lladdr 52:55:0a:00:00:03 REACHABLE 
+169.254.0.1 dev swp7 lladdr aa:c1:ab:ff:c5:90 PERMANENT proto zebra 
+169.254.0.1 dev swp6 lladdr aa:c1:ab:a1:3d:76 PERMANENT proto zebra 
+169.254.0.1 dev swp8 lladdr aa:c1:ab:3c:af:2d PERMANENT proto zebra 
+169.254.0.1 dev swp3 lladdr aa:c1:ab:03:43:d6 PERMANENT proto zebra 
+10.0.0.2 dev eth0 lladdr 52:55:0a:00:00:02 REACHABLE 
+169.254.0.1 dev swp4 lladdr aa:c1:ab:c3:d5:d5 PERMANENT proto zebra 
+169.254.0.1 dev swp1 lladdr aa:c1:ab:9b:38:b1 PERMANENT proto zebra 
+169.254.0.1 dev swp5 lladdr aa:c1:ab:6c:03:79 PERMANENT proto zebra 
+fe80::a8c1:abff:fea1:3d76 dev swp6 lladdr aa:c1:ab:a1:3d:76 router REACHABLE 
+fe80::a8c1:abff:fe9b:38b1 dev swp1 lladdr aa:c1:ab:9b:38:b1 router REACHABLE 
+fe80::2 dev eth0 lladdr 52:56:00:00:00:02 router STALE 
+fe80::a8c1:abff:fe03:43d6 dev swp3 lladdr aa:c1:ab:03:43:d6 router REACHABLE 
+fe80::a8c1:abff:fe5a:c358 dev swp2 lladdr aa:c1:ab:5a:c3:58 router REACHABLE 
+fe80::a8c1:abff:fe3c:af2d dev swp8 lladdr aa:c1:ab:3c:af:2d router REACHABLE 
+fe80::a8c1:abff:feff:c590 dev swp7 lladdr aa:c1:ab:ff:c5:90 router REACHABLE 
+fe80::a8c1:abff:fe6c:379 dev swp5 lladdr aa:c1:ab:6c:03:79 router REACHABLE 
+fe80::a8c1:abff:fec3:d5d5 dev swp4 lladdr aa:c1:ab:c3:d5:d5 router REACHABLE 

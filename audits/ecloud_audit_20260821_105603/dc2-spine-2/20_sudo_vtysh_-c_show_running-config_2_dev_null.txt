@@ -1,0 +1,57 @@
+
+Building configuration...
+
+Current configuration:
+!
+frr version 8.4.3
+frr defaults datacenter
+hostname dc2-spine-2
+log syslog informational
+log timestamp precision 6
+service integrated-vtysh-config
+!
+router bgp 65200
+ bgp router-id 10.2.0.2
+ neighbor swp1 interface remote-as external
+ neighbor swp1 advertisement-interval 0
+ neighbor swp1 timers 3 9
+ neighbor swp1 timers connect 10
+ neighbor swp2 interface remote-as external
+ neighbor swp2 advertisement-interval 0
+ neighbor swp2 timers 3 9
+ neighbor swp2 timers connect 10
+ neighbor swp3 interface remote-as external
+ neighbor swp3 advertisement-interval 0
+ neighbor swp3 timers 3 9
+ neighbor swp3 timers connect 10
+ neighbor swp4 interface remote-as external
+ neighbor swp4 advertisement-interval 0
+ neighbor swp4 timers 3 9
+ neighbor swp4 timers connect 10
+ neighbor swp5 interface remote-as external
+ neighbor swp5 advertisement-interval 0
+ neighbor swp5 timers 3 9
+ neighbor swp5 timers connect 10
+ neighbor swp6 interface remote-as external
+ neighbor swp6 advertisement-interval 0
+ neighbor swp6 timers 3 9
+ neighbor swp6 timers connect 10
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  maximum-paths 64
+  maximum-paths ibgp 64
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  neighbor swp1 activate
+  neighbor swp2 activate
+  neighbor swp3 activate
+  neighbor swp4 activate
+  neighbor swp5 activate
+  neighbor swp6 activate
+  advertise-all-vni
+ exit-address-family
+exit
+!
+end

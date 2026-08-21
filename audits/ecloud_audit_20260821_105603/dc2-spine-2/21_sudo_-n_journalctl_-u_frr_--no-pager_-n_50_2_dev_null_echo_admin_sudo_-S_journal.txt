@@ -1,0 +1,52 @@
+
+Aug 20 09:28:43 dc2-spine-2 bgpd[2157]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp3 in vrf default
+Aug 20 09:28:43 dc2-spine-2 bgpd[2157]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp3 in vrf default
+Aug 20 09:28:43 dc2-spine-2 bgpd[2157]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2 in vrf default
+Aug 20 09:28:43 dc2-spine-2 bgpd[2157]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp2 in vrf default
+Aug 20 09:28:55 dc2-spine-2 zebra[2105]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+-- Boot a9db965cc8d144c5a6d6a882997c5ead --
+Aug 20 10:23:37 dc2-spine-2 systemd[1]: Starting frr.service - FRRouting...
+Aug 20 10:23:37 dc2-spine-2 frrinit.sh[1979]: Starting watchfrr with command: '   /usr/lib/frr/watchfrr  -d  -F datacenter   zebra bgpd staticd'.
+Aug 20 10:23:37 dc2-spine-2 watchfrr[2022]: [T83RR-8SM5G] watchfrr 8.4.3 starting: vty@0
+Aug 20 10:23:37 dc2-spine-2 watchfrr[2022]: [ZCJ3S-SPH5S] zebra state -> down : initial connection attempt failed
+Aug 20 10:23:37 dc2-spine-2 watchfrr[2022]: [ZCJ3S-SPH5S] bgpd state -> down : initial connection attempt failed
+Aug 20 10:23:37 dc2-spine-2 watchfrr[2022]: [ZCJ3S-SPH5S] staticd state -> down : initial connection attempt failed
+Aug 20 10:23:37 dc2-spine-2 watchfrr[2022]: [YFT0P-5Q5YX] Forked background command [pid 2024]: /usr/lib/frr/watchfrr.sh restart all
+Aug 20 10:23:37 dc2-spine-2 watchfrr.sh[2046]: Cannot stop zebra: pid file not found
+Aug 20 10:23:38 dc2-spine-2 bgpd[2146]: [J7484-2SYXF][EC 33554465] swp1 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-2 bgpd[2146]: [J7484-2SYXF][EC 33554465] swp2 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-2 bgpd[2146]: [J7484-2SYXF][EC 33554465] swp3 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-2 bgpd[2146]: [J7484-2SYXF][EC 33554465] swp4 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-2 bgpd[2146]: [J7484-2SYXF][EC 33554465] swp5 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-2 bgpd[2146]: [J7484-2SYXF][EC 33554465] swp6 [FSM] Failure handling event BGP_Start in state Idle, prior events (null), (null), fd -1
+Aug 20 10:23:38 dc2-spine-2 zebra[2100]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:38 dc2-spine-2 staticd[2204]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:38 dc2-spine-2 bgpd[2146]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Aug 20 10:23:38 dc2-spine-2 watchfrr[2022]: [PR3CF-TPMEZ] frr_sigevent_process: calling daemon handlers
+Aug 20 10:23:38 dc2-spine-2 watchfrr[2022]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Aug 20 10:23:38 dc2-spine-2 watchfrr[2022]: [QDG3Y-BY5TN] bgpd state -> up : connect succeeded
+Aug 20 10:23:38 dc2-spine-2 watchfrr[2022]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Aug 20 10:23:38 dc2-spine-2 watchfrr[2022]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Aug 20 10:23:38 dc2-spine-2 frrinit.sh[1979]: Started watchfrr.
+Aug 20 10:23:38 dc2-spine-2 systemd[1]: Started frr.service - FRRouting.
+Aug 20 10:23:39 dc2-spine-2 bgpd[2146]: [J7484-2SYXF][EC 33554465] swp3 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 dc2-spine-2 bgpd[2146]: [J7484-2SYXF][EC 33554465] swp6 [FSM] Failure handling event BGP_Start in state Idle, prior events BGP_Start, BGP_Start, fd -1
+Aug 20 10:23:39 dc2-spine-2 bgpd[2146]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp3(dc2-svc-leaf-1) in vrf default Up
+Aug 20 10:23:39 dc2-spine-2 bgpd[2146]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp6(dc2-border-2) in vrf default Up
+Aug 20 10:23:39 dc2-spine-2 bgpd[2146]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp4(dc2-svc-leaf-2) in vrf default Up
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp5(dc2-border-1) in vrf default Up
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1(dc2-k8s-leaf-1) in vrf default Up
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2(dc2-k8s-leaf-2) in vrf default Up
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp3 in vrf default
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp3 in vrf default
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp6 in vrf default
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp6 in vrf default
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp4 in vrf default
+Aug 20 10:23:40 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp4 in vrf default
+Aug 20 10:23:41 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp5 in vrf default
+Aug 20 10:23:41 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp5 in vrf default
+Aug 20 10:23:41 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1 in vrf default
+Aug 20 10:23:41 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp1 in vrf default
+Aug 20 10:23:41 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2 in vrf default
+Aug 20 10:23:41 dc2-spine-2 bgpd[2146]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp2 in vrf default
+Aug 20 10:23:53 dc2-spine-2 zebra[2100]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000

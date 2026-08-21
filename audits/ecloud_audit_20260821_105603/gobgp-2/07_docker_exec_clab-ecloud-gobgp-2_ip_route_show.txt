@@ -1,0 +1,8 @@
+default via 172.29.140.1 dev eth0 
+10.201.20.8/30 dev eth1 proto kernel scope link src 10.201.20.10 
+10.201.20.12/30 dev eth2 proto kernel scope link src 10.201.20.14 
+172.29.140.0/24 dev eth0 proto kernel scope link src 172.29.140.43 
+192.168.202.0/24 
+	nexthop via 10.201.20.9 dev eth1 weight 1 
+	nexthop via 10.201.20.13 dev eth2 weight 1 
+

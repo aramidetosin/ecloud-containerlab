@@ -1,0 +1,51 @@
+
+Aug 20 10:23:40 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp7 in vrf default
+Aug 20 10:23:40 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp7 in vrf default
+Aug 20 10:23:40 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp8 in vrf default
+Aug 20 10:23:40 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp8 in vrf default
+Aug 20 10:23:40 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp5 in vrf default
+Aug 20 10:23:40 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp5 in vrf default
+Aug 20 10:23:52 spine-2 zebra[2142]: [WPPMZ-G9797] if_zebra_speed_update: eth0 old speed: 0 new speed: 1000
+Aug 20 17:57:54 spine-2 bgpd[2209]: [HZN6M-XRM1G] %NOTIFICATION: received from neighbor swp1 6/3 (Cease/Peer De-configured) 0 bytes
+Aug 20 17:57:54 spine-2 bgpd[2209]: [PXVXG-TFNNT] %ADJCHANGE: neighbor swp1(leaf-k8s-master-1) in vrf default Down BGP Notification received
+Aug 20 17:57:54 spine-2 bgpd[2209]: [HZN6M-XRM1G] %NOTIFICATION: received from neighbor swp2 6/3 (Cease/Peer De-configured) 0 bytes
+Aug 20 17:57:54 spine-2 bgpd[2209]: [PXVXG-TFNNT] %ADJCHANGE: neighbor swp2(leaf-k8s-master-2) in vrf default Down BGP Notification received
+Aug 20 17:57:56 spine-2 bgpd[2209]: [MJ4D6-VBJKV][EC 33554454] swp2 [Error] bgp_read_packet error: Connection reset by peer
+Aug 20 17:58:05 spine-2 bgpd[2209]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2(leaf-k8s-master-2) in vrf default Up
+Aug 20 17:58:05 spine-2 bgpd[2209]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1(leaf-k8s-master-1) in vrf default Up
+Aug 20 17:58:06 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2 in vrf default
+Aug 20 17:58:06 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1 in vrf default
+Aug 20 17:58:06 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp1 in vrf default
+Aug 20 17:58:06 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp2 in vrf default
+Aug 20 17:58:21 spine-2 bgpd[2209]: [HZN6M-XRM1G] %NOTIFICATION: received from neighbor swp5 6/3 (Cease/Peer De-configured) 0 bytes
+Aug 20 17:58:21 spine-2 bgpd[2209]: [PXVXG-TFNNT] %ADJCHANGE: neighbor swp5(leaf-service-1) in vrf default Down BGP Notification received
+Aug 20 17:58:21 spine-2 bgpd[2209]: [HZN6M-XRM1G] %NOTIFICATION: received from neighbor swp6 6/3 (Cease/Peer De-configured) 0 bytes
+Aug 20 17:58:21 spine-2 bgpd[2209]: [PXVXG-TFNNT] %ADJCHANGE: neighbor swp6(leaf-service-2) in vrf default Down BGP Notification received
+Aug 20 17:58:24 spine-2 bgpd[2209]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp5(leaf-service-1) in vrf default Up
+Aug 20 17:58:24 spine-2 bgpd[2209]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp6(leaf-service-2) in vrf default Up
+Aug 20 17:58:25 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp5 in vrf default
+Aug 20 17:58:25 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp5 in vrf default
+Aug 20 17:58:25 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp6 in vrf default
+Aug 20 17:58:25 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp6 in vrf default
+Aug 20 18:09:35 spine-2 bgpd[2209]: [HZN6M-XRM1G] %NOTIFICATION: received from neighbor swp1 6/3 (Cease/Peer De-configured) 0 bytes
+Aug 20 18:09:35 spine-2 bgpd[2209]: [PXVXG-TFNNT] %ADJCHANGE: neighbor swp1(leaf-k8s-master-1) in vrf default Down BGP Notification received
+Aug 20 18:09:35 spine-2 bgpd[2209]: [HZN6M-XRM1G] %NOTIFICATION: received from neighbor swp2 6/3 (Cease/Peer De-configured) 0 bytes
+Aug 20 18:09:35 spine-2 bgpd[2209]: [PXVXG-TFNNT] %ADJCHANGE: neighbor swp2(leaf-k8s-master-2) in vrf default Down BGP Notification received
+Aug 20 18:09:37 spine-2 bgpd[2209]: [MJ4D6-VBJKV][EC 33554454] swp1 [Error] bgp_read_packet error: Connection reset by peer
+Aug 20 18:09:37 spine-2 bgpd[2209]: [MJ4D6-VBJKV][EC 33554454] swp2 [Error] bgp_read_packet error: Connection reset by peer
+Aug 20 18:09:45 spine-2 bgpd[2209]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2(leaf-k8s-master-2) in vrf default Up
+Aug 20 18:09:45 spine-2 bgpd[2209]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1(leaf-k8s-master-1) in vrf default Up
+Aug 20 18:09:46 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1 in vrf default
+Aug 20 18:09:46 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2 in vrf default
+Aug 20 18:09:46 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp2 in vrf default
+Aug 20 18:09:46 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp1 in vrf default
+Aug 20 18:17:04 spine-2 bgpd[2209]: [HZN6M-XRM1G] %NOTIFICATION: received from neighbor swp1 6/3 (Cease/Peer De-configured) 0 bytes
+Aug 20 18:17:04 spine-2 bgpd[2209]: [PXVXG-TFNNT] %ADJCHANGE: neighbor swp1(leaf-k8s-master-1) in vrf default Down BGP Notification received
+Aug 20 18:17:04 spine-2 bgpd[2209]: [HZN6M-XRM1G] %NOTIFICATION: received from neighbor swp2 6/3 (Cease/Peer De-configured) 0 bytes
+Aug 20 18:17:04 spine-2 bgpd[2209]: [PXVXG-TFNNT] %ADJCHANGE: neighbor swp2(leaf-k8s-master-2) in vrf default Down BGP Notification received
+Aug 20 18:17:15 spine-2 bgpd[2209]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp1(leaf-k8s-master-1) in vrf default Up
+Aug 20 18:17:15 spine-2 bgpd[2209]: [N9HHH-F8H1M] %ADJCHANGE: neighbor swp2(leaf-k8s-master-2) in vrf default Up
+Aug 20 18:17:16 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp1 in vrf default
+Aug 20 18:17:16 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for IPv4 Unicast from swp2 in vrf default
+Aug 20 18:17:16 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp2 in vrf default
+Aug 20 18:17:16 spine-2 bgpd[2209]: [M59KS-A3ZXZ] bgp_update_receive_eor: rcvd End-of-RIB for L2VPN EVPN from swp1 in vrf default

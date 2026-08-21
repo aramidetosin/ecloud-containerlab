@@ -1,0 +1,20 @@
+
+                                applied    
+------------------------------  -----------
+enable                          on         
+autonomous-system               65211      
+router-id                       10.2.0.11  
+policy-update-timer             5          
+graceful-shutdown               off        
+wait-for-install                off        
+graceful-restart                           
+  mode                          helper-only
+  restart-time                  120        
+  path-selection-deferral-time  360        
+  stale-routes-time             360        
+convergence-wait                           
+  time                          0          
+  establish-wait-time           0          
+queue-limit                                
+  input                         10000      
+  output                        10000      
