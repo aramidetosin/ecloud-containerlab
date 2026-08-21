@@ -1,0 +1,129 @@
+##### endpoints: src service-node-dns-ntp 10.167.30.10/24 -> dst dc2-svc-ntp-dns 10.168.30.10/24 (bond0 mac 50:00:00:23:00:01)
+##### hosts: default routes + bond hash policy
+default via 10.167.30.1 dev bond0 
+Bonding Mode: IEEE 802.3ad Dynamic link aggregation
+Transmit Hash Policy: layer3+4 (1)
+default via 10.168.30.1 dev bond0 
+##### multi-probe trace (3 probes/hop)
+traceroute to 10.168.30.10 (10.168.30.10), 10 hops max, 46 byte packets
+ 1  10.167.30.2  0.227 ms  10.167.30.3  0.211 ms  0.056 ms
+ 2  192.0.0.8  0.632 ms  0.410 ms  0.248 ms
+ 3  10.201.1.0  0.352 ms  0.215 ms  0.176 ms
+ 4  192.0.0.8  0.511 ms  0.251 ms  0.242 ms
+ 5  10.168.30.3  0.804 ms  10.168.30.2  0.866 ms  0.445 ms
+ 6  10.168.30.10  0.490 ms  0.581 ms  0.969 ms
+##### per-flow pinning: 4 flows, different UDP base ports
+--- flow port 33434 ---
+ 1  10.167.30.3  0.115 ms
+ 2  192.0.0.8  0.535 ms
+ 3  10.201.1.0  0.307 ms
+ 4  192.0.0.8  0.683 ms
+ 5  10.168.30.3  0.621 ms
+ 6  10.168.30.10  0.771 ms
+--- flow port 33500 ---
+ 1  10.167.30.2  0.173 ms
+ 2  192.0.0.8  0.512 ms
+ 3  10.201.1.2  0.572 ms
+ 4  192.0.0.8  0.572 ms
+ 5  10.168.30.3  0.659 ms
+ 6  10.168.30.10  0.504 ms
+--- flow port 33600 ---
+ 1  10.167.30.3  0.138 ms
+ 2  192.0.0.8  0.635 ms
+ 3  10.201.1.0  0.449 ms
+ 4  192.0.0.8  0.539 ms
+ 5  10.168.30.3  0.662 ms
+ 6  10.168.30.10  0.713 ms
+--- flow port 33700 ---
+ 1  10.167.30.2  0.144 ms
+ 2  192.0.0.8  0.604 ms
+ 3  10.201.1.0  0.551 ms
+ 4  192.0.0.8  0.656 ms
+ 5  10.168.30.2  0.767 ms
+ 6  *
+##### reply TTL at the source
+      3 ttl=59
+##### identity: SVI owners
+leaf-service-1 vlan130: 10.167.30.2/24
+leaf-service-2 vlan130: 10.167.30.3/24
+dc2-svc-leaf-1 vlan230: 10.168.30.2/24
+dc2-svc-leaf-2 vlan230: 10.168.30.3/24
+##### identity: agg addresses in the 10.201.1.x / 10.201.x range (tenant-svc + firewall-transit)
+--- br-agg-sw-1 ---
+swp7 10.201.20.1/30
+swp8 10.201.20.9/30
+swp3.100@swp3 10.201.0.0/31
+swp4.100@swp4 10.201.0.4/31
+swp3.200@swp3 10.201.1.0/31
+swp4.200@swp4 10.201.1.4/31
+--- br-agg-sw-2 ---
+swp7 10.201.20.5/30
+swp8 10.201.20.13/30
+swp3.100@swp3 10.201.0.2/31
+swp4.100@swp4 10.201.0.6/31
+swp3.200@swp3 10.201.1.2/31
+swp4.200@swp4 10.201.1.6/31
+##### identity: 192.0.0.8 configured on any border?
+leaf-border-1: 0
+leaf-border-2: 0
+dc2-border-1: 0
+dc2-border-2: 0
+##### VTEP loopbacks
+leaf-border-1 lo: 10.0.0.17/32
+leaf-border-2 lo: 10.0.0.18/32
+dc2-border-1 lo: 10.2.0.15/32
+dc2-border-2 lo: 10.2.0.16/32
+dc2-svc-leaf-1 lo: 10.2.0.13/32
+dc2-svc-leaf-2 lo: 10.2.0.14/32
+##### FIB at each decision point: show ip route vrf tenant-svc 10.168.30.10
+--- leaf-service-1 ---
+Routing entry for 10.168.30.10/32
+  Known via "bgp", distance 20, metric 0, vrf tenant-svc, best
+  * 10.0.0.17, via vlan3002_l3 onlink, weight 1
+  * 10.0.0.18, via vlan3002_l3 onlink, weight 1
+--- leaf-border-1 ---
+Routing entry for 10.168.30.10/32
+  Known via "bgp", distance 20, metric 0, vrf tenant-svc, best
+  * fe80::a8c1:abff:fe0b:f1f1, via swp3.200, weight 1
+  * fe80::a8c1:abff:feb7:d029, via swp4.200, weight 1
+--- br-agg-sw-1 ---
+Routing entry for 10.168.30.10/32
+  Known via "bgp", distance 20, metric 0, vrf tenant-svc, best
+  * fe80::a8c1:abff:fe15:5db7, via swp5.200, weight 1
+  * fe80::a8c1:abff:fe4b:4b47, via swp6.200, weight 1
+--- dc2-border-1 ---
+Routing entry for 10.168.30.10/32
+  Known via "bgp", distance 20, metric 0, vrf tenant-svc, best
+  * 10.2.0.13, via vlan3102_l3 onlink, weight 1
+  * 10.2.0.14, via vlan3102_l3 onlink, weight 1
+--- dc2-svc-leaf-1 ---
+Routing entry for 10.168.30.0/24
+  Known via "connected", distance 0, metric 1024, vrf tenant-svc
+  * directly connected, vlan230-v0
+Routing entry for 10.168.30.0/24
+  Known via "connected", distance 0, metric 0, vrf tenant-svc, best
+##### VNIs in play
+leaf-service-1: 10130 L2 tenant-svc;50002 L3 tenant-svc
+dc2-border-1 L3: 50102 tenant-svc;50101 tenant-k8s
+dc2-svc-leaf-1: 10230 L2 tenant-svc;50102 L3 tenant-svc
+##### destination MAC 50:00:00:23:00:01 in DC2 svc leaves EVPN table (vni 10230)
+--- dc2-svc-leaf-1 ---
+MAC: 50:00:00:23:00:01
+ ESI: 03:44:38:39:be:ef:1a:00:00:01
+ Intf: bond1(8) VLAN: 230
+--- dc2-svc-leaf-2 ---
+MAC: 50:00:00:23:00:01
+ ESI: 03:44:38:39:be:ef:1a:00:00:01
+ Intf: bond1(8) VLAN: 230
+##### border DCI subinterface VLANs (tenant-svc uses .200)
+swp3.100@swp3 fe80::a8c1:abff:fec0:8738/64
+swp4.100@swp4 fe80::a8c1:abff:feb4:eeac/64
+swp3.200@swp3 fe80::a8c1:abff:fec0:8738/64
+swp4.200@swp4 fe80::a8c1:abff:feb4:eeac/64
+--- flow port 33700, re-run (-w2) ---
+ 1  10.167.30.3  0.208 ms
+ 2  192.0.0.8  0.763 ms
+ 3  10.201.1.2  0.527 ms
+ 4  192.0.0.8  0.680 ms
+ 5  10.168.30.2  1.045 ms
+ 6  10.168.30.10  0.881 ms
