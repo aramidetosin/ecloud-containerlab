@@ -1,0 +1,71 @@
+===== (a) east-west: the app live path trace, DC1 pod -> DC2 over the backbone =====
+{"target": "10.168.10.21", "trace": "traceroute to 10.168.10.21 (10.168.10.21), 10 hops max, 46 byte packets  (hop 1 = node Cilium gw)\n 0  10.244.2.67      dc-demo-7b5bcf4c4-xbm96  [this pod = source]\n 1  *\n 2  10.244.2.149  0.003 ms\n 3  10.167.10.2  0.163 ms\n 4  192.0.0.8  0.680 ms\n 5  10.201
+
+===== (b) north-south: external client -> anycast VIP through the PA pair =====
+traceroute to 10.80.15.50 (10.80.15.50), 12 hops max, 46 byte packets
+ 1  *
+ 2  *
+ 3  *
+ 4  *
+ 5  *
+ 6  *
+ 7  *
+ 8  *
+ 9  *
+10  *
+11  *
+12  *
+--- by name ---
+traceroute to app.ecloud.lab (10.80.15.50), 12 hops max, 46 byte packets
+ 1  *
+ 2  *
+ 3  *
+ 4  *
+ 5  *
+===== (c) DC1 k8s host -> DC2 k8s host over the backbone =====
+dc2-k8s-master-1 = 10.168.10.11
+traceroute to 10.168.10.11 (10.168.10.11), 12 hops max, 46 byte packets
+ 1  10.167.10.3  0.190 ms
+ 2  192.0.0.8  0.714 ms
+ 3  10.201.20.1  0.450 ms
+ 4  192.0.0.8  0.832 ms
+ 5  10.168.10.2  1.082 ms
+ 6  10.168.10.11  0.824 ms
+===== (a) full app path trace DC1 pod -> DC2 (hop by hop) =====
+traceroute to 10.168.10.21 (10.168.10.21), 10 hops max, 46 byte packets  (hop 1 = node Cilium gw)
+ 0  10.244.3.124     dc-demo-7b5bcf4c4-vn7db  [this pod = source]
+ 1  *
+ 2  10.244.3.101  0.003 ms
+ 3  10.167.20.3  0.206 ms
+ 4  192.0.0.8  0.632 ms
+ 5  10.201.20.1  0.362 ms
+ 6  192.0.0.8  0.769 ms
+ 7  10.168.10.3  0.813 ms
+ 8  10.168.10.21  0.660 ms
+
+  *  10.245.0.227     dc-demo-5cdd56f98c-vxrzv  [peer POD on dc2-k8s-worker-3 - NodePort local delivery, not a routed x-region hop]
+===== (b) north-south via ICMP probes =====
+traceroute to 10.80.15.50 (10.80.15.50), 8 hops max, 46 byte packets
+ 1  *
+ 2  *
+ 3  *
+ 4  *
+ 5  *
+ 6  *
+ 7  *
+ 8  *
+===== (b2) the firewall session table while client-1 fetches the VIP =====
+dst=10.80.15.50 
+xsource=10.80.15.103 
+source=10.80.15.103 
+xdst=192.168.202.0 
+from=internet 
+to=k8s 
+nat=True 
+state=ACTIVE 
+application=web-browsing 
+ingress=ethernet1/3 
+egress=ethernet1/1.100 
+dst=10.80.15.50 
+xsource=10.80.15.103 
+source=10.80.15.103 
